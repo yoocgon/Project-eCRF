@@ -276,13 +276,13 @@
     </div>
 
     <div class="area-menu">
-        <span id="btn-menu-main" onclick="btnMenu('02-index')">¸ŞÀÎ</span>
-        <span id="btn-menu-request" onclick="btnMenu('03-breast-cancer')">À¯¹æ¾Ï</span>
-        <span id="btn-menu-import" onclick="btnMenu('04-stomach-cancer')">À§¾Ï</span>
+        <span id="btn-menu-main" onclick="btnMenu('02-index')">ë©”ì¸</span>
+        <span id="btn-menu-request" onclick="btnMenu('03-breast-cancer')">ìœ ë°©ì•”</span>
+        <span id="btn-menu-import" onclick="btnMenu('04-stomach-cancer')">ìœ„ì•”</span>
         <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
-        <span id="btn-menu-export" onclick="btnMenu('06-code')">ÄÚµåÁ¶È¸</span>
-        <span id="btn-menu-export" onclick="btnMenu('07-column')">ÄÃ·³¼³Á¤</span>
-        <span id="btn-menu-logout" onclick="btnMenu('01-login')">·Î±×¾Æ¿ô</span>
+        <span id="btn-menu-export" onclick="btnMenu('06-code')">ì½”ë“œì¡°íšŒ</span>
+        <span id="btn-menu-export" onclick="btnMenu('07-column')">ì»¬ëŸ¼ì„¤ì •</span>
+        <span id="btn-menu-logout" onclick="btnMenu('01-login')">ë¡œê·¸ì•„ì›ƒ</span>
 
         <span id="btn-menu-test001" onclick="btnMenu('11-test001')">test001</span>
         <span id="btn-menu-test002" onclick="btnMenu('12-test002')">test002</span>
@@ -291,12 +291,12 @@
 
 
     <div class="area-header">
-        <p class="title">À¯¹æ¾Ï</p>
+        <p class="title">ìœ ë°©ì•”</p>
     </div>
 
     <div class="area-filter">
         <div class="contianer-filter"></div>
-        <input id="btn-search-patient" type="button" value="Á¶È¸" onclick="btnSearchPatient()" />
+        <input id="btn-search-patient" type="button" value="ì¡°íšŒ" onclick="btnSearchPatient()" />
     </div>
 
     <div class="area-result">
@@ -308,15 +308,15 @@
         <div class="warp-detail">
             <div class="tab-contianer">
 
-                <span class="tab" onclick="alert('È¯ÀÚ')">È¯ÀÚ</span>
-                <span class="tab" onclick="alert('Áø´Ü')">Áø´Ü</span>
-                <span class="tab" onclick="alert('°Ë»ç')">°Ë»ç</span>
-                <span class="tab" onclick="alert('Ä¡·á')">Ä¡·á</span>
-                <span class="tab" onclick="alert('ÃßÀû°üÂû')">ÃßÀû°üÂû</span>
+                <span class="tab" onclick="alert('í™˜ì')">í™˜ì</span>
+                <span class="tab" onclick="alert('ì§„ë‹¨')">ì§„ë‹¨</span>
+                <span class="tab" onclick="alert('ê²€ì‚¬')">ê²€ì‚¬</span>
+                <span class="tab" onclick="alert('ì¹˜ë£Œ')">ì¹˜ë£Œ</span>
+                <span class="tab" onclick="alert('ì¶”ì ê´€ì°°')">ì¶”ì ê´€ì°°</span>
 
                 <div class="warp-detail-content">
                     <div class="contianer-filter"></div>
-                    <input id="btn-search-detail" type="button" value="Á¶È¸" onclick="btnSearchDetail()" />
+                    <input id="btn-search-detail" type="button" value="ì¡°íšŒ" onclick="btnSearchDetail()" />
                     <table id="tb_detail"></table>
                     <div id="pagenation-detail"></div>
                 </div>
@@ -357,7 +357,7 @@
             window.chrome.webview.postMessage(objData);
         }
         else {
-            document.getElementById("hello").innerText = data + "´Ô ¾È³çÇÏ¼¼¿ä."
+            document.getElementById("hello").innerText = data + "ë‹˜ ì•ˆë…•í•˜ì„¸ìš”."
         }
     }
 
