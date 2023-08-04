@@ -1,0 +1,631 @@
+
+<style>
+
+    body {
+        margin: 0;
+    }
+
+    .wrapper {
+        display: grid;
+        grid-template-areas:
+            "stat"
+            "menu"
+            "head"
+            "fter"
+            "aply"
+            "relt"
+            "foot";
+        grid-template-columns: 100%;
+        grid-template-rows: 2em 4em 4em auto auto auto 2em;
+        font-size: small;
+        margin: 0%;
+        padding: 0%;
+    }
+
+    .area-stat {
+        grid-area: stat;
+    }
+
+    #hello {
+        float: right;
+        padding-right: 1em;
+    }
+
+    .area-menu {
+        grid-area: menu;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 4px double #ccc;
+        padding-top: 1.4em;
+        padding-left: 2em;
+        padding-right: 2em;
+        font-size: small;
+        font-weight: 800;
+        background-color: #777;
+        color: #fff;
+    }
+
+    .area-menu span:hover {
+        justify-content: center;
+        align-items: center;
+        transform: scale(1.3);
+        transition: all 0.1s ease-in-out;
+    }
+
+    .area-header {
+        grid-area: head;
+    }
+
+    .area-header .title {
+        font-size: medium;
+        font-weight: 800;
+        margin-left: 0.8em;
+        padding-left: 2px;
+        border-bottom: 1px double #999;
+        color: #777;
+    }
+
+    #lb-title {
+        margin-left: 1.2em;
+        margin-bottom: 0;
+    }
+
+    .area-filter {
+        grid-area: fter;
+    }
+
+    .contianer-filter {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-top: 0.4em;
+        margin-left: 0.8em;
+        margin-right: 0.8em;
+        padding: 1em;
+        border-radius: 3px;
+        background: #333;
+        color: #fff;
+    }
+
+    .lb-filter {
+        display: inline-block;
+        width: 10em;
+        margin-left: 1em;
+    }
+
+    .area-filter select {
+        width: 12.7em;
+        height: 1.4em;
+    }
+
+    .area-apply {
+        grid-area: aply;
+    }
+
+    #btn-apply, #btn-search {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin: 1em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #333;
+        color: #fff;
+    }
+
+    .area-result {
+        grid-area: relt;
+        padding: 0.6em;
+    }
+
+    #tb_result {
+        width: 100%;
+        background: #fff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+    }
+
+    #tb_result th {
+        background: #333;
+        color: #fff;
+    }
+
+    #tb_result tr {
+        border-bottom: 2px solid #eee;
+        background: #eee;
+        padding: 2px;
+    }
+
+    #tb_result tr:hover {
+        background: #999;
+        color: #fff;
+    }
+
+    #pagenation {
+        float: right;
+    }
+
+    .btn-pagenation {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #ccc;
+    }
+
+    .btn-pagenation-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #333;
+        color: #fff;
+    }
+
+    .area-footer {
+        grid-area: foot;
+        color: #fff;
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+<script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0"></script>
+
+<div class="wrapper">
+
+    <div class="area-stat">
+        <span id="hello"></span>
+    </div>
+
+    <div class="area-menu">
+        <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
+        <span id="btn-menu-request" onclick="btnMenu('03-breast-cancer')">유방암</span>
+        <span id="btn-menu-import" onclick="btnMenu('04-stomach-cancer')">위암</span>
+        <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
+        <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
+        <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
+        <span id="btn-menu-logout" onclick="btnMenu('01-login')">로그아웃</span>
+    </div>
+
+    <div class="area-header">
+        <p class="title">컬럼설정</p>
+    </div>
+
+    <div class="area-filter">
+
+        <div class="contianer-filter">
+            <span>
+                <span class="lb-filter">스키마 선택</span>
+
+                <select id="selector-schema">
+                    <option>공통</option>
+                    <option>위암</option>
+                    <option>유방암</option>
+                </select>
+                <span class="lb-filter">테이블 선택</span>
+                <select id="selector-table">
+                    <option>-</option>
+                </select>
+            </span>
+        </div>
+        <input id="btn-search" type="button" value="검색" onclick="btnSearch()" />
+    </div>
+
+    <div class="area-apply">
+
+        <div class="contianer-filter">
+
+            <span>
+                <span class="lb-filter">No</span>
+                <input class="lb-filter" id="text-apply-no" type="text" />
+            </span>
+
+            <span>
+                <span class="lb-filter">Schema</span>
+                <input class="lb-filter" id="text-apply-schema" type="text" />
+            </span>
+
+            <span>
+                <span class="lb-filter">Table</span>
+                <input class="lb-filter" id="text-apply-table" type="text" />
+            </span>
+
+            <span>
+                <span class="lb-filter">Column</span>
+                <input class="lb-filter" id="text-apply-column" type="text" />
+            </span>
+
+            <span>
+                <span class="lb-filter">Filter Option No</span>
+                <input class="lb-filter" id="text-apply-filter-option-no" type="text" />
+            </span>
+
+            <span>
+                <span class="lb-filter">Use Column</span>
+                <select class="lb-filter" id="selector-use-column">
+                    <option>Y</option>
+                    <option>N</option>
+                </select>
+            </span>
+
+            <span>
+                <span class="lb-filter">Display Column</span>
+                <input class="lb-filter" id="text-display-column" type="text" />
+            </span>
+
+            <span>
+                <span class="lb-filter">Use Filter</span>
+                <select class="lb-filter" id="selector-use-filter">
+                    <option>N</option>
+                    <option>Y</option>
+                </select>
+            </span>
+
+            <span>
+                <span class="lb-filter">Filter Type</span>
+                <select class="lb-filter" id="selector-filter-type">
+                    <option>Textbox</option>
+                    <option>ListView</option>
+                    <option>DatePicker</option>
+                </select>
+            </span>
+
+            <span>
+                <span class="lb-filter">Filter Option</span>
+                <input class="lb-filter" id="text-filter-option" type="text" />
+            </span>
+
+            <span>
+                <span class="lb-filter">Use Code</span>
+                <select class="lb-filter" id="selector-use-code">
+                    <option>N</option>
+                    <option>Y</option>
+                </select>
+            </span>
+        </div>
+
+        <input id="btn-apply" type="button" value="적용" onclick="btnApply()" />
+
+    </div>
+
+</div>
+
+<div class="area-result">
+    <table id="tb_result"></table>
+    <div id="pagenation"></div>
+</div>
+
+<div class="area-footer">
+    <span id="logo-footer"></span>
+</div>
+
+
+<script>
+
+    //
+    function log(category, log, type) {
+        console.log("Debug>>> (" + category + ") \n");
+
+        if (type === "table")
+            console.table(log);
+        else
+            console.log(log);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// header
+
+    //
+    function fetchHello(data) {
+        //
+        if (data == undefined) {
+            jsonData = JSON.stringify(
+                {
+                    type: 'api',
+                    action: 'hello',
+                    message: ''
+                }
+            );
+            //
+            let objData = JSON.parse(jsonData);
+            window.chrome.webview.postMessage(objData);
+        }
+        else {
+            document.getElementById("hello").innerText = data + "님 안녕하세요."
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////// menu
+
+    //
+    function btnMenu(menu) {
+        //
+        jsonData = JSON.stringify(
+            {
+                type: 'page',
+                action: menu,
+                message: ''
+            }
+        );
+        //
+        let objData = JSON.parse(jsonData);
+        window.chrome.webview.postMessage(objData);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// filter search
+
+    //
+    function getSelectedValue(id) {
+        let elem = document.getElementById(id);
+        let selectedValue = elem.options[elem.selectedIndex].value;
+        return selectedValue;
+    }
+
+    //
+    function btnSearch() {
+
+        //
+        let searchSchema = getSelectedValue('selector-schema');
+        let searchTable = getSelectedValue('selector-table');
+
+        //
+        let filter = {
+            searchSchema: searchSchema,
+            searchTable: searchTable
+        };
+        //
+        let option = {
+            schema: "public",
+            table: "tb_column",
+            offset: 0,
+            limit: 20,
+            apply: filter,
+        }
+        //
+        console.table(filter);
+        //
+        fetchColumnInfo(undefined, option);
+    }
+
+    //
+    var rowsColumn = []
+    function fetchColumnInfo(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                type: 'api',
+                action: 'table',
+                message: 'column',
+                data: option
+            });
+        }
+        else
+        {
+            log("response", response);
+            rowsColumn = JSON.parse(response);
+            renderTable();
+            renderPagenation();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////// filter apply
+
+    //
+    function btnApply() {
+
+        //
+        let applyNo = getSelectedValue('text-apply-no');
+        let applySchema = getSelectedValue('text-apply-schema');
+        let applyTable = getSelectedValue('text-apply-table');
+        let applyColumn = getSelectedValue('text-apply-column');
+        let applyFilterOptionNo = getSelectedValue('text-apply-option-no');
+        let applyUseColumn = getSelectedValue('selector-apply-use-column');
+        let applyDisplayColumn = getSelectedValue('text-apply-display-column');
+        let applyUseFilter = getSelectedValue('selector-apply-use-filter');
+        let applyUseFilterType = getSelectedValue('selector-apply-use-filter-type');
+        let applyUseFilterOption = getSelectedValue('text-apply-use-filter-option');
+        let applyUseCode = getSelectedValue('selector-table-use-code');
+
+        //
+        let apply = {
+            applyNo: applyNo,
+            applySchema: applySchema,
+            applyTable: applyTable,
+            applyColumn: applyColumn,
+            applyFilterOptionNo: applyFilterOptionNo,
+            applyUseColumn: applyUseColumn,
+            applyDisplayColumn: applyDisplayColumn,
+            applyUseFilter: applyUseFilter,
+            applyUseFilterType: applyUseFilterType,
+            applyUseFilterOption: applyUseFilterOption,
+            applyUseCode: applyUseCode
+        };
+        //
+        let option = {
+            schema: "public",
+            table: "tb_column",
+            apply: apply,
+        }
+        //
+        console.table(filter);
+        //
+        UpdateColumnInfo(undefined, option);
+    }
+
+    //
+    var rowsColumn = []
+    function fetchUpdateColumnInfo(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                type: 'api',
+                action: 'table',
+                message: 'update',
+                data: option
+            });
+        }
+        else {
+            log("response", response);
+            rowsColumn = JSON.parse(response);
+            renderTable();
+            renderPagenation();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////// gridview
+
+    //
+    function renderTableHeader() {
+        //
+        log("rowsColumn[0]", rowsColumn[0], "table");
+        //
+        let htmlTh = "";
+        for (let key in rowsColumn[0])
+            htmlTh += "<th>" + key + "</th>";
+        //
+        return htmlTh;
+    }
+
+    //
+    function renderTable() {
+        //
+        log("table", rowsColumn, "table");
+        //
+        let htmlTh = renderTableHeader();
+        //
+        pagenationLastPage = parseInt(rowsColumn.length / pagenationRowLimit);
+        if (rowsColumn.length % pagenationRowLimit > 0)
+            pagenationLastPage += 1;
+        //
+        log("pagenationRowLimit", pagenationRowLimit, "");
+        log("pagenationCurPage", pagenationCurPage, "");
+        log("pagenationLastPage : ", pagenationLastPage, "");
+
+        let rowStart = (pagenationCurPage * pagenationRowLimit) - pagenationRowLimit + 1;
+        let rowEnd = rowStart + pagenationRowLimit - 1;
+        if (rowEnd >= rowsColumn.length)
+            rowEnd = rowStart + rowsColumn.length % pagenationRowLimit;
+        //
+        log("rowStart : ", rowStart, "");
+        log("rowEnd : ", rowEnd, "");
+        //
+        let htmlStack = "";
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+            //
+            if (rowNum == rowsColumn.length + 1)
+                break;
+            //
+            let item = rowsColumn[rowNum - 1];
+            log("row", item, "");
+            //
+            htmlStack += `<tr onclick="selectRow(` + rowNum + `)">`;
+            for (let key in item) {
+                log("key", key, "");
+                let column = item[key];
+                log("column", column, "");
+                htmlStack += ` <td> ` + column + ` </td> `;
+            }
+            htmlStack += `</tr>`;
+        }
+        //
+        let elemTable = document.getElementById("tb_result");
+        elemTable.innerHTML = htmlTh + htmlStack;
+    }
+
+    // 선택된 열의 값으로 박스 채우는 로직으로 변경 할 것
+    function selectRow(rowNum) {
+        //
+        //let row = rowsColumn[rowNum - 1];
+        //console.log("select row", rowNum, "");
+        //console.log("select row", row, "");
+        ////
+        //let htmlTemp = "";
+        //for (let key in row)
+        //    htmlTemp += `<div> <span class="lb-detail">` + key + `</span> <span class="tx-detail">` + row[key] + `</span> </div>`;
+        ////
+        //document.getElementById("contianer-detail").innerHTML = htmlTemp;
+    }
+
+    //////////////////////////////////////////////////////////////////////////// pagenation
+
+    //
+    var pagenationRowLimit = 10;
+    var pagenationLastPage = 0;
+    var pagenationCurPage = 1;
+
+    //
+    function btnPagenation(page) {
+
+        if (page <= 0)
+            page = 1;
+
+        if (page >= pagenationLastPage)
+            page = pagenationLastPage;
+
+        pagenationCurPage = page;
+        renderPagenation();
+        renderTable();
+    }
+
+    //
+    function renderPagenation() {
+        //
+        let htmlBase = `
+                <span class='btn-pagenation' onclick='btnPagenation(1)'> << </span>
+                <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage - 1)'> < </span>
+                {pages}
+                <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage + 1)'> > </span>
+                <span class='btn-pagenation' onclick='btnPagenation(pagenationLastPage)'> >> </span>
+                `;
+
+        let htmlPage = "";
+        for (let i = 1; i <= pagenationLastPage; i++) {
+            if (i == pagenationCurPage)
+                htmlPage += "<span class='btn-pagenation-selected' onclick='btnPagenation(" + i + ")'>" + i + "</span>";
+            else
+                htmlPage += "<span class='btn-pagenation' onclick='btnPagenation(" + i + ")'>" + i + "</span>";
+        }
+
+        htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
+        document.getElementById('pagenation').innerHTML = htmlPage;
+    }
+
+    //////////////////////////////////////////////////////////////////////////// init
+
+    //
+    function init() {
+        //
+        fetchHello();
+        //
+        let filter = {
+            searchSchema: searchSchema,
+            searchTable: searchTable
+        };
+        //
+        let option = {
+            schema: "public",
+            table: "tb_column",
+            offset: 0,
+            limit: 20,
+            apply: filter,
+        }
+        //
+        console.table(filter);
+        //
+        fetchColumnInfo(undefined, {
+            type: 'api',
+            action: 'table',
+            message: 'column',
+            data: option
+        });
+    }
+
+    //
+    init();
+
+</script>

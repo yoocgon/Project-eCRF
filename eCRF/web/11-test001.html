@@ -1,0 +1,796 @@
+
+<style>
+
+    body {
+        margin: 0;
+    }
+
+    .wrapper {
+        display: grid;
+        grid-template-areas:
+            "stat"
+            "menu"
+            "head"
+            "fter"
+            "relt"
+            "detl"
+            "foot";
+        grid-template-columns: 100%;
+        grid-template-rows: 2em 4em 3em auto auto auto 2em;
+        font-size: small;
+        margin: 0%;
+        padding: 0%;
+    }
+
+    .area-stat {
+        grid-area: stat;
+    }
+
+    #hello {
+        float: right;
+        padding-right: 1em;
+    }
+
+    .area-menu {
+        grid-area: menu;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 4px double #ccc;
+        padding-top: 1.4em;
+        padding-left: 2em;
+        padding-right: 2em;
+        font-size: small;
+        font-weight: 800;
+        background-color: #777;
+        color: #fff;
+    }
+
+        .area-menu span:hover {
+            justify-content: center;
+            align-items: center;
+            transform: scale(1.3);
+            transition: all 0.1s ease-in-out;
+        }
+
+    .area-header {
+        grid-area: head;
+    }
+
+        .area-header .title {
+            font-size: medium;
+            font-weight: 800;
+            margin-left: 0.8em;
+            padding-left: 2px;
+            border-bottom: 1px double #999;
+            color: #777;
+        }
+
+    #lb-title {
+        margin-left: 1.2em;
+        margin-bottom: 0;
+    }
+
+    .area-filter {
+        grid-area: fter;
+    }
+
+    .contianer-filter {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-top: 0.4em;
+        margin-left: 0.8em;
+        margin-right: 0.8em;
+        padding: 1em;
+        border-radius: 3px;
+        background: #333;
+        color: #fff;
+    }
+
+    .lb-filter {
+        display: inline-block;
+        width: 10em;
+        margin-left: 1em;
+    }
+
+    .area-filter select {
+        width: 12.7em;
+        height: 1.4em;
+    }
+
+    #btn-search-patient {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin: 1em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #333;
+        color: #fff;
+    }
+
+    #btn-search-detail {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin: 1em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #333;
+        color: #fff;
+    }
+
+    .area-result {
+        grid-area: relt;
+        padding: 0.6em;
+    }
+
+    #tb_patient {
+        width: 100%;
+        background: #fff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+    }
+
+    #tb_detail {
+        width: 100%;
+        background: #fff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+        margin-left: 1em;
+        margin-right: 1em;
+        margin-bottom: 4px;
+    }
+
+    #tb_patient th {
+        background: #333;
+        color: #fff;
+    }
+
+    #tb_detail th {
+        background: #333;
+        color: #fff;
+    }
+
+    #tb_patient tr {
+        border-bottom: 2px solid #eee;
+        background: #eee;
+        padding: 2px;
+    }
+
+    #tb_detail tr {
+        border-bottom: 2px solid #eee;
+        background: #eee;
+        padding: 2px;
+    }
+
+    #tb_patient tr:hover {
+        background: #999;
+        color: #fff;
+    }
+
+    #tb_detail tr:hover {
+        background: #999;
+        color: #fff;
+    }
+
+    #pagenation-patient {
+        float: right;
+    }
+
+    #pagenation-detail {
+        float: right;
+    }
+
+    .btn-pagenation-patient {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #ccc;
+    }
+
+    .btn-pagenation-detail {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #ccc;
+    }
+
+    .btn-pagenation-patient-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #333;
+        color: #fff;
+    }
+
+    .btn-pagenation-detail-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #333;
+        color: #fff;
+    }
+
+    #area-detail {
+        grid-area: detl;
+        background: #111;
+        color: #fff;
+        border: 1px solid gray;
+    }
+
+    .warp-detail {
+        margin: 1em;
+    }
+
+    .tab-contianer {
+        padding: 0px;
+    }
+
+    .tab {
+        margin: 0px;
+        display: inline-block;
+        width: 16em;
+        border: 1px solid gray;
+        border-bottom: none;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background: #888;
+        color: white;
+        text-align: center;
+    }
+
+    .warp-detail-content {
+        background: #999;
+        border: 1px solid gray;
+        min-height: 24em;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    .area-footer {
+        grid-area: foot;
+        color: #fff;
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+<script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0"></script>
+
+<div class="wrapper">
+
+    <div class="area-stat">
+        <span id="hello"></span>
+    </div>
+
+    <div class="area-menu">
+        <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
+        <span id="btn-menu-request" onclick="btnMenu('03-breast-cancer')">유방암</span>
+        <span id="btn-menu-import" onclick="btnMenu('04-stomach-cancer')">위암</span>
+        <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
+        <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
+        <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
+        <span id="btn-menu-logout" onclick="btnMenu('01-login')">로그아웃</span>
+
+        <span id="btn-menu-test001" onclick="btnMenu('11-test001')">test001</span>
+        <span id="btn-menu-test002" onclick="btnMenu('12-test002')">test002</span>
+        <span id="btn-menu-test003" onclick="btnMenu('13-test003')">test003</span>
+    </div>
+
+
+    <div class="area-header">
+        <p class="title">유방암</p>
+    </div>
+
+    <div class="area-filter">
+        <div class="contianer-filter"></div>
+        <input id="btn-search-patient" type="button" value="조회" onclick="btnSearchPatient()" />
+    </div>
+
+    <div class="area-result">
+        <table id="tb_patient"></table>
+        <div id="pagenation-patient"></div>
+    </div>
+
+    <div class="area-detail">
+        <div class="warp-detail">
+            <div class="tab-contianer">
+
+                <span class="tab" onclick="alert('환자')">환자</span>
+                <span class="tab" onclick="alert('진단')">진단</span>
+                <span class="tab" onclick="alert('검사')">검사</span>
+                <span class="tab" onclick="alert('치료')">치료</span>
+                <span class="tab" onclick="alert('추적관찰')">추적관찰</span>
+
+                <div class="warp-detail-content">
+                    <div class="contianer-filter"></div>
+                    <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
+                    <table id="tb_detail"></table>
+                    <div id="pagenation-detail"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="area-footer">
+            <span id="logo-footer"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    //
+    function log(category, log, type) {
+        console.log("Debug>>> (" + category + ") \n");
+
+        if (type === "table")
+            console.table(log);
+        else
+            console.log(log);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// menu
+
+    //
+    function fetchHello(data) {
+        //
+        if (data == undefined) {
+            jsonData = JSON.stringify(
+                {
+                    type: 'api',
+                    action: 'hello',
+                    message: ''
+                }
+            );
+            //
+            let objData = JSON.parse(jsonData);
+            window.chrome.webview.postMessage(objData);
+        }
+        else {
+            document.getElementById("hello").innerText = data + "님 안녕하세요."
+        }
+    }
+
+    //
+    function btnMenu(menu) {
+        //
+        jsonData = JSON.stringify(
+            {
+                type: 'page',
+                action: menu,
+                message: ''
+            }
+        );
+        //
+        let objData = JSON.parse(jsonData);
+        window.chrome.webview.postMessage(objData);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// patient filter box
+
+    //
+    function btnSearchPatient() {
+        //
+        let filter = {
+            research: "",
+            department: "",
+            researcher: "",
+            applyStep: "",
+            //    applyStatus: "",
+            //    importedDataExists: "",
+            //    dataExportRequestExists: "",
+            //    dataExportApprovalExistence: "",
+            //    dataUtilizationStartDate: "",
+            //    dataUtilizationEndDate: ""
+        };
+        //
+        log("filter", filter, "table");
+        //
+        let option = {
+            schema: "public",
+            table: "tb_test",
+            offset: 0,
+            limit: 20,
+            filter: filter
+        }
+        //
+        fetchPatient(undefined, option);
+    }
+
+    //
+    var rowsPatient = []
+    function fetchPatient(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                type: 'api',
+                action: 'table',
+                message: '',
+                data: option
+            });
+        }
+        else {
+            log("response", response);
+            rowsPatient = JSON.parse(response);
+            renderTablePatient();
+            renderPagenationPatient();
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////// patient filter box
+
+    //
+    function btnSearchDetail() {
+        //
+        let filter = {
+            research: "",
+            department: "",
+            researcher: "",
+            applyStep: "",
+            //    applyStatus: "",
+            //    importedDataExists: "",
+            //    dataExportRequestExists: "",
+            //    dataExportApprovalExistence: "",
+            //    dataUtilizationStartDate: "",
+            //    dataUtilizationEndDate: ""
+        };
+        //
+        log("filter", filter, "table");
+        //
+        let option = {
+            schema: "public",
+            table: "tb_test",
+            offset: 0,
+            limit: 20,
+            filter: filter
+        }
+        //
+        fetchPatient(undefined, option);
+    }
+
+    //
+    var rowsPatient = []
+    function fetchPatient(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                type: 'api',
+                action: 'table',
+                message: '',
+                data: option
+            });
+        }
+        else {
+            log("response", response);
+            rowsPatient = JSON.parse(response);
+            renderTablePatient();
+            renderPagenationPatient();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////// patient gridview
+
+    //
+    function renderTablePatient() {
+        //
+        log("table", rowsPatient, "table");
+        //
+        let htmlTh = renderTableHeaderPatient();
+        //
+        lastPagePagenationPatient = parseInt(rowsPatient.length / limitRowPagenationPatient);
+        if (rowsPatient.length % limitRowPagenationPatient > 0)
+            lastPagePagenationPatient += 1;
+        //
+        log("limitRowPagenationPatient", limitRowPagenationPatient, "");
+        log("currentPagePatenationPatient", currentPagePatenationPatient, "");
+        log("lastPagePagenationPatient : ", lastPagePagenationPatient, "");
+
+        let rowStart = (currentPagePatenationPatient * limitRowPagenationPatient) - limitRowPagenationPatient + 1;
+        let rowEnd = rowStart + limitRowPagenationPatient - 1;
+        if (rowEnd >= rowsPatient.length)
+            rowEnd = rowStart + rowsPatient.length % limitRowPagenationPatient;
+        //
+        log("rowStart : ", rowStart, "");
+        log("rowEnd : ", rowEnd, "");
+        //
+        let htmlStack = "";
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+            //
+            if (rowNum == rowsPatient.length + 1)
+                break;
+            //
+            let item = rowsPatient[rowNum - 1];
+            log("row", item, "");
+            //
+            htmlStack += `<tr onclick="selectRowTablePatient(` + rowNum + `)">`;
+            for (let key in item) {
+                log("key", key, "");
+                let column = item[key];
+                log("column", column, "");
+                htmlStack += ` <td> ` + column + ` </td> `;
+            }
+            htmlStack += `</tr>`;
+        }
+        //
+        let elemTable = document.getElementById("tb_patient");
+        elemTable.innerHTML = htmlTh + htmlStack;
+    }
+
+    //
+    function renderTableHeaderPatient() {
+        //
+        log("rowsPatient[0]", rowsPatient[0], "table");
+        //
+        let htmlTh = "";
+        for (let key in rowsPatient[0])
+            htmlTh += "<th>" + key + "</th>";
+        //
+        return htmlTh;
+    }
+
+    //
+    function selectRowTablePatient(rowNum) {
+        //
+        log("select row", rowNum);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// patient pagenation
+
+    //
+    var limitRowPagenationPatient = 10;
+    var lastPagePagenationPatient = 0;
+    var currentPagePatenationPatient = 1;
+
+    //
+    function renderPagenationPatient() {
+        //
+        let htmlBase = `
+            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(1)'> << </span>
+            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePatenationPatient - 1)'> < </span>
+            {pages}
+            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePatenationPatient + 1)'> > </span>
+            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(lastPagePagenationPatient)'> >> </span>
+            `;
+
+        let htmlPage = "";
+        for (let i = 1; i <= lastPagePagenationPatient; i++) {
+            if (i == currentPagePatenationPatient)
+                htmlPage += "<span class='btn-pagenation-patient-selected' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
+            else
+                htmlPage += "<span class='btn-pagenation-patient' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
+        }
+
+        htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
+        document.getElementById('pagenation-patient').innerHTML = htmlPage;
+    }
+
+    //
+    function btnPagenationPatient(page) {
+
+        if (page <= 0)
+            page = 1;
+
+        if (page >= lastPagePagenationPatient)
+            page = lastPagePagenationPatient;
+
+        currentPagePatenationPatient = page;
+        renderPagenationPatient();
+        renderTablePatient();
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////// detail filter box
+
+    //
+    function btnSearchDetail() {
+        //
+        let filter = {
+            research: "",
+            department: "",
+            researcher: "",
+            applyStep: "",
+            //    applyStatus: "",
+            //    importedDataExists: "",
+            //    dataExportRequestExists: "",
+            //    dataExportApprovalExistence: "",
+            //    dataUtilizationStartDate: "",
+            //    dataUtilizationEndDate: ""
+        };
+        //
+        log("filter", filter, "table");
+        //
+        let option = {
+            schema: "public",
+            table: "tb_test",
+            offset: 0,
+            limit: 20,
+            filter: filter
+        }
+        //
+        fetchDetail(undefined, option);
+    }
+
+    //
+    var rowsDetail = []
+    function fetchDetail(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                type: 'api',
+                action: 'table',
+                message: '',
+                data: option
+            });
+        }
+        else {
+            log("response", response);
+            rowsDetail = JSON.parse(response);
+            renderTableDetail();
+            renderPagenationDetail();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////// detail gridview
+
+    //
+    function renderTableDetail() {
+        //
+        log("table", rowsDetail, "table");
+        //
+        let htmlTh = renderTableHeaderDetail();
+        //
+        lastPagePagenationDetail = parseInt(rowsDetail.length / limitRowPagenationDetail);
+        if (rowsDetail.length % limitRowPagenationDetail > 0)
+            lastPagePagenationDetail += 1;
+        //
+        log("limitRowPagenationDetail", limitRowPagenationDetail, "");
+        log("currentPagePatenationDetail", currentPagePatenationDetail, "");
+        log("lastPagePagenationDetail : ", lastPagePagenationDetail, "");
+
+        let rowStart = (currentPagePatenationDetail * limitRowPagenationDetail) - limitRowPagenationDetail + 1;
+        let rowEnd = rowStart + limitRowPagenationDetail - 1;
+        if (rowEnd >= rowsDetail.length)
+            rowEnd = rowStart + rowsDetail.length % limitRowPagenationDetail;
+        //
+        log("rowStart : ", rowStart, "");
+        log("rowEnd : ", rowEnd, "");
+        //
+        let htmlStack = "";
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+            //
+            if (rowNum == rowsDetail.length + 1)
+                break;
+            //
+            let item = rowsDetail[rowNum - 1];
+            log("row", item, "");
+            //
+            htmlStack += `<tr onclick="selectRowTableDetail(` + rowNum + `)">`;
+            for (let key in item) {
+                log("key", key, "");
+                let column = item[key];
+                log("column", column, "");
+                htmlStack += ` <td> ` + column + ` </td> `;
+            }
+            htmlStack += `</tr>`;
+        }
+        //
+        let elemTable = document.getElementById("tb_detail");
+        elemTable.innerHTML = htmlTh + htmlStack;
+    }
+
+    //
+    function renderTableHeaderDetail() {
+        //
+        log("rowsDetail[0]", rowsDetail[0], "table");
+        //
+        let htmlTh = "";
+        for (let key in rowsDetail[0])
+            htmlTh += "<th>" + key + "</th>";
+        //
+        return htmlTh;
+    }
+
+    //
+    function selectRowTableDetail(rowNum) {
+        //
+        log("select row", rowNum);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// detail pagenation
+
+    //
+    var limitRowPagenationDetail = 10;
+    var lastPagePagenationDetail = 0;
+    var currentPagePatenationDetail = 1;
+
+    //
+    function renderPagenationDetail() {
+        //
+        let htmlBase = `
+            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(1)'> << </span>
+            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePatenationDetail - 1)'> < </span>
+            {pages}
+            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePatenationDetail + 1)'> > </span>
+            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(lastPagePagenationDetail)'> >> </span>
+            `;
+
+        let htmlPage = "";
+        for (let i = 1; i <= lastPagePagenationDetail; i++) {
+            if (i == currentPagePatenationDetail)
+                htmlPage += "<span class='btn-pagenation-detail-selected' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
+            else
+                htmlPage += "<span class='btn-pagenation-detail' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
+        }
+
+        htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
+        document.getElementById('pagenation-detail').innerHTML = htmlPage;
+    }
+
+    //
+    function btnPagenationDetail(page) {
+
+        if (page <= 0)
+            page = 1;
+
+        if (page >= lastPagePagenationDetail)
+            page = lastPagePagenationDetail;
+
+        currentPagePatenationDetail = page;
+        renderPagenationDetail();
+        renderTableDetail();
+    }
+
+    //////////////////////////////////////////////////////////////////////////// init
+
+    //
+    function init() {
+        //
+        fetchHello();
+        //
+        let filter = {
+            research: "-",
+            department: "-",
+            researcher: "-",
+            apply_step: "-",
+            apply_status: "-",
+            imported_data_exists: "-",
+            data_export_request_exists: "-",
+            data_export_approval_existence: "-",
+            data_utilization_start_date: "-",
+            data_utilization_end_eate: "-"
+        };
+        //
+        console.table(filter);
+        //
+        let option = {
+            schema: "public",
+            table: "tb_test",
+            offset: 0,
+            limit: 20,
+            filter: filter
+        }
+        //
+        fetchPatient(undefined, option);
+        fetchDetail(undefined, option);
+    }
+
+    //
+    init();
+
+</script>
