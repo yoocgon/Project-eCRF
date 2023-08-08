@@ -103,28 +103,21 @@
 
 <script>
 
-        function login(){
+        function login() {
             //
             let id = document.getElementById("id").value;
             let password = document.getElementById("password").value;
             //
-            let data = {
-                id: id,
-                password: password
-            };
-            //
-            let jsonData = JSON.stringify(data);
-            jsonData = JSON.stringify(
-                {
-                    type: 'api',
-                    action: 'login',
-                    message: '',
-                    data: data
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'api',
+                action: 'login',
+                message: '',
+                data: {
+                    id: id,
+                    password: password
                 }
-            );
-            //
-            let objData = JSON.parse(jsonData);
-            window.chrome.webview.postMessage(objData);
+            });
         }
 
 </script>

@@ -292,15 +292,15 @@
 
     </div>
 
-</div>
+    <div class="area-result">
+        <table id="tb_result"></table>
+        <div id="pagenation"></div>
+    </div>
 
-<div class="area-result">
-    <table id="tb_result"></table>
-    <div id="pagenation"></div>
-</div>
+    <div class="area-footer">
+        <span id="logo-footer"></span>
+    </div>
 
-<div class="area-footer">
-    <span id="logo-footer"></span>
 </div>
 
 
@@ -308,8 +308,9 @@
 
     //
     function log(category, log, type) {
+        //
         console.log("Debug>>> (" + category + ") \n");
-
+        //
         if (type === "table")
             console.table(log);
         else
@@ -321,19 +322,17 @@
     //
     function fetchHello(data) {
         //
-        if (data == undefined) {
-            jsonData = JSON.stringify(
-                {
-                    type: 'api',
-                    action: 'hello',
-                    message: ''
-                }
-            );
-            //
-            let objData = JSON.parse(jsonData);
-            window.chrome.webview.postMessage(objData);
+        if (data == undefined)
+        {
+            window.chrome.webview.postMessage({
+                 phase: 'request',
+                 type: 'api',
+                 action: 'hello',
+                 message: ''
+             });
         }
-        else {
+        else
+        {
             document.getElementById("hello").innerText = data + "¥‘ æ»≥Á«œººø‰."
         }
     }
@@ -343,16 +342,12 @@
     //
     function btnMenu(menu) {
         //
-        jsonData = JSON.stringify(
-            {
-                type: 'page',
-                action: menu,
-                message: ''
-            }
-        );
-        //
-        let objData = JSON.parse(jsonData);
-        window.chrome.webview.postMessage(objData);
+        window.chrome.webview.postMessage({
+            phase: 'request',
+            type: 'page',
+            action: menu,
+            message: ''
+        });
     }
 
     //////////////////////////////////////////////////////////////////////////// filter search
@@ -366,11 +361,9 @@
 
     //
     function btnSearch() {
-
         //
         let searchSchema = getSelectedValue('selector-schema');
         let searchTable = getSelectedValue('selector-table');
-
         //
         let filter = {
             searchSchema: searchSchema,
@@ -379,24 +372,22 @@
         //
         let option = {
             schema: "public",
-            table: "tb_column",
+            table: "ecrf_col_info",
             offset: 0,
             limit: 20,
-            apply: filter,
+            filter: filter,
         }
         //
-        console.table(filter);
-        //
-        fetchColumnInfo(undefined, option);
+        fetchColumn(undefined, option);
     }
 
-    //
     var rowsColumn = []
-    function fetchColumnInfo(response, option) {
+    function fetchColumn(data, option) {
         //
-        if (response == undefined) {
-            log("option", option, "table");
+        if (data == undefined)
+        {
             window.chrome.webview.postMessage({
+                phase: "request",
                 type: 'api',
                 action: 'table',
                 message: 'column',
@@ -405,8 +396,8 @@
         }
         else
         {
-            log("response", response);
-            rowsColumn = JSON.parse(response);
+            rowsColumn = JSON.parse(data);
+            log("aaa", rowsColumns, "table");
             renderTable();
             renderPagenation();
         }
@@ -416,71 +407,54 @@
 
     //
     function btnApply() {
-
         //
         let applyNo = getSelectedValue('text-apply-no');
         let applySchema = getSelectedValue('text-apply-schema');
-        let applyTable = getSelectedValue('text-apply-table');
-        let applyColumn = getSelectedValue('text-apply-column');
-        let applyFilterOptionNo = getSelectedValue('text-apply-option-no');
-        let applyUseColumn = getSelectedValue('selector-apply-use-column');
-        let applyDisplayColumn = getSelectedValue('text-apply-display-column');
-        let applyUseFilter = getSelectedValue('selector-apply-use-filter');
-        let applyUseFilterType = getSelectedValue('selector-apply-use-filter-type');
-        let applyUseFilterOption = getSelectedValue('text-apply-use-filter-option');
-        let applyUseCode = getSelectedValue('selector-table-use-code');
-
         //
-        let apply = {
+        let filter = {
             applyNo: applyNo,
             applySchema: applySchema,
-            applyTable: applyTable,
-            applyColumn: applyColumn,
-            applyFilterOptionNo: applyFilterOptionNo,
-            applyUseColumn: applyUseColumn,
-            applyDisplayColumn: applyDisplayColumn,
-            applyUseFilter: applyUseFilter,
-            applyUseFilterType: applyUseFilterType,
-            applyUseFilterOption: applyUseFilterOption,
-            applyUseCode: applyUseCode
         };
         //
         let option = {
             schema: "public",
-            table: "tb_column",
-            apply: apply,
+            table: "ecrf_col_info",
+            filter: filter,
         }
-        //
-        console.table(filter);
         //
         UpdateColumnInfo(undefined, option);
     }
 
-    //
-    var rowsColumn = []
-    function fetchUpdateColumnInfo(response, option) {
-        //
-        if (response == undefined) {
-            log("option", option, "table");
-            window.chrome.webview.postMessage({
-                type: 'api',
-                action: 'table',
-                message: 'update',
-                data: option
-            });
-        }
-        else {
-            log("response", response);
-            rowsColumn = JSON.parse(response);
-            renderTable();
-            renderPagenation();
-        }
-    }
+    ////
+    //var rowsColumn = []
+    //function fetchColumn(response, option) {
+    //    //
+    //    if (response == undefined)
+    //    {
+    //        log("option", option, "table");
+    //        window.chrome.webview.postMessage({
+    //            phase: 'request',
+    //            type: 'api',
+    //            action: 'table',
+    //            message: 'column',
+    //            data: option
+    //        });
+    //    }
+    //    else
+    //    {
+    //        log("response", response, "table");
+    //        rowsColumn = JSON.parse(response);
+    //        renderTable();
+    //        renderPagenation();
+    //    }
+    //}
 
     //////////////////////////////////////////////////////////////////////////// gridview
 
     //
     function renderTableHeader() {
+        //
+        alert("a");
         //
         log("rowsColumn[0]", rowsColumn[0], "table");
         //
@@ -493,6 +467,8 @@
 
     //
     function renderTable() {
+        //
+        alert("a");
         //
         log("table", rowsColumn, "table");
         //
@@ -560,13 +536,13 @@
 
     //
     function btnPagenation(page) {
-
+        //
         if (page <= 0)
             page = 1;
-
+        //
         if (page >= pagenationLastPage)
             page = pagenationLastPage;
-
+        //
         pagenationCurPage = page;
         renderPagenation();
         renderTable();
@@ -582,7 +558,7 @@
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage + 1)'> > </span>
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationLastPage)'> >> </span>
                 `;
-
+        //
         let htmlPage = "";
         for (let i = 1; i <= pagenationLastPage; i++) {
             if (i == pagenationCurPage)
@@ -590,7 +566,7 @@
             else
                 htmlPage += "<span class='btn-pagenation' onclick='btnPagenation(" + i + ")'>" + i + "</span>";
         }
-
+        //
         htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
         document.getElementById('pagenation').innerHTML = htmlPage;
     }
@@ -602,27 +578,23 @@
         //
         fetchHello();
         //
+        // let searchSchema = getSelectedValue('selector-schema');
+        // let searchTable = getSelectedValue('selector-table');
+        //
         let filter = {
-            searchSchema: searchSchema,
-            searchTable: searchTable
+            tbl_enm: "GSCN_EXAM_HPLI",
+            pk_ord: ""
         };
         //
         let option = {
             schema: "public",
-            table: "tb_column",
+            table: "ecrf_col_info",
             offset: 0,
             limit: 20,
-            apply: filter,
+            filter: filter,
         }
         //
-        console.table(filter);
-        //
-        fetchColumnInfo(undefined, {
-            type: 'api',
-            action: 'table',
-            message: 'column',
-            data: option
-        });
+        fetchColumn(undefined, option);
     }
 
     //

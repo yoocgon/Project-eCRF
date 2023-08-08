@@ -90,6 +90,7 @@ namespace KCureDataAccess
             if (objJson == null)
                 return;
             //
+            string? phase = objJson["phase"]?.GetValue<string>();
             string? type = objJson["type"]?.GetValue<string>();
             string? action = objJson["action"]?.GetValue<string>();
             string? message = objJson["message"]?.GetValue<string>();
@@ -98,6 +99,9 @@ namespace KCureDataAccess
             Console.WriteLine("Debug>>> (type) : " + type);
             Console.WriteLine("Debug>>> (action) : " + action);
             Console.WriteLine("Debug>>> (message) : " + message);
+            //
+            if (phase != "request")
+                return;
             //
             if (type == "page")
             {
@@ -119,22 +123,22 @@ namespace KCureDataAccess
                     if(message == "patient")
                     {
                         List<Dictionary<string, object>>? listDicData = service03BreastCancer.GetPatients((JsonObject)objJson["data"]);
-                        observer.Send("response", "api", "patient", "", listDicData);
+                        observer.Send("response", "api", "table", "patient", listDicData);
                     }
                     else if (message == "detail")
                     {
                         List<Dictionary<string, object>>? listDicData = service04StomachCancer.GetPatients((JsonObject)objJson["data"]);
-                        observer.Send("response", "api", "detail", "", listDicData);
+                        observer.Send("response", "api", "table", "detail", listDicData);
                     }
                     else if (message == "code")
                     {
                         List<Dictionary<string, object>>? listDicData = service06Code.GetCodes((JsonObject)objJson["data"]);
-                        observer.Send("response", "api", "code", "", listDicData);
+                        observer.Send("response", "api", "table", "code", listDicData);
                     }
                     else if (message == "column")
                     {
                         List<Dictionary<string, object>>? listDicData = service07Column.GetColumns((JsonObject)objJson["data"]);
-                        observer.Send("response", "api", "column", "", listDicData);
+                        observer.Send("response", "api", "table", "column", listDicData);
                     }
                 }
                 ////

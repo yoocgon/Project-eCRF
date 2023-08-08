@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Nodes;
 using eCRF.module;
 
 namespace eCRF.service
@@ -23,7 +17,7 @@ namespace eCRF.service
             string table = objData["table"].GetValue<string>();
             Console.WriteLine("Debug>>> (table) : " + table);
             //
-            string query = $"SELECT * FROM {schema}.{table}";
+            string query = $"SELECT * FROM public.cncr_code_meta";
             List<Dictionary<string, object>> listDicData = DapperClient.Query(query);
             return listDicData;
         }

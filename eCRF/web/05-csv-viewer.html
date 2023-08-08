@@ -222,8 +222,9 @@
 
     //
     function log(category, log, type) {
+        //
         console.log("Debug>>> (" + category + ") \n");
-
+        //
         if (type === "table")
             console.table(log);
         else
@@ -236,13 +237,12 @@
     function fetchHello(data) {
         //
         if (data == undefined) {
-            jsonData = JSON.stringify(
-                {
+            jsonData = JSON.stringify({
+                    phase: "request",
                     type: 'api',
                     action: 'hello',
                     message: ''
-                }
-            );
+            });
             //
             let objData = JSON.parse(jsonData);
             window.chrome.webview.postMessage(objData);
@@ -257,13 +257,12 @@
     //
     function btnMenu(menu) {
         //
-        jsonData = JSON.stringify(
-            {
+        jsonData = JSON.stringify({
+                phase:"request",
                 type: 'page',
                 action: menu,
                 message: ''
-            }
-        );
+         });
         //
         let objData = JSON.parse(jsonData);
         window.chrome.webview.postMessage(objData);
@@ -282,6 +281,7 @@
             console.log("DEBUG>>> (file) ");
             console.table(file);
             window.chrome.webview.postMessage({
+                phase: "request",
                 type: 'api',
                 action: 'csv',
                 message: filePath

@@ -125,34 +125,28 @@
     //
     function btnMenu(menu) {
         //
-        jsonData = JSON.stringify(
-            {
-                type: 'page',
-                action: menu,
-                message: ''
-            }
-        );
-        //
-        let objData = JSON.parse(jsonData);
-        window.chrome.webview.postMessage(objData);
+        window.chrome.webview.postMessage({
+            phase: "request",
+            type: 'page',
+            action: menu,
+            message: ''
+        });
     }
 
     //
     function fetchHello(data) {
         //
-        if (data == undefined) {
-            jsonData = JSON.stringify(
-                {
-                    type: 'api',
-                    action: 'hello',
-                    message: ''
-                }
-            );
-            //
-            let objData = JSON.parse(jsonData);
-            window.chrome.webview.postMessage(objData);
+        if (data == undefined)
+        {
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'api',
+                action: 'hello',
+                message: ''
+            });
         }
-        else {
+        else
+        {
             document.getElementById("hello").innerText = data + "¥‘ æ»≥Á«œººø‰."
         }
     }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using eCRF.module;
 
 namespace eCRF.service
@@ -31,7 +26,9 @@ namespace eCRF.service
             //
             Dictionary<string, JsonElement> whereConditions = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(strFilter);
             List<Dictionary<string, object>> listDicData = DapperClient.Select(schema, table, offset, limit, whereConditions);
+            // SetColumnSetting(ref listDicData);
             return listDicData;
         }
+
     }
 }

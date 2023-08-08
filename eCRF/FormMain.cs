@@ -79,9 +79,9 @@ namespace KCureDataAccess
             Console.WriteLine("(type) " + type);
             Console.WriteLine("(action) " + action);
             Console.WriteLine("(message) " + message);
-            // Console.WriteLine("Debug>>> (data) : " + library.PrettifyJSON(data));
             //
-            // page and api response
+            if (phase != "response")
+                return;
             //
             if (type == "page")
             {
@@ -89,22 +89,43 @@ namespace KCureDataAccess
             }
             else if (type == "api")
             {
-                if (action == "hello")
+                if (action == "table")
                 {
-                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchHello('{message}');");
-                }
-                else if(action == "patient")
-                {
-                    List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
-                    string jsonData = JsonSerializer.Serialize(listDicData);
-                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchPatient('{jsonData}', undefined);");
-                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchDetail('{jsonData}', undefined);");
-                }
-                else if (action == "api-info-table")
-                {
-                    List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
-                    string jsonData = JsonSerializer.Serialize(listDicData);
-                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchGetTableInfo('{jsonData}', undefined);");
+                    if (message == "hello")
+                    {
+                        webView2.CoreWebView2.ExecuteScriptAsync($"fetchHello('{message}');");
+                    }
+                    else if (message == "patient")
+                    {
+                        List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
+                        string jsonData = JsonSerializer.Serialize(listDicData);
+                        webView2.CoreWebView2.ExecuteScriptAsync($"fetchPatient('{jsonData}', undefined);");
+                        webView2.CoreWebView2.ExecuteScriptAsync($"fetchDetail('{jsonData}', undefined);");
+                    }
+                    else if (message == "detail")
+                    {
+                        List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
+                        string jsonData = JsonSerializer.Serialize(listDicData);
+                        webView2.CoreWebView2.ExecuteScriptAsync($"fetchDetail('{jsonData}', undefined);");
+                    }
+                    else if (message == "code")
+                    {
+                        List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
+                        string jsonData = JsonSerializer.Serialize(listDicData);
+                        webView2.CoreWebView2.ExecuteScriptAsync($"fetchCode('{jsonData}', undefined);");
+                    }
+                    else if (message == "column")
+                    {
+                        List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
+                        string jsonData = JsonSerializer.Serialize(listDicData);
+                        webView2.CoreWebView2.ExecuteScriptAsync($"fetchColumn('{jsonData}', undefined);");
+                    }
+                    //else if (message == "api-info-table")
+                    //{
+                    //    List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
+                    //    string jsonData = JsonSerializer.Serialize(listDicData);
+                    //    webView2.CoreWebView2.ExecuteScriptAsync($"fetchGetTableInfo('{jsonData}', undefined);");
+                    //}
                 }
             }
         }

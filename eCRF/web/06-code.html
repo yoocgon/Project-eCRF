@@ -214,8 +214,9 @@
 
     //
     function log(category, log, type) {
+        //
         console.log("Debug>>> (" + category + ") \n");
-
+        //
         if (type === "table")
             console.table(log);
         else
@@ -230,6 +231,7 @@
         if (data == undefined)
         {
             window.chrome.webview.postMessage({
+                phase: 'request',
                 type: 'api',
                 action: 'hello',
                 message: ''
@@ -247,6 +249,7 @@
     function btnMenu(menu) {
         //
         window.chrome.webview.postMessage({
+            phase: "request",
             type: 'page',
             action: menu,
             message: ''
@@ -258,38 +261,66 @@
     //
     function btnSearch() {
         //
+        let option = {
+            schema: "public",
+            table: "cncr_code_meta",
+            offset: 0,
+            limit: 20,
+        }
+        //
+        fetchCode(undefined, option);
+
     }
 
     //
     var dataResult = []
-    function fetchCodes(data) {
+    function fetchCode(data, option) {
         //
         if (data == undefined)
         {
-            console.table(data);
-            //
             window.chrome.webview.postMessage({
+                phase: "request",
                 type: 'api',
                 action: 'table',
                 message: 'code',
-                data: {
-                    schema: "public",
-                    table: "tb_test",
-                    offset: 0,
-                    limit: 20
-                }
+                data: option
             });
         } 
         else
         {
-            console.log("DEBUG>>> render table");
-            console.log("DEBUG>>> (data) ");
-            console.table(data);
             dataResult = JSON.parse(data);
             renderTable();
             renderPagenation();
         }
     }
+
+    //function fetchCode(data, option) {
+    //    //
+    //    if (data == undefined) {
+    //        console.table(data);
+    //        //
+    //        window.chrome.webview.postMessage({
+    //            phase: "request",
+    //            type: 'api',
+    //            action: 'table',
+    //            message: 'code',
+    //            data: {
+    //                schema: "public",
+    //                table: "cncr_code_meta",
+    //                offset: 0,
+    //                limit: 20
+    //            }
+    //        });
+    //    }
+    //    else {
+    //        console.log("DEBUG>>> render table");
+    //        console.log("DEBUG>>> (data) ");
+    //        console.table(data);
+    //        dataResult = JSON.parse(data);
+    //        renderTable();
+    //        renderPagenation();
+    //    }
+    //}
 
     //////////////////////////////////////////////////////////////////////////// gridview
 
@@ -400,17 +431,14 @@
     //
     function init() {
         //
-        window.chrome.webview.postMessage({
-            type: 'api',
-            action: 'table',
-            message: 'code',
-            data: {
-                schema: "public",
-                table: "tb_test",
-                offset: 0,
-                limit: 20
-            }
-        });
+        let option = {
+            schema: "public",
+            table: "cncr_code_meta",
+            offset: 0,
+            limit: 20,
+        }
+        //
+        fetchCode(undefined, option);
     }
 
     //
