@@ -11,11 +11,10 @@
             "stat"
             "menu"
             "head"
-            "fter"
-            "relt"
+            "main"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 4em 3em auto auto 2em;
+        grid-template-rows: 2em 2.4em 3em auto 2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -23,6 +22,8 @@
 
     .area-stat {
         grid-area: stat;
+        background: #3f0e40;
+        color: #0e4f6b;
     }
 
     #hello {
@@ -34,14 +35,14 @@
         grid-area: menu;
         display: flex;
         justify-content: space-between;
-        border-bottom: 4px double #ccc;
-        padding-top: 1.4em;
+        border-bottom: 4px double white;
+        padding-top: 0.4em;
         padding-left: 2em;
         padding-right: 2em;
         font-size: small;
         font-weight: 800;
-        background-color: #777;
-        color: #fff;
+        background-color: #641666;
+        color: white;
     }
 
     .area-menu span:hover {
@@ -56,24 +57,26 @@
     }
 
     .area-header .title {
-        font-size: medium;
+        font-size: small;
         font-weight: 800;
         margin-left: 0.8em;
         padding-left: 2px;
-        border-bottom: 1px double #999;
-        color: #777;
+        border-bottom: 2px solid #641666;
+        color: #3f0e40;
     }
 
     #lb-title {
         margin-left: 1.2em;
         margin-bottom: 0;
+        color: #0e4f6b;
     }
 
-    .area-filter {
-        grid-area: fter;
+    .area-main {
+        grid-area: main;
+        padding: 0.6em;
     }
 
-    .contianer-filter {
+    .container-postgres, .container-csv {
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
@@ -81,59 +84,57 @@
         margin-left: 0.8em;
         margin-right: 0.8em;
         padding: 1em;
+        border: 1px solid none;
         border-radius: 3px;
-        background: #333;
-        color: #fff;
+        background: #0e4f6b;
+        color: white;
+        width: calc(100% - 4em);
     }
 
-    .lb-filter {
+    .lb-black {
         display: inline-block;
         width: 10em;
         margin-left: 1em;
     }
 
-    .area-filter select {
-        width: 12.7em;
-        height: 1.4em;
+    #text-csv-dir {
+        width: calc(100% - 14em);
     }
 
-    #btn-open {
+    #btn-connection, #btn-open-dir {
         float: right;
         width: 4em;
         padding: 4px;
         margin: 1em;
+        margin-top: 0.4em;
         border: 0px none #000;
         border-radius: 5px;
-        background: #333;
+        background: #0e4f6b;
         color: #fff;
-    }
-
-    .area-result {
-        grid-area: relt;
-        padding: 0.6em;
     }
 
     #tb_result {
         width: 100%;
-        background: #fff;
+        background: #eff7ff;
+        border-color: #f1f8ff;
         font-size: small;
         font: normal 1px 100 verdana;
     }
 
     #tb_result th {
-        background: #333;
+        background: #15759e;
+        border-color: #f1f8ff;
         color: #fff;
     }
     
     #tb_result tr {
-        border-bottom: 2px solid #eee;
-        background: #eee;
+        border-bottom: 2px solid white;
         padding: 2px;
     }
     
     #tb_result tr:hover {
-        background: #999;
-        color: #fff;
+        background: #0e4f6b;
+        color: white;
     }
 
     #pagenation {
@@ -147,7 +148,8 @@
         width: 2em;
         border-radius: 4px;
         text-align: center;
-        background: #ccc;
+        background: #0e4f6b;
+        color: white;
     }
 
     .btn-pagenation-selected {
@@ -157,13 +159,14 @@
         width: 2em;
         border-radius: 4px;
         text-align: center;
-        background: #333;
-        color: #fff;
+        background: #1da8e3;
+        color: white;
     }
 
     .area-footer {
         grid-area: foot;
-        color: #fff;
+        /*background: #3f0e40;*/
+        /*color: #0e4f6b;*/
     }
 </style>
 
@@ -187,29 +190,51 @@
         <span id="btn-menu-logout" onclick="btnMenu('01-login')">로그아웃</span>
     </div>
 
-
     <div class="area-header">
-        <p class="title">CSV Viewer</p>
+        <p class="title">데이터 선택</p>
     </div>
 
-    <div class="area-filter">
+    <div class="area-main">
 
-        <div class="contianer-filter">
-
-            <span>
-                <span class="lb-filter">데이터활용시작일자</span>
-                <input type="text" id="selector-data-utilization-start-date">
-            </span>
-
+        <div class="container-postgres">
+            <div>
+                <span class="lb-black">IP</span>
+                <input class="text-black" id="text-ip" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Port</span>
+                <input class="text-black" id="text-port" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Database</span>
+                <input class="text-black" id="text-database" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">User</span>
+                <input class="text-black" id="text-user" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Password</span>
+                <input class="text-black" id="text-password" type="text" />
+            </div>
+        </div>
+       
+        <div>
+            <input id="btn-connection" type="button" value="접속" onclick="btnConnection()" />
         </div>
 
-        <input id="btn-open" type="button" value="조회" onclick="btnFileOpen()" />
+        <div class="container-csv">
+            <span class="lb-black">CSV 저장 폴더 위치</span>
+            <input class="text-black" id="text-csv-dir" type="text" />
+        </div>
 
-    </div>
+        <div>
+            <input id="btn-open-dir" type="button" value="선택" onclick="btnOpenDir()" />
+        </div>
 
-    <div class="area-result">
         <table id="tb_result"></table>
         <div id="pagenation"></div>
+
     </div>
 
     <div class="area-footer">
@@ -232,21 +257,18 @@
             console.log(log);
     }
 
-    //////////////////////////////////////////////////////////////////////////// hello
+    //////////////////////////////////////////////////////////////////////////// header
 
     //
     function fetchHello(data) {
         //
         if (data == undefined) {
-            jsonData = JSON.stringify({
-                    phase: "request",
-                    type: 'api',
-                    action: 'hello',
-                    message: ''
+            window.chrome.webview.postMessage({
+                phase: 'request',
+                type: 'api',
+                action: 'hello',
+                message: ''
             });
-            //
-            let objData = JSON.parse(jsonData);
-            window.chrome.webview.postMessage(objData);
         }
         else {
             document.getElementById("hello").innerText = data + "님 안녕하세요."
@@ -258,51 +280,62 @@
     //
     function btnMenu(menu) {
         //
-        jsonData = JSON.stringify({
-                phase:"request",
-                type: 'page',
-                action: menu,
-                message: ''
-         });
-        //
-        let objData = JSON.parse(jsonData);
-        window.chrome.webview.postMessage(objData);
+        window.chrome.webview.postMessage({
+            phase: "request",
+            type: 'page',
+            action: menu,
+            message: ''
+        });
     }
 
-    //////////////////////////////////////////////////////////////////////////// file open
+    //////////////////////////////////////////////////////////////////////////// postgres connection
 
     //
-    var dataResult = []
+    function btnConnection() {
 
-    //
-    function fetchCsvFile(data, file) {
-        //
-        if (data == undefined) {
-            console.log("DEBUG>>> load page");
-            console.log("DEBUG>>> (file) ");
-            console.table(file);
-            window.chrome.webview.postMessage({
-                phase: "request",
-                type: 'api',
-                action: 'csv',
-                message: filePath
-            });
-        }
-        else
-        {
-            console.log("DEBUG>>> render table");
-            console.log("DEBUG>>> (data) ");
-            console.table(data);
-            dataResult = JSON.parse(data);
-            renderTable();
-            renderPagenation();
-        }
     }
 
     //
-    function btnFileOpen() {
+    function btnOpenDir() {
+
+    }
+
+    //////////////////////////////////////////////////////////////////////////// load csv files
+
+    //
+    var dataFiles = []
+    function fetchCsv(data, option) {
         //
-        fetchCsvFile(undefined, filter);
+        dataFiles = [
+            {
+                schema: "위암",
+                table: "tb_test001",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test002",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test003",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test004",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test005",
+                csv: "C://aaaaa.csv"
+            }
+        ]
+        //
+        renderTable();
+        renderPagenation();
     }
 
     //////////////////////////////////////////////////////////////////////////// gridview
@@ -310,10 +343,10 @@
     //
     function renderTableHeader() {
         //
-        log("dataResult[0]", dataResult[0], "table");
+        log("dataFiles[0]", dataFiles[0], "table");
         //
         let htmlTh = "";
-        for (let key in dataResult[0])
+        for (let key in dataFiles[0])
             htmlTh += "<th>" + key + "</th>";
         //
         return htmlTh;
@@ -322,12 +355,12 @@
     //
     function renderTable() {
         //
-        log("table", dataResult, "table");
+        log("table", dataFiles, "table");
         //
         let htmlTh = renderTableHeader();
         //
-        pagenationLastPage = parseInt(dataResult.length / pagenationRowLimit);
-        if (dataResult.length % pagenationRowLimit > 0)
+        pagenationLastPage = parseInt(dataFiles.length / pagenationRowLimit);
+        if (dataFiles.length % pagenationRowLimit > 0)
             pagenationLastPage += 1;
         //
         log("pagenationRowLimit", pagenationRowLimit, "");
@@ -336,8 +369,8 @@
 
         let rowStart = (pagenationCurPage * pagenationRowLimit) - pagenationRowLimit + 1;
         let rowEnd = rowStart + pagenationRowLimit - 1;
-        if (rowEnd >= dataResult.length)
-            rowEnd = rowStart + dataResult.length % pagenationRowLimit;
+        if (rowEnd >= dataFiles.length)
+            rowEnd = rowStart + dataFiles.length % pagenationRowLimit;
         //
         log("rowStart : ", rowStart, "");
         log("rowEnd : ", rowEnd, "");
@@ -345,10 +378,10 @@
         let htmlStack = "";
         for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
             //
-            if (rowNum == dataResult.length + 1)
+            if (rowNum == dataFiles.length + 1)
                 break;
             //
-            let item = dataResult[rowNum - 1];
+            let item = dataFiles[rowNum - 1];
             log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRow(` + rowNum + `)">`;
@@ -399,6 +432,10 @@
 
         let htmlPage = "";
         for (let i = 1; i <= pagenationLastPage; i++) {
+            //
+            if (i < pagenationCurPage - 5 || i > pagenationCurPage + 5)
+                continue;
+            //
             if (i == pagenationCurPage)
                 htmlPage += "<span class='btn-pagenation-selected' onclick='btnPagenation(" + i + ")'>" + i + "</span>";
             else
@@ -408,5 +445,23 @@
         htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
         document.getElementById('pagenation').innerHTML = htmlPage;
     }
+
+    //////////////////////////////////////////////////////////////////////////// init
+
+    //
+    function init() {
+        //
+        let option = {
+            schema: "public",
+            table: "cncr_code_meta",
+            offset: 0,
+            limit: 20,
+        }
+        //
+        fetchCsv(undefined, option);
+    }
+
+    //
+    init();
 
 </script>

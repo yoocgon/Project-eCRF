@@ -284,6 +284,7 @@
         <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
         <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
         <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
+        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
         <span id="btn-menu-logout" onclick="btnMenu('01-login')">로그아웃</span>
     </div>
 
@@ -403,26 +404,61 @@
         fetchPatient(undefined, option);
     }
 
-    //
+    ////
+    //var rowsPatient = []
+    //function fetchPatient(response, option) {
+    //    //
+    //    if (response == undefined) {
+    //        log("option", option, "table");
+    //        window.chrome.webview.postMessage({
+    //            phase: "request",
+    //            type: 'api',
+    //            action: 'table',
+    //            message: 'patient',
+    //            data: option
+    //        });
+    //    }
+    //    else {
+    //        log("response", response);
+    //        rowsPatient = JSON.parse(response);
+    //        renderTablePatient();
+    //        renderPagenationPatient();
+    //    }
+    //}
+
     var rowsPatient = []
-    function fetchPatient(response, option) {
+    function fetchPatient(data, option) {
         //
-        if (response == undefined) {
-            log("option", option, "table");
-            window.chrome.webview.postMessage({
-                phase: "request",
-                type: 'api',
-                action: 'table',
-                message: 'patient',
-                data: option
-            });
-        }
-        else {
-            log("response", response);
-            rowsPatient = JSON.parse(response);
-            renderTablePatient();
-            renderPagenationPatient();
-        }
+        rowsPatient = [
+            {
+                schema: "위암",
+                table: "tb_test001",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test002",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test003",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test004",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test005",
+                csv: "C://aaaaa.csv"
+            }
+        ]
+        //
+        renderTablePatient();
+        renderPagenationPatient();
     }
 
     //////////////////////////////////////////////////////////////////////////// patient gridview
