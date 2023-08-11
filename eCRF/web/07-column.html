@@ -225,11 +225,11 @@
         fetchColumn(undefined, option);
     }
 
+    //
     var rowsColumn = []
-    function fetchColumn(data, option) {
+    function fetchColumn(response, option) {
         //
-        if (data == undefined)
-        {
+        if (response == undefined) {
             window.chrome.webview.postMessage({
                 phase: "request",
                 type: 'api',
@@ -240,8 +240,9 @@
         }
         else
         {
-            rowsColumn = JSON.parse(data);
-            log("aaa", rowsColumns, "table");
+            alert(response);
+            rowsColumn = JSON.parse(response);
+            log("response", rowsColumn, "table");
             renderTable();
             renderPagenation();
         }
@@ -311,8 +312,6 @@
 
     //
     function renderTable() {
-        //
-        alert("a");
         //
         log("table", rowsColumn, "table");
         //
@@ -438,7 +437,7 @@
             schema: "public",
             table: "ecrf_col_info",
             offset: 0,
-            limit: 20,
+            limit: 10,
             filter: filter,
         }
         //

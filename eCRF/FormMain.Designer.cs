@@ -39,10 +39,10 @@
             webView2.DefaultBackgroundColor = Color.White;
             webView2.Dock = DockStyle.Top;
             webView2.Location = new Point(0, 0);
-            webView2.Margin = new Padding(2, 2, 2, 2);
+            webView2.Margin = new Padding(2);
             webView2.Name = "webView2";
             webView2.RightToLeft = RightToLeft.Yes;
-            webView2.Size = new Size(1153, 640);
+            webView2.Size = new Size(1335, 753);
             webView2.TabIndex = 0;
             webView2.ZoomFactor = 1D;
             // 
@@ -51,9 +51,9 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1153, 640);
+            ClientSize = new Size(1335, 751);
             Controls.Add(webView2);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "MainForm";
             Text = "K-CURE | eCRF Viewer";
             Load += MainForm_Load;

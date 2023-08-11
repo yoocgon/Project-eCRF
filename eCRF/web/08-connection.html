@@ -92,6 +92,13 @@
         color: #0e4f6b;
     }
 
+    h4 {
+        margin-left: 1em;
+        font-size: small;
+        /*color: #0e4f6b;*/
+        color: #3f0e40;
+    }
+
     .area-main {
         grid-area: main;
         padding: 0.6em;
@@ -234,7 +241,18 @@
     <div class="area-main">
 
 
-        <h4>설정 데이터베이스 접속 설정</h4>
+        <h4>설정 데이터베이스 접속</h4>
+
+        <div class="container-csv">
+            <span>저장 경로</span>
+            <input class="text-black" id="text-csv-dir" type="text" />
+        </div>
+
+        <div>
+            <input id="btn-connection" type="button" value="접속" onclick="btnConnection()" />
+        </div>
+
+        <h4>외부 PostgreSQL 접속 설정</h4>
 
         <div class="container-postgres">
             <div>
@@ -264,37 +282,7 @@
         </div>
 
 
-        <h4>업무 데이터베이스 접속 설정</h4>
-
-        <div class="container-postgres">
-            <div>
-                <span class="lb-black">IP</span>
-                <input class="text-black" id="text-ip" type="text" />
-            </div>
-            <div>
-                <span class="lb-black">Port</span>
-                <input class="text-black" id="text-port" type="text" />
-            </div>
-            <div>
-                <span class="lb-black">Database</span>
-                <input class="text-black" id="text-database" type="text" />
-            </div>
-            <div>
-                <span class="lb-black">User</span>
-                <input class="text-black" id="text-user" type="text" />
-            </div>
-            <div>
-                <span class="lb-black">Password</span>
-                <input class="text-black" id="text-password" type="text" />
-            </div>
-        </div>
-
-        <div>
-            <input id="btn-connection" type="button" value="접속" onclick="btnConnection()" />
-        </div>
-
-
-        <h4>CSV 파일 폴더 사용</h4>
+        <h4>CSV 데이터 사용</h4>
 
         <div class="container-csv">
             <span>CSV 폴더 경로</span>
@@ -304,6 +292,8 @@
         <div>
             <input id="btn-open-dir" type="button" value="선택" onclick="btnOpenDir()" />
         </div>
+
+        <h4>CSV - 데이터 영역 매핑 상세 상태</h4>
 
         <table id="tb_result"></table>
         <div id="pagenation"></div>
@@ -392,28 +382,265 @@
         //
         dataFiles = [
             {
-                schema: "위암",
-                table: "tb_test001",
+                암종: "위암",
+                대분류: "환자",
+                중분류: "건강정보",
+                소분류: "위암_환자_건강정보",
                 csv: "C://aaaaa.csv"
             },
             {
-                schema: "위암",
-                table: "tb_test002",
+                암종: "위암",
+                대분류: "환자",
+                중분류: "건강정보",
+                소분류: "위암_환자_가족력",
                 csv: "C://aaaaa.csv"
             },
             {
-                schema: "위암",
-                table: "tb_test003",
+                암종: "위암",
+                대분류: "진단",
+                중분류: "신체계측정보",
+                소분류: "위암_진단_신체계측정보",
                 csv: "C://aaaaa.csv"
             },
             {
-                schema: "위암",
-                table: "tb_test004",
+                암종: "위암",
+                대분류: "진단",
+                중분류: "진단정보",
+                소분류: "위암_진단_정보",
                 csv: "C://aaaaa.csv"
             },
             {
-                schema: "위암",
-                table: "tb_test005",
+                암종: "위암",
+                대분류: "진단",
+                중분류: "병기",
+                소분류: "위암_진단_병기",
+                csv: "C://aaaaa.csv"
+            },
+
+            {
+                암종: "위암",
+                대분류: "진단",
+                중분류: "전이정보",
+                소분류: "위암_진단_전이",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "진단",
+                소분류: "위암_검사_진단",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "영상",
+                중분류: "영상",
+                소분류: "위암_검사_영상",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "면역병리",
+                소분류: "위암_검사_면역_병리",
+                csv: "C://aaaaa.csv"
+            },
+
+
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "분자병리",
+                소분류: "위암_검사_분자병리",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "생체검사",
+                소분류: "위암_검사_생체",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "H.pylori 감염여부",
+                소분류: "위암_검사_HPYLORI",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "위내시경",
+                소분류: "위암_검사_위내시경",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "내시경초음파(EUS)",
+                소분류: "위암_검사_EUS",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "치료",
+                중분류: "수술",
+                소분류: "위암_치료_수술",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "위암",
+                대분류: "검사",
+                중분류: "수술 후 외과병리",
+                소분류: "위암_검사_외과병리",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "환자",
+                중분류: "건강정보",
+                소분류: "유방암_환자_건강정보",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "환자",
+                중분류: "가족력",
+                소분류: "유방암_환자_가족력",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "환자",
+                중분류: "산과정보",
+                소분류: "유방암_환자_산과정보",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "진단",
+                중분류: "신체계측정보",
+                소분류: "유방암_진단_신체계측정보",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "진단",
+                중분류: "진단정보",
+                소분류: "유방암_진단_정보",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "진단",
+                중분류: "전이정보",
+                소분류: "유방암_진단_전이",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "진단",
+                중분류: "병기",
+                소분류: "유방암_진단_병기",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "검사",
+                중분류: "진단",
+                소분류: "유방암_검사_진단",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "검사",
+                중분류: "영상",
+                소분류: "유방암_검사_영상",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "검사",
+                중분류: "생체검사",
+                소분류: "유방암_검사_생체",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "검사",
+                중분류: "면역병리",
+                소분류: "유방암_검사_면역병리",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "검사",
+                중분류: "생식세포 변이검사",
+                소분류: "유방암_검사_생식세포변이검사",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "검사",
+                중분류: "예후예측 유전자 발현검사",
+                소분류: "유방암_검사_유전자발현검사",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "치료",
+                중분류: "수술",
+                소분류: "유방암_치료_수술",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "치료",
+                중분류: "수혈",
+                소분류: "유방암_치료_수혈",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "검사",
+                중분류: "수술 후 외과병리",
+                소분류: "유방암_검사_외과병리",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "진단",
+                중분류: "수술 후 합병증",
+                소분류: "유방암_진단_수술후합병증",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "치료",
+                중분류: "약제",
+                소분류: "유방암_치료_약제성분",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "치료",
+                중분류: "항암요법",
+                소분류: "유방암_치료_항암요법",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "치료",
+                중분류: "방사선",
+                소분류: "유방암_치료_방사선",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                암종: "유방암",
+                대분류: "추적관찰",
+                중분류: "재발정보",
+                소분류: "유방암_추적관찰_재발",
                 csv: "C://aaaaa.csv"
             }
         ]

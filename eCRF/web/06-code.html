@@ -218,7 +218,6 @@
         <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
     </div>
 
-
     <div class="area-header">
         <p class="title">코드</p>
     </div>
@@ -354,7 +353,8 @@
     //            }
     //        });
     //    }
-    //    else {
+    //    else 
+    //    {
     //        console.log("DEBUG>>> render table");
     //        console.log("DEBUG>>> (data) ");
     //        console.table(data);
@@ -427,7 +427,7 @@
     //////////////////////////////////////////////////////////////////////////// pagenation
 
     //
-    var pagenationRowLimit = 10;
+    var pagenationRowLimit = 22;
     var pagenationLastPage = 0;
     var pagenationCurPage = 1;
 
@@ -451,7 +451,7 @@
         let htmlBase = `
             <span class='btn-pagenation' onclick='btnPagenation(1)'> << </span>
             <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage - 1)'> < </span>
-            {pages}
+                {pages}
             <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage + 1)'> > </span>
             <span class='btn-pagenation' onclick='btnPagenation(pagenationLastPage)'> >> </span>
             `;

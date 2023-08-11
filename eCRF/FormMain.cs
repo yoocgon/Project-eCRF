@@ -100,7 +100,6 @@ namespace KCureDataAccess
                         List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
                         string jsonData = JsonSerializer.Serialize(listDicData);
                         webView2.CoreWebView2.ExecuteScriptAsync($"fetchPatient('{jsonData}', undefined);");
-                        webView2.CoreWebView2.ExecuteScriptAsync($"fetchDetail('{jsonData}', undefined);");
                     }
                     else if (message == "detail")
                     {
@@ -116,8 +115,26 @@ namespace KCureDataAccess
                     }
                     else if (message == "column")
                     {
+                        //List<Dictionary<string, object>> dataList = new List<Dictionary<string, object>>
+                        //{
+                        //    new Dictionary<string, object>
+                        //    {
+                        //        { "name", "John" },
+                        //        { "age", 30 }
+                        //    },
+                        //    new Dictionary<string, object>
+                        //    {
+                        //        { "name", "Jane" },
+                        //        { "age", 25 }
+                        //    }
+                        //};
+                        //string jsonData = JsonSerializer.Serialize(dataList);
+                        //webView2.CoreWebView2.ExecuteScriptAsync($"fetchColumn('{jsonData}', undefined);");
+                        //
                         List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
                         string jsonData = JsonSerializer.Serialize(listDicData);
+                        jsonData = jsonData.Replace("null", "\"\"");
+                        jsonData = jsonData.Replace("\r\n", "");
                         webView2.CoreWebView2.ExecuteScriptAsync($"fetchColumn('{jsonData}', undefined);");
                     }
                     //else if (message == "api-info-table")

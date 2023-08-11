@@ -12,7 +12,7 @@
             "menu"
             "head"
             "fter"
-            "relt"
+            "pati"
             "detl"
             "foot";
         grid-template-columns: 100%;
@@ -98,6 +98,7 @@
 
     .area-filter {
         grid-area: fter;
+        margin-left: 1em;
     }
 
     .contianer-filter {
@@ -111,7 +112,7 @@
         border-radius: 3px;
         background: #0e4f6b;
         color: #fff;
-        width: calc(100% - 4em);        
+        width: calc(100% - 4em);
     }
 
     .lb-filter {
@@ -147,16 +148,18 @@
         color: #fff;
     }
 
-    .area-result {
-        grid-area: relt;
+    .area-patient {
+        grid-area: pati;
         padding: 0.6em;
     }
 
     #tb_patient {
-        width: 100%;
+        width: calc(100% - 2em);
         background: #fff;
         font-size: small;
         font: normal 1px 100 verdana;
+        margin-left: 1em;
+        margin-right: 1em;
     }
 
     #tb_detail {
@@ -296,6 +299,7 @@
         grid-area: foot;
         color: #fff;
     }
+
 </style>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
@@ -330,7 +334,7 @@
         <input id="btn-search-patient" type="button" value="조회" onclick="btnSearchPatient()" />
     </div>
 
-    <div class="area-result">
+    <div class="area-patient">
         <table id="tb_patient"></table>
         <div id="pagenation-patient"></div>
     </div>
@@ -343,8 +347,8 @@
                 <span class="tab" onclick="alert('진단')">진단</span>
                 <span class="tab" onclick="alert('검사')">검사</span>
                 <span class="tab" onclick="alert('치료')">치료</span>
-                <span class="tab" onclick="alert('추적관찰')">추적관찰</span>
 
+                <span class="tab" onclick="alert('추적관찰')">추적관찰</span>
                 <div class="warp-detail-content">
                     <div class="contianer-filter"></div>
                     <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
@@ -358,6 +362,7 @@
             <span id="logo-footer"></span>
         </div>
     </div>
+
 </div>
 
 <script>
@@ -626,7 +631,7 @@
     //////////////////////////////////////////////////////////////////////////// patient pagenation
 
     //
-    var limitRowPagenationPatient = 10;
+    var limitRowPagenationPatient = 5;
     var lastPagePagenationPatient = 0;
     var currentPagePatenationPatient = 1;
 
@@ -808,7 +813,7 @@
             <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePatenationDetail + 1)'> > </span>
             <span class='btn-pagenation-detail' onclick='btnPagenationDetail(lastPagePagenationDetail)'> >> </span>
             `;
-
+        //
         let htmlPage = "";
         for (let i = 1; i <= lastPagePagenationDetail; i++) {
             if (i == currentPagePatenationDetail)
@@ -816,7 +821,7 @@
             else
                 htmlPage += "<span class='btn-pagenation-detail' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
         }
-
+        //
         htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
         document.getElementById('pagenation-detail').innerHTML = htmlPage;
     }
