@@ -24,11 +24,12 @@
         grid-area: stat;
     }
 
+/*    
     #hello {
         float: right;
         padding-right: 1em;
     }
-
+*/
     .area-menu {
         grid-area: menu;
         display: flex;
@@ -43,25 +44,25 @@
         color: #fff;
     }
 
-        .area-menu span:hover {
-            justify-content: center;
-            align-items: center;
-            transform: scale(1.3);
-            transition: all 0.1s ease-in-out;
-        }
+    .area-menu span:hover {
+        justify-content: center;
+        align-items: center;
+        transform: scale(1.3);
+        transition: all 0.1s ease-in-out;
+    }
 
     .area-header {
         grid-area: head;
     }
 
-        .area-header .title {
-            font-size: medium;
-            font-weight: 800;
-            margin-left: 0.8em;
-            padding-left: 2px;
-            border-bottom: 1px double #999;
-            color: #777;
-        }
+    .area-header .title {
+        font-size: medium;
+        font-weight: 800;
+        margin-left: 0.8em;
+        padding-left: 2px;
+        border-bottom: 1px double #999;
+        color: #777;
+    }
 
     #lb-title {
         margin-left: 1.2em;
@@ -274,23 +275,22 @@
 <div class="wrapper">
 
     <div class="area-stat">
-        <span id="hello"></span>
+        <!--<span id="hello"></span>-->
     </div>
 
     <div class="area-menu">
         <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
-        <span id="btn-menu-request" onclick="btnMenu('03-breast-cancer')">유방암</span>
-        <span id="btn-menu-import" onclick="btnMenu('04-stomach-cancer')">위암</span>
-        <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
+        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">암</option>
+                <option class="option-menu-sub">유방암</option>
+                <option class="option-menu-sub">위암</option>
+            </select>
+        </span>
         <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
         <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
-        <span id="btn-menu-logout" onclick="btnMenu('01-login')">로그아웃</span>
-
-        <span id="btn-menu-test001" onclick="btnMenu('11-test001')">test001</span>
-        <span id="btn-menu-test002" onclick="btnMenu('12-test002')">test002</span>
-        <span id="btn-menu-test003" onclick="btnMenu('13-test003')">test003</span>
     </div>
-
 
     <div class="area-header">
         <p class="title">유방암</p>
@@ -346,25 +346,25 @@
 
     //////////////////////////////////////////////////////////////////////////// menu
 
-    //
-    function fetchHello(data) {
-        //
-        if (data == undefined) {
-            jsonData = JSON.stringify(
-                {
-                    type: 'api',
-                    action: 'hello',
-                    message: ''
-                }
-            );
-            //
-            let objData = JSON.parse(jsonData);
-            window.chrome.webview.postMessage(objData);
-        }
-        else {
-            document.getElementById("hello").innerText = data + "님 안녕하세요."
-        }
-    }
+    ////
+    //function fetchHello(data) {
+    //    //
+    //    if (data == undefined) {
+    //        jsonData = JSON.stringify(
+    //            {
+    //                type: 'api',
+    //                action: 'hello',
+    //                message: ''
+    //            }
+    //        );
+    //        //
+    //        let objData = JSON.parse(jsonData);
+    //        window.chrome.webview.postMessage(objData);
+    //    }
+    //    else {
+    //        document.getElementById("hello").innerText = data + "님 안녕하세요."
+    //    }
+    //}
 
     //
     function btnMenu(menu) {
@@ -379,6 +379,15 @@
         //
         let objData = JSON.parse(jsonData);
         window.chrome.webview.postMessage(objData);
+    }
+
+    //
+    function btnMenuSub(elem) {
+        //
+        if (elem.value === "유방암")
+            btnMenu('03-breast-cancer');
+        else if (elem.value === "위암")
+            btnMenu('04-stomach-cancer');
     }
 
     //////////////////////////////////////////////////////////////////////////// patient filter box
@@ -764,7 +773,7 @@
     //
     function init() {
         //
-        fetchHello();
+        // fetchHello();
         //
         let filter = {
             research: "-",

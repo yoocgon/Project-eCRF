@@ -15,7 +15,7 @@
             "relt"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 4em 3em auto auto 2em;
+        grid-template-rows: 2em 2.4em 3em auto auto 2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -23,24 +23,27 @@
 
     .area-stat {
         grid-area: stat;
+        background: #3f0e40;
+        color: #0e4f6b; 
     }
 
+/* 
     #hello {
         float: right;
         padding-right: 1em;
     }
-
+*/
     .area-menu {
         grid-area: menu;
         display: flex;
         justify-content: space-between;
         border-bottom: 4px double #ccc;
-        padding-top: 1.4em;
+        padding-top: 0.4em;
         padding-left: 2em;
         padding-right: 2em;
         font-size: small;
         font-weight: 800;
-        background-color: #777;
+        background-color: #641666;
         color: #fff;
     }
 
@@ -49,6 +52,26 @@
         align-items: center;
         transform: scale(1.3);
         transition: all 0.1s ease-in-out;
+    }
+
+    .select-menu-sub {
+        border: none;
+        appearance: none;
+        outline: none;
+        background: #641666;
+        color: white;
+        font-size: small;
+        font-weight: 800;
+        width: 8em;
+        outline: none;
+        text-align: center;
+    }
+
+    .option-menu-sub {
+        border-radius: 0px;
+        font-size: small;
+        font-weight: 800;
+        padding: 20px;
     }
 
     .area-header {
@@ -60,8 +83,8 @@
         font-weight: 800;
         margin-left: 0.8em;
         padding-left: 2px;
-        border-bottom: 1px double #999;
-        color: #777;
+        border-bottom: 2px double #641666;
+        color: #3f0e40;
     }
 
     #lb-title {
@@ -71,6 +94,7 @@
 
     .area-filter {
         grid-area: fter;
+        color: #0e4f6b
     }
 
     .contianer-filter {
@@ -82,8 +106,9 @@
         margin-right: 0.8em;
         padding: 1em;
         border-radius: 3px;
-        background: #333;
+        background: #0e4f6b;
         color: #fff;
+        width: calc(100% -4em);
     }
 
     .lb-filter {
@@ -104,7 +129,7 @@
         margin: 1em;
         border: 0px none #000;
         border-radius: 5px;
-        background: #333;
+        background: #0e4f6b;
         color: #fff;
     }
 
@@ -121,19 +146,19 @@
     }
 
     #tb_result th {
-        background: #333;
+        background: #15759e;
+        border-color: gray;
         color: #fff;
     }
     
     #tb_result tr {
-        border-bottom: 2px solid #eee;
-        background: #eee;
-        padding: 2px;
+        background: #eff7ff;
+        color: black;
     }
     
     #tb_result tr:hover {
-        background: #999;
-        color: #fff;
+        background: #eff7ff;
+        color: black;
     }
 
     #pagenation {
@@ -147,7 +172,8 @@
         width: 2em;
         border-radius: 4px;
         text-align: center;
-        background: #ccc;
+        background: #0e4f6b;
+        color: white;
     }
 
     .btn-pagenation-selected {
@@ -157,8 +183,8 @@
         width: 2em;
         border-radius: 4px;
         text-align: center;
-        background: #333;
-        color: #fff;
+        background: #1da8e3;
+        color: white;
     }
 
     .area-footer {
@@ -173,19 +199,22 @@
 <div class="wrapper">
 
     <div class="area-stat">
-        <span id="hello"></span>
+        <!--<span id="hello"></span>-->
     </div>
 
     <div class="area-menu">
         <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
-        <span id="btn-menu-request" onclick="btnMenu('03-breast-cancer')">유방암</span>
-        <span id="btn-menu-import" onclick="btnMenu('04-stomach-cancer')">위암</span>
-        <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
+        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">암</option>
+                <option class="option-menu-sub">유방암</option>
+                <option class="option-menu-sub">위암</option>
+            </select>
+        </span>
         <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
         <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
-        <span id="btn-menu-logout" onclick="btnMenu('01-login')">로그아웃</span>
     </div>
-
 
     <div class="area-header">
         <p class="title">CSV Viewer</p>
@@ -233,24 +262,24 @@
 
     //////////////////////////////////////////////////////////////////////////// hello
 
-    //
-    function fetchHello(data) {
-        //
-        if (data == undefined) {
-            jsonData = JSON.stringify({
-                    phase: "request",
-                    type: 'api',
-                    action: 'hello',
-                    message: ''
-            });
-            //
-            let objData = JSON.parse(jsonData);
-            window.chrome.webview.postMessage(objData);
-        }
-        else {
-            document.getElementById("hello").innerText = data + "님 안녕하세요."
-        }
-    }
+    ////
+    //function fetchHello(data) {
+    //    //
+    //    if (data == undefined) {
+    //        jsonData = JSON.stringify({
+    //                phase: "request",
+    //                type: 'api',
+    //                action: 'hello',
+    //                message: ''
+    //        });
+    //        //
+    //        let objData = JSON.parse(jsonData);
+    //        window.chrome.webview.postMessage(objData);
+    //    }
+    //    else {
+    //        document.getElementById("hello").innerText = data + "님 안녕하세요."
+    //    }
+    //}
 
     //////////////////////////////////////////////////////////////////////////// menu
 
@@ -266,6 +295,15 @@
         //
         let objData = JSON.parse(jsonData);
         window.chrome.webview.postMessage(objData);
+    }
+
+    //
+    function btnMenuSub(elem) {
+        //
+        if (elem.value === "유방암")
+            btnMenu('03-breast-cancer');
+        else if (elem.value === "위암")
+            btnMenu('04-stomach-cancer');
     }
 
     //////////////////////////////////////////////////////////////////////////// file open
@@ -398,6 +436,10 @@
 
         let htmlPage = "";
         for (let i = 1; i <= pagenationLastPage; i++) {
+            //
+            if (i < pagenationCurPage - 5 || i > pagenationCurPage + 5)
+                continue;
+            //
             if (i == pagenationCurPage)
                 htmlPage += "<span class='btn-pagenation-selected' onclick='btnPagenation(" + i + ")'>" + i + "</span>";
             else

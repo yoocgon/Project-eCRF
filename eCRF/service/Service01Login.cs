@@ -9,10 +9,10 @@ namespace eCRF.service
         public CustomDapperClient? DapperClient { get; set; }
         public CustomLibrary? Library { get; set; }
 
-        public bool Login(JsonObject objData, ref Store store)
+        public string Login(JsonObject objData, ref Store store)
         {
             if (objData == null)
-                return false;
+                return "로그인 실패";
             //
             string? id = objData["id"]?.GetValue<string>();
             string? password = objData["password"]?.GetValue<string>();
@@ -21,12 +21,12 @@ namespace eCRF.service
             Console.WriteLine("Debug>>> (password) : " + password);
             //
             if (id == null || password == null)
-                return false;
+                return "로그인 실패";
             //
             store = new Store();
             store.id = id;
             //
-            return true;
+            return "로그인 성공";
         }
     }
 }

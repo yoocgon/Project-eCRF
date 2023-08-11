@@ -29,7 +29,7 @@ namespace KCureDataAccess
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            webView2.Source = new Uri(config.webRoot + "01-login.html");
+            webView2.Source = new Uri(config.webRoot + "02-index.html");
 
             //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             //string relativePath = @"web/01-login.html";

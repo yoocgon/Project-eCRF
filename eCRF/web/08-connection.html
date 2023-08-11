@@ -11,11 +11,10 @@
             "stat"
             "menu"
             "head"
-            "conn"
-            "impt"
+            "main"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 2.4em 4em auto auto 2em;
+        grid-template-rows: 2em 2.4em auto 3em auto 2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -24,28 +23,27 @@
     .area-stat {
         grid-area: stat;
         background: #3f0e40;
-        color: #0e4f6b;   
+        color: #0e4f6b;
     }
 
-/*
-    #hello {
-        float: right;
-        padding-right: 1em;
-    }
-*/
-    
+    /*
+        #hello {
+            float: right;
+            padding-right: 1em;
+        }
+    */
+
     .area-menu {
         grid-area: menu;
         display: flex;
         justify-content: space-between;
-        border-bottom: 4px double #ccc;
         padding-top: 0.4em;
         padding-left: 2em;
         padding-right: 2em;
         font-size: small;
         font-weight: 800;
         background-color: #641666;
-        color: #fff;
+        color: white;
     }
 
     .area-menu span:hover {
@@ -80,30 +78,131 @@
     }
 
     .area-header .title {
-        font-size: medium;
+        font-size: small;
         font-weight: 800;
         margin-left: 0.8em;
         padding-left: 2px;
-        border-bottom: 2px double #641666;
+        border-bottom: 2px solid #641666;
         color: #3f0e40;
     }
 
     #lb-title {
         margin-left: 1.2em;
         margin-bottom: 0;
+        color: #0e4f6b;
     }
 
-    .area-connection {
-        grid-area: conn;
+    .area-main {
+        grid-area: main;
+        padding: 0.6em;
     }
-    
-    .area-footer {
-        grid-area: foot;
+
+    .container-postgres, .container-csv {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-top: 0.4em;
+        margin-left: 0.8em;
+        margin-right: 0.8em;
+        padding: 1em;
+        border: 1px solid none;
+        border-radius: 3px;
+        background: #0e4f6b;
+        color: white;
+        width: calc(100% - 4em);
+    }
+
+    input {
+        background: #eff7ff;
+        border: none;
+    }
+
+    .lb-black {
+        display: inline-block;
+        width: 4.3em;
+        margin-left: 0.5em;
+    }
+
+    #text-csv-dir {
+        width: calc(100% - 10em);
+        margin-left: 1em;
+    }
+
+    #btn-connection, #btn-open-dir {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin: 1em;
+        margin-top: 0.4em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #0e4f6b;
         color: #fff;
     }
 
-</style>
+    #tb_result {
+        width: 100%;
+        background: #eff7ff;
+        border-color: #f1f8ff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+    }
 
+    #tb_result th {
+        background: #15759e;
+        border-color: #f1f8ff;
+        color: #fff;
+    }
+    
+    #tb_result tr {
+        border-bottom: 2px solid white;
+        padding: 2px;
+    }
+    
+    #tb_result .btn-change-csv {
+        background: #15759e;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    #tb_result .btn-change-csv:hover {
+        background: #0e4f6b;
+        color: white;
+    }
+
+    #pagenation {
+        float: right;
+    }
+
+    .btn-pagenation {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .btn-pagenation-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #1da8e3;
+        color: white;
+    }
+
+    .area-footer {
+        grid-area: foot;
+        /*background: #3f0e40;*/
+        /*color: #0e4f6b;*/
+    }
+</style>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 <script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0"></script>
@@ -132,6 +231,85 @@
         <p class="title">데이터 선택</p>
     </div>
 
+    <div class="area-main">
+
+
+        <h4>설정 데이터베이스 접속 설정</h4>
+
+        <div class="container-postgres">
+            <div>
+                <span class="lb-black">IP</span>
+                <input class="text-black" id="text-ip" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Port</span>
+                <input class="text-black" id="text-port" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Database</span>
+                <input class="text-black" id="text-database" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">User</span>
+                <input class="text-black" id="text-user" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Password</span>
+                <input class="text-black" id="text-password" type="text" />
+            </div>
+        </div>
+
+        <div>
+            <input id="btn-connection" type="button" value="접속" onclick="btnConnection()" />
+        </div>
+
+
+        <h4>업무 데이터베이스 접속 설정</h4>
+
+        <div class="container-postgres">
+            <div>
+                <span class="lb-black">IP</span>
+                <input class="text-black" id="text-ip" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Port</span>
+                <input class="text-black" id="text-port" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Database</span>
+                <input class="text-black" id="text-database" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">User</span>
+                <input class="text-black" id="text-user" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">Password</span>
+                <input class="text-black" id="text-password" type="text" />
+            </div>
+        </div>
+
+        <div>
+            <input id="btn-connection" type="button" value="접속" onclick="btnConnection()" />
+        </div>
+
+
+        <h4>CSV 파일 폴더 사용</h4>
+
+        <div class="container-csv">
+            <span>CSV 폴더 경로</span>
+            <input class="text-black" id="text-csv-dir" type="text" />
+        </div>
+
+        <div>
+            <input id="btn-open-dir" type="button" value="선택" onclick="btnOpenDir()" />
+        </div>
+
+        <table id="tb_result"></table>
+        <div id="pagenation"></div>
+
+    </div>
+
     <div class="area-footer">
         <span id="logo-footer"></span>
     </div>
@@ -157,16 +335,16 @@
     ////
     //function fetchHello(data) {
     //    //
-    //    if (data == undefined)
+    //    if (data == undefined) 
     //    {
     //        window.chrome.webview.postMessage({
-    //             phase: 'request',
-    //             type: 'api',
-    //             action: 'hello',
-    //             message: ''
-    //         });
+    //            phase: 'request',
+    //            type: 'api',
+    //            action: 'hello',
+    //            message: ''
+    //        });
     //    }
-    //    else
+    //    else 
     //    {
     //        document.getElementById("hello").innerText = data + "님 안녕하세요."
     //    }
@@ -194,132 +372,80 @@
             btnMenu('04-stomach-cancer');
     }
 
-    //////////////////////////////////////////////////////////////////////////// filter search
+    //////////////////////////////////////////////////////////////////////////// postgres connection
 
     //
-    function getSelectedValue(id) {
-        let elem = document.getElementById(id);
-        let selectedValue = elem.options[elem.selectedIndex].value;
-        return selectedValue;
+    function btnConnection() {
+
     }
 
     //
-    function btnSearch() {
-        //
-        let searchSchema = getSelectedValue('selector-schema');
-        let searchTable = getSelectedValue('selector-table');
-        //
-        let filter = {
-            searchSchema: searchSchema,
-            searchTable: searchTable
-        };
-        //
-        let option = {
-            schema: "public",
-            table: "ecrf_col_info",
-            offset: 0,
-            limit: 20,
-            filter: filter,
-        }
-        //
-        fetchColumn(undefined, option);
+    function btnOpenDir() {
+
     }
 
-    var rowsColumn = []
-    function fetchColumn(data, option) {
-        //
-        if (data == undefined)
-        {
-            window.chrome.webview.postMessage({
-                phase: "request",
-                type: 'api',
-                action: 'table',
-                message: 'column',
-                data: option
-            });
-        }
-        else
-        {
-            rowsColumn = JSON.parse(data);
-            log("aaa", rowsColumns, "table");
-            renderTable();
-            renderPagenation();
-        }
-    }
-
-    //////////////////////////////////////////////////////////////////////////// filter apply
+    //////////////////////////////////////////////////////////////////////////// load csv files
 
     //
-    function btnApply() {
+    var dataFiles = []
+    function fetchCsv(data, option) {
         //
-        let applyNo = getSelectedValue('text-apply-no');
-        let applySchema = getSelectedValue('text-apply-schema');
+        dataFiles = [
+            {
+                schema: "위암",
+                table: "tb_test001",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test002",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test003",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test004",
+                csv: "C://aaaaa.csv"
+            },
+            {
+                schema: "위암",
+                table: "tb_test005",
+                csv: "C://aaaaa.csv"
+            }
+        ]
         //
-        let filter = {
-            applyNo: applyNo,
-            applySchema: applySchema,
-        };
-        //
-        let option = {
-            schema: "public",
-            table: "ecrf_col_info",
-            filter: filter
-        };
-        //
-        UpdateColumnInfo(undefined, option);
+        renderTable();
+        renderPagenation();
     }
-
-    ////
-    //var rowsColumn = []
-    //function fetchColumn(response, option) {
-    //    //
-    //    if (response == undefined)
-    //    {
-    //        log("option", option, "table");
-    //        window.chrome.webview.postMessage({
-    //            phase: 'request',
-    //            type: 'api',
-    //            action: 'table',
-    //            message: 'column',
-    //            data: option
-    //        });
-    //    }
-    //    else
-    //    {
-    //        log("response", response, "table");
-    //        rowsColumn = JSON.parse(response);
-    //        renderTable();
-    //        renderPagenation();
-    //    }
-    //}
 
     //////////////////////////////////////////////////////////////////////////// gridview
 
     //
     function renderTableHeader() {
         //
-        alert("a");
-        //
-        log("rowsColumn[0]", rowsColumn[0], "table");
+        log("dataFiles[0]", dataFiles[0], "table");
         //
         let htmlTh = "";
-        for (let key in rowsColumn[0])
+        for (let key in dataFiles[0])
             htmlTh += "<th>" + key + "</th>";
         //
+        htmlTh += "<th> 변경 </th>";
         return htmlTh;
     }
 
     //
     function renderTable() {
         //
-        alert("a");
-        //
-        log("table", rowsColumn, "table");
+        log("table", dataFiles, "table");
         //
         let htmlTh = renderTableHeader();
         //
-        pagenationLastPage = parseInt(rowsColumn.length / pagenationRowLimit);
-        if (rowsColumn.length % pagenationRowLimit > 0)
+        pagenationLastPage = parseInt(dataFiles.length / pagenationRowLimit);
+        if (dataFiles.length % pagenationRowLimit > 0)
             pagenationLastPage += 1;
         //
         log("pagenationRowLimit", pagenationRowLimit, "");
@@ -328,8 +454,8 @@
 
         let rowStart = (pagenationCurPage * pagenationRowLimit) - pagenationRowLimit + 1;
         let rowEnd = rowStart + pagenationRowLimit - 1;
-        if (rowEnd >= rowsColumn.length)
-            rowEnd = rowStart + rowsColumn.length % pagenationRowLimit;
+        if (rowEnd >= dataFiles.length)
+            rowEnd = rowStart + dataFiles.length % pagenationRowLimit;
         //
         log("rowStart : ", rowStart, "");
         log("rowEnd : ", rowEnd, "");
@@ -337,10 +463,10 @@
         let htmlStack = "";
         for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
             //
-            if (rowNum == rowsColumn.length + 1)
+            if (rowNum == dataFiles.length + 1)
                 break;
             //
-            let item = rowsColumn[rowNum - 1];
+            let item = dataFiles[rowNum - 1];
             log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRow(` + rowNum + `)">`;
@@ -350,25 +476,13 @@
                 log("column", column, "");
                 htmlStack += ` <td> ` + column + ` </td> `;
             }
+            //
+            htmlStack += `<td> <div class="btn-change-csv" onclick="btnSelectCsv(` + rowNum + `)"> 변경 </div> </td>`;
             htmlStack += `</tr>`;
         }
         //
         let elemTable = document.getElementById("tb_result");
         elemTable.innerHTML = htmlTh + htmlStack;
-    }
-
-    // 선택된 열의 값으로 박스 채우는 로직으로 변경 할 것
-    function selectRow(rowNum) {
-        //
-        //let row = rowsColumn[rowNum - 1];
-        //console.log("select row", rowNum, "");
-        //console.log("select row", row, "");
-        ////
-        //let htmlTemp = "";
-        //for (let key in row)
-        //    htmlTemp += `<div> <span class="lb-detail">` + key + `</span> <span class="tx-detail">` + row[key] + `</span> </div>`;
-        ////
-        //document.getElementById("contianer-detail").innerHTML = htmlTemp;
     }
 
     //////////////////////////////////////////////////////////////////////////// pagenation
@@ -380,13 +494,13 @@
 
     //
     function btnPagenation(page) {
-        //
+
         if (page <= 0)
             page = 1;
-        //
+
         if (page >= pagenationLastPage)
             page = pagenationLastPage;
-        //
+
         pagenationCurPage = page;
         renderPagenation();
         renderTable();
@@ -402,7 +516,7 @@
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage + 1)'> > </span>
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationLastPage)'> >> </span>
                 `;
-        //
+
         let htmlPage = "";
         for (let i = 1; i <= pagenationLastPage; i++) {
             //
@@ -414,7 +528,7 @@
             else
                 htmlPage += "<span class='btn-pagenation' onclick='btnPagenation(" + i + ")'>" + i + "</span>";
         }
-        //
+
         htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
         document.getElementById('pagenation').innerHTML = htmlPage;
     }
@@ -424,25 +538,14 @@
     //
     function init() {
         //
-        // fetchHello();
-        //
-        // let searchSchema = getSelectedValue('selector-schema');
-        // let searchTable = getSelectedValue('selector-table');
-        //
-        let filter = {
-            tbl_enm: "GSCN_EXAM_HPLI",
-            pk_ord: ""
-        };
-        //
         let option = {
             schema: "public",
-            table: "ecrf_col_info",
+            table: "cncr_code_meta",
             offset: 0,
             limit: 20,
-            filter: filter,
         }
         //
-        fetchColumn(undefined, option);
+        fetchCsv(undefined, option);
     }
 
     //

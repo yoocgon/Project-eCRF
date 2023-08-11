@@ -116,7 +116,7 @@ namespace KCureDataAccess
                 }
                 else if (action == "hello")
                 {
-                    observer.Send("response", "api", "hello", store.id, null);
+                    // observer.Send("response", "api", "hello", store.id, null);
                 }
                 else if (action == "table")
                 {

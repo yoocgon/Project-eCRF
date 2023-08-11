@@ -19,6 +19,11 @@ namespace eCRF.module
              .CreateLogger();
         }
 
+        /// <summary>
+        /// SQL를 사용해 쿼리
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public List<Dictionary<string, object>> Query(string query)
         {
             using (var connection = new NpgsqlConnection(config.dapperConnStr))
@@ -52,6 +57,92 @@ namespace eCRF.module
             }
         }
 
+        //
+        // Dapper 기본 사용 방법 예시
+        // 
+        // string query = "" +
+        //     "SELECT * " +
+        //     "FROM tb_test " +
+        //     "WHERE department = @department " +
+        //     "AND researcher = @researcher" +
+        //     "AND researcher = @applyStep" +
+        //     "AND researcher = @applyStatus" +
+        //     "AND researcher = @importedDataExists" +
+        //     "AND researcher = @dataExportRequestExists" +
+        //     "AND researcher = @dataExportApprovalExistence";
+        // 
+        // var parameter = new
+        // {
+        //     department = department,
+        //     researcher = researcher,
+        //     applyStep = applyStep,
+        //     applyStatus = applyStatus,
+        //     importedDataExists = importedDataExists,
+        //     dataExportRequestExists = dataExportRequestExists,
+        //     dataExportApprovalExistence = dataExportApprovalExistence
+        // };
+        //
+        // List<Dictionary<string, object>> listDicData = dapperClient.Select(query, parameter);
+        //
+
+        /// <summary>
+        /// SQL 문에 dynamic 파라메터를 사용하는 쿼리 기능
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public List<Dictionary<string, object>> Select(string query, object parameters)
+        {
+            using (var connection = new NpgsqlConnection(config.dapperConnStr))
+            {
+                connection.Open();
+                dynamic result;
+                if (parameters == null)
+                {
+                    result = connection.Query<dynamic>(query);
+                }
+                else
+                {
+                    result = connection.Query(query, parameters).ToList();
+                }
+                //
+                connection.Close();
+                //
+                List<Dictionary<string, object>> listResult = new List<Dictionary<string, object>>();
+                foreach (var row in result)
+                {
+                    var dictionary = new Dictionary<string, object>();
+                    foreach (var column in row)
+                    {
+                        dictionary.Add(column.Key, column.Value);
+                    }
+                    listResult.Add(dictionary);
+                }
+                //
+                Console.WriteLine("\nDebug>>> (query result) ");
+                foreach (var row in listResult)
+                {
+                    Console.WriteLine("\nDebug>>> (row) ");
+                    foreach (var kvp in row)
+                    {
+                        Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+                    }
+                }
+                //
+                return listResult;
+            }
+        }
+
+        /// <summary>
+        /// Deprecated
+        /// 주로 GridView에 사용하기 위해, Where 절 필터 조건을 동적으로 추가하기 위한 SELECT 쿼리 기능
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <param name="table"></param>
+        /// <param name="offset"></param>
+        /// <param name="limit"></param>
+        /// <param name="whereConditions"></param>
+        /// <returns></returns>
         public List<Dictionary<string, object>> Select(string schema, string table, int offset, int limit, Dictionary<string, JsonElement> whereConditions)
         {
             using (var connection = new NpgsqlConnection(config.dapperConnStr))
@@ -166,90 +257,17 @@ namespace eCRF.module
             }
         }
 
-        public List<Dictionary<string, object>> Select(string query, object parameters)
-        {
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
-            {
-                connection.Open();
-                dynamic result;
-                if (parameters == null)
-                {
-                    result = connection.Query<dynamic>(query);
-                }
-                else
-                {
-                    result = connection.Query(query, parameters).ToList();
-                }
-                //
-                connection.Close();
-                //
-                List<Dictionary<string, object>> listResult = new List<Dictionary<string, object>>();
-                foreach (var row in result)
-                {
-                    var dictionary = new Dictionary<string, object>();
-                    foreach (var column in row)
-                    {
-                        dictionary.Add(column.Key, column.Value);
-                    }
-                    listResult.Add(dictionary);
-                }
-                //
-                Console.WriteLine("\nDebug>>> (query result) ");
-                foreach (var row in listResult)
-                {
-                    Console.WriteLine("\nDebug>>> (row) ");
-                    foreach (var kvp in row)
-                    {
-                        Console.WriteLine($"{kvp.Key}: {kvp.Value}");
-                    }
-                }
-                //
-                return listResult;
-            }
-        }
-
-        // 쿼리식, 값, contition 
-        public List<Dictionary<string, object>> Select(string query, Dictionary<string, string> conditions)
-        {
-            //
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
-            {
-                connection.Open();
-                //
-                foreach (var item in conditions)
-                    query = query.Replace(item.Key, item.Value);
-                //
-                dynamic result = connection.Query(query).ToList();
-                List<Dictionary<string, object>> listResult = new List<Dictionary<string, object>>();
-                foreach (var row in result)
-                {
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var column in row)
-                    {
-                        dictionary.Add(column.Key, column.Value);
-                    }
-                    listResult.Add(dictionary);
-                }
-                //
-                Console.WriteLine("\nDebug>>> (query result) ");
-                foreach (var row in listResult)
-                {
-                    Console.WriteLine("\nDebug>>> (row) ");
-                    foreach (var kvp in row)
-                    {
-                        Console.WriteLine($"{kvp.Key}: {kvp.Value}");
-                    }
-                }
-                //
-                connection.Close();
-                //
-                return listResult;
-            }
-        }
-
-
-
-        // 쿼리식, 값, contition 
+        /// <summary>
+        /// Deprecated
+        /// 주로 GridView에 사용하기 위해, Where 절 필터 조건을 동적으로 추가하기 위한 SELECT 쿼리 기능 
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <param name="table"></param>
+        /// <param name="conditionSelect"></param>
+        /// <param name="conditionsWhere"></param>
+        /// <param name="offset"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
         public List<Dictionary<string, object>> SelectUsingFilter(
             string schema,
             string table,
@@ -336,34 +354,12 @@ namespace eCRF.module
             }
         }
 
-        public List<Dictionary<string, object>> PostSelectFilter(List<Dictionary<string, object>> listDicData)
-        {
-            List<Dictionary<string, object>> listDicPostData = new List<Dictionary<string, object>>();
-            foreach (var dic in listDicData)
-            {
-                var newDic = new Dictionary<string, object>();
-                foreach (var item in dic)
-                {
-                    string newValue = "";
-                    if (item.Value == null)
-                        newValue = "";
-                    else if (item.Value.GetType().Name == "Boolean" && (bool)item.Value)
-                        newValue = "Y";
-                    else if (item.Value.GetType().Name == "Boolean" && !(bool)item.Value)
-                        newValue = "N";
-                    else
-                        newValue = item.Value.ToString();
-                    //
-                    newDic.Add(item.Key, newValue);
-                }
-                //
-                listDicPostData.Add(newDic);
-            }
-            //
-            return listDicPostData;
-        }
-
-        // 쿼리식, 값, contition 
+        /// <summary>
+        /// PostgreSQL에서 schema, table, column 정보를 쿼리
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <param name="table"></param>
+        /// <returns></returns>
         public List<Dictionary<string, object>> GetPostgresTableColumnInfo(string schema, string table)
         {
             //
@@ -443,7 +439,46 @@ namespace eCRF.module
             }
         }
 
-        //
+        /// <summary>
+        /// Deprecated, Subfunction
+        /// 쿼리 조건 결과에서 기존 타입이 Boolean인 경우 반환시 원래 표시 형식으로 변경
+        /// </summary>
+        /// <param name="listDicData"></param>
+        /// <returns></returns>
+        public List<Dictionary<string, object>> PostSelectFilter(List<Dictionary<string, object>> listDicData)
+        {
+            List<Dictionary<string, object>> listDicPostData = new List<Dictionary<string, object>>();
+            foreach (var dic in listDicData)
+            {
+                var newDic = new Dictionary<string, object>();
+                foreach (var item in dic)
+                {
+                    string newValue = "";
+                    if (item.Value == null)
+                        newValue = "";
+                    else if (item.Value.GetType().Name == "Boolean" && (bool)item.Value)
+                        newValue = "Y";
+                    else if (item.Value.GetType().Name == "Boolean" && !(bool)item.Value)
+                        newValue = "N";
+                    else
+                        newValue = item.Value.ToString();
+                    //
+                    newDic.Add(item.Key, newValue);
+                }
+                //
+                listDicPostData.Add(newDic);
+            }
+            //
+            return listDicPostData;
+        }
+
+        /// <summary>
+        /// Deprecated
+        /// 필터 조건이 적합한지 판단하려고 컬럼별 출력 값 갯수를 확인하기 위한 기능
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="schema"></param>
+        /// <param name="table"></param>
         public void SetColumnFilterValues(List<Dictionary<string, object>> columns, string schema, string table)
         {
             if (columns == null)
@@ -456,7 +491,14 @@ namespace eCRF.module
             }
         }
 
-        //
+        /// <summary>
+        /// Deprecated
+        /// 필터 조건이 적합한지 판단하려고 컬럼별 출력 값 갯수를 확인하기 위한 기능
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <param name="table"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public List<object> SelectDistinctColumns(string schema, string table, string column)
         {
             //
@@ -474,32 +516,5 @@ namespace eCRF.module
                 return listResult;
             }
         }
-
-
-        //
-        //string query = "" +
-        //    "SELECT * " +
-        //    "FROM tb_test " +
-        //    "WHERE department = @department " +
-        //    "AND researcher = @researcher" +
-        //    "AND researcher = @applyStep" +
-        //    "AND researcher = @applyStatus" +
-        //    "AND researcher = @importedDataExists" +
-        //    "AND researcher = @dataExportRequestExists" +
-        //    "AND researcher = @dataExportApprovalExistence";
-        //
-        //var parameter = new
-        //{
-        //    department = department,
-        //    researcher = researcher,
-        //    applyStep = applyStep,
-        //    applyStatus = applyStatus,
-        //    importedDataExists = importedDataExists,
-        //    dataExportRequestExists = dataExportRequestExists,
-        //    dataExportApprovalExistence = dataExportApprovalExistence
-        //};
-        //
-        // List<Dictionary<string, object>> listDicData = dapperClient.Select(query, parameter);
-
     }
 }

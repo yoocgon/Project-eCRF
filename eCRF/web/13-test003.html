@@ -35,10 +35,13 @@
         border-radius: 5px;
     }
 
+/*    
     #hello {
         float: right;
         padding-right: 1em;
     }
+
+*/
 
     .area-menu {
         grid-area: menu;
@@ -210,22 +213,19 @@
 <div class="wrapper">
 
     <div class="area-stat">
-        <span id="hello"></span>
-        <span id="ftp">FTP</span>
+        <!--<span id="hello"></span>-->
+        <!--<span id="ftp">FTP</span>-->
     </div>
 
     <div class="area-menu">
         <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
+        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
         <span id="btn-menu-request" onclick="btnMenu('03-breast-cancer')">유방암</span>
         <span id="btn-menu-import" onclick="btnMenu('04-stomach-cancer')">위암</span>
-        <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
         <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
         <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
         <span id="btn-menu-logout" onclick="btnMenu('01-login')">로그아웃</span>
-
-        <span id="btn-menu-test001" onclick="btnMenu('11-test001')">test001</span>
-        <span id="btn-menu-test002" onclick="btnMenu('12-test002')">test002</span>
-        <span id="btn-menu-test003" onclick="btnMenu('13-test003')">test003</span>
+        <span id="btn-menu-export" onclick="btnMenu('05-csv-viewer')">CSV Viewer</span>
     </div>
 
     <div class="area-header">
@@ -568,24 +568,24 @@
         return htmlResult;
     }
 
-    var userId = "gony";
-    function fetchHello(data) {
-        //
-        if (data == undefined) {
-            jsonData = JSON.stringify(
-                {
-                    page: '01-index.html',
-                    action: 'hello',
-                }
-            );
-            //
-            let objData = JSON.parse(jsonData);
-            window.chrome.webview.postMessage(objData);
-        }
-        else {
-            document.getElementById("hello").innerText = data + "님 안녕하세요."
-        }
-    }
+    //var userId = "gony";
+    //function fetchHello(data) {
+    //    //
+    //    if (data == undefined) {
+    //        jsonData = JSON.stringify(
+    //            {
+    //                page: '01-index.html',
+    //                action: 'hello',
+    //            }
+    //        );
+    //        //
+    //        let objData = JSON.parse(jsonData);
+    //        window.chrome.webview.postMessage(objData);
+    //    }
+    //    else {
+    //        document.getElementById("hello").innerText = data + "님 안녕하세요."
+    //    }
+    //}
 
     var ftpStatus = true;
     function fetchFtpStatus(data) {
@@ -697,7 +697,7 @@
 
 
     function init() {
-        fetchHello();
+        // fetchHello();
         fetchFtpStatus();
         fetchresearch();
         fetchDepartment();

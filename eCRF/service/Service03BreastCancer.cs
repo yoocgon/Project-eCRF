@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using eCRF.module;
 
@@ -8,6 +9,14 @@ namespace eCRF.service
     {
         public CustomDapperClient? DapperClient { get; set; }
         public CustomLibrary? Library { get; set; }
+        public List<Dictionary<string, object>> GetFilterPatients(JsonObject objData)
+        {
+            if (objData == null)
+                return null;
+            //
+            List<Dictionary<string, object>> listDicData = null;
+            return listDicData;
+        }
         public List<Dictionary<string, object>> GetPatients(JsonObject objData)
         {
             if (objData == null)
@@ -29,7 +38,14 @@ namespace eCRF.service
             // SetColumnSetting(ref listDicData);
             return listDicData;
         }
-
+        public List<Dictionary<string, object>> GetFilterDetails(JsonObject objData)
+        {
+            if (objData == null)
+                return null;
+            //
+            List<Dictionary<string, object>> listDicData = null;
+            return listDicData;
+        }
         public List<Dictionary<string, object>> GetDetails(JsonObject objData)
         {
             if (objData == null)
