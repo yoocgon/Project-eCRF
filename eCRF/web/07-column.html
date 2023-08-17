@@ -11,11 +11,12 @@
             "stat"
             "menu"
             "head"
-            "conn"
-            "impt"
+            "mdfy"
+            "fltr"
+            "grid"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 2.4em 4em auto auto 2em;
+        grid-template-rows: 2em 2.4em 4em auto auto auto 2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -63,7 +64,7 @@
         color: white;
         font-size: small;
         font-weight: 800;
-        width: 8em;
+        width: 10em;
         outline: none;
         text-align: center;
     }
@@ -93,10 +94,121 @@
         margin-bottom: 0;
     }
 
-    .area-connection {
-        grid-area: conn;
+    .area-filter {
+        grid-area: fltr;
     }
-    
+
+    .container-filter {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-top: 0.4em;
+        margin-left: 0.8em;
+        margin-right: 0.8em;
+        padding: 1em;
+        border: 1px solid none;
+        border-radius: 3px;
+        background: #0e4f6b;
+        color: white;
+        width: calc(100% - 4em);
+    }
+
+    .lb-black {
+        display: inline-block;
+        width: 6em;
+        margin-left: 0.5em;
+    }
+
+    input {
+        background: #eff7ff;
+        width: 13em;
+        margin-left: 0.2em;
+        border: none;
+    }
+
+    .select-black {
+        background: #eff7ff;
+        width: 13em;
+        margin-left: 0.2em;
+        border: none;
+    }
+
+    #btn-apply {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin: 1em;
+        margin-top: 0.4em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #0e4f6b;
+        color: #fff;
+    }
+
+    .area-modify {
+        grid-area: mdfy;
+    }
+
+    .area-girdview {
+        grid-area: grid;
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+    .contianer-gridview {
+        overflow-x: auto;
+    }
+
+    #tb_result {
+        width: 100%;
+        background: #fff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+        white-space: nowrap;
+    }
+
+    #tb_result th {
+        background: #15759e;
+        border-color: gray;
+        color: #fff;
+    }
+
+    #tb_result tr {
+        background: #eff7ff;
+        color: black;
+    }
+
+    #tb_result tr:hover {
+        background: #eff7ff;
+        color: black;
+    }
+
+    #pagenation {
+        float: right;
+    }
+
+    .btn-pagenation {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .btn-pagenation-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #1da8e3;
+        color: white;
+    }
+
     .area-footer {
         grid-area: foot;
         color: #fff;
@@ -116,20 +228,107 @@
 
     <div class="area-menu">
         <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
-        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
         <span id="btn-menu-request">
             <select class="select-menu-sub" onchange="btnMenuSub(this)">
-                <option style="display: none;">암</option>
-                <option class="option-menu-sub">유방암</option>
-                <option class="option-menu-sub">위암</option>
+                <option style="display: none;">암종별 레지스트리</option>
+                <option class="option-menu-sub">유방암 레지스트리</option>
+                <option class="option-menu-sub">위암 레지스트리</option>
             </select>
         </span>
-        <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
-        <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">설정</option>
+                <option class="option-menu-sub">데이터 선택</option>
+                <option class="option-menu-sub">데이터 매핑</option>
+                <option class="option-menu-sub">코드조회</option>
+                <option class="option-menu-sub">컬럼설정</option>
+            </select>
+        </span>
     </div>
 
     <div class="area-header">
-        <p class="title">데이터 선택</p>
+        <p class="title">컬럼설정</p>
+    </div>
+
+    <div class="area-modify">
+        <div class="container-filter">
+            <div>
+                <span class="lb-black">테이블</span>
+                <select class="select-black">
+                    <option>테스트1</option>
+                    <option>테스트2</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <input id="btn-apply" type="button" value="적용" onclick="btnApply()" />
+        </div>
+    </div>
+
+    <div class="area-filter">
+        <div class="container-filter">
+            <div>
+                <span class="lb-black">NO</span>
+                <input class="text-black" id="text-no" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">테이블</span>
+                <input class="text-black" id="text-category-lagre" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">컬럼</span>
+                <input class="text-black" id="text-category-lagre" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">컬럼사용</span>
+                <select class="select-black">
+                    <option>Y</option>
+                    <option>N</option>
+                </select>
+            </div>
+            <div>
+                <span class="lb-black">컬럼헤더표현</span>
+                <input class="text-black" id="text-category-lagre" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">필터 사용</span>
+                <select class="select-black">
+                    <option>Y</option>
+                    <option>N</option>
+                </select>
+            </div>
+            <div>
+                <span class="lb-black">필터타입</span>
+                <select class="select-black">
+                    <option>ListView</option>
+                    <option>DatePicker</option>
+                    <option>text</option>
+                </select>
+            </div>
+            <div>
+                <span class="lb-black">필터옵션</span>
+                <input class="text-black" id="text-category-lagre" type="text" />
+            </div>
+            <div>
+                <span class="lb-black">코드사용</span>
+                <select class="select-black">
+                    <option>Y</option>
+                    <option>N</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <input id="btn-apply" type="button" value="적용" onclick="btnApply()" />
+        </div>
+    </div>
+
+
+    <div class="contianer-gridview">
+        <div class="area-girdview">
+            <table id="tb_result"></table>
+            <div id="pagenation"></div>
+        </div>
     </div>
 
     <div class="area-footer">
@@ -188,67 +387,21 @@
     //
     function btnMenuSub(elem) {
         //
-        if (elem.value === "유방암")
+        if (elem.value === "유방암 레지스트리")
             btnMenu('03-breast-cancer');
-        else if (elem.value === "위암")
+        else if (elem.value === "위암 레지스트리")
             btnMenu('04-stomach-cancer');
+        else if (elem.value === "데이터 선택")
+            btnMenu('08-connection');
+        else if (elem.value === "데이터 매핑")
+            btnMenu('09-data-mapping');
+        else if (elem.value === "코드조회")
+            btnMenu('06-code');
+        else if (elem.value === "컬럼설정")
+            btnMenu('07-column');
     }
 
-    //////////////////////////////////////////////////////////////////////////// filter search
-
-    //
-    function getSelectedValue(id) {
-        let elem = document.getElementById(id);
-        let selectedValue = elem.options[elem.selectedIndex].value;
-        return selectedValue;
-    }
-
-    //
-    function btnSearch() {
-        //
-        let searchSchema = getSelectedValue('selector-schema');
-        let searchTable = getSelectedValue('selector-table');
-        //
-        let filter = {
-            searchSchema: searchSchema,
-            searchTable: searchTable
-        };
-        //
-        let option = {
-            schema: "public",
-            table: "ecrf_col_info",
-            offset: 0,
-            limit: 20,
-            filter: filter,
-        }
-        //
-        fetchColumn(undefined, option);
-    }
-
-    //
-    var rowsColumn = []
-    function fetchColumn(response, option) {
-        //
-        if (response == undefined) {
-            window.chrome.webview.postMessage({
-                phase: "request",
-                type: 'api',
-                action: 'table',
-                message: 'column',
-                data: option
-            });
-        }
-        else
-        {
-            alert(response);
-            rowsColumn = JSON.parse(response);
-            log("response", rowsColumn, "table");
-            renderTable();
-            renderPagenation();
-        }
-    }
-
-    //////////////////////////////////////////////////////////////////////////// filter apply
+    //////////////////////////////////////////////////////////////////////////// filter
 
     //
     function btnApply() {
@@ -270,36 +423,32 @@
         UpdateColumnInfo(undefined, option);
     }
 
-    ////
-    //var rowsColumn = []
-    //function fetchColumn(response, option) {
-    //    //
-    //    if (response == undefined)
-    //    {
-    //        log("option", option, "table");
-    //        window.chrome.webview.postMessage({
-    //            phase: 'request',
-    //            type: 'api',
-    //            action: 'table',
-    //            message: 'column',
-    //            data: option
-    //        });
-    //    }
-    //    else
-    //    {
-    //        log("response", response, "table");
-    //        rowsColumn = JSON.parse(response);
-    //        renderTable();
-    //        renderPagenation();
-    //    }
-    //}
+    //
+    var rowsColumn = []
+    function fetchColumn(response, option) {
+        //
+        if (response == undefined) {
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'api',
+                action: 'table',
+                message: 'column',
+                data: option
+            });
+        }
+        else
+        {
+            rowsColumn = JSON.parse(response);
+            log("response", rowsColumn, "table");
+            renderTable();
+            renderPagenation();
+        }
+    }
 
     //////////////////////////////////////////////////////////////////////////// gridview
 
     //
     function renderTableHeader() {
-        //
-        alert("a");
         //
         log("rowsColumn[0]", rowsColumn[0], "table");
         //
@@ -344,9 +493,9 @@
             //
             htmlStack += `<tr onclick="selectRow(` + rowNum + `)">`;
             for (let key in item) {
-                log("key", key, "");
+                // log("key", key, "");
                 let column = item[key];
-                log("column", column, "");
+                // log("column", column, "");
                 htmlStack += ` <td> ` + column + ` </td> `;
             }
             htmlStack += `</tr>`;
@@ -373,7 +522,7 @@
     //////////////////////////////////////////////////////////////////////////// pagenation
 
     //
-    var pagenationRowLimit = 10;
+    var pagenationRowLimit = 20;
     var pagenationLastPage = 0;
     var pagenationCurPage = 1;
 
@@ -422,11 +571,6 @@
 
     //
     function init() {
-        //
-        // fetchHello();
-        //
-        // let searchSchema = getSelectedValue('selector-schema');
-        // let searchTable = getSelectedValue('selector-table');
         //
         let filter = {
             tbl_enm: "GSCN_EXAM_HPLI",

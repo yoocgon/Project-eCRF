@@ -62,7 +62,7 @@
         color: white;
         font-size: small;
         font-weight: 800;
-        width: 8em;
+        width: 10em;
         outline: none;
         text-align: center;
     }
@@ -204,17 +204,24 @@
 
     <div class="area-menu">
         <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
-        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
         <span id="btn-menu-request">
             <select class="select-menu-sub" onchange="btnMenuSub(this)">
-                <option style="display: none;">암</option>
-                <option class="option-menu-sub">유방암</option>
-                <option class="option-menu-sub">위암</option>
+                <option style="display: none;">암종별 레지스트리</option>
+                <option class="option-menu-sub">유방암 레지스트리</option>
+                <option class="option-menu-sub">위암 레지스트리</option>
             </select>
         </span>
-        <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
-        <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">설정</option>
+                <option class="option-menu-sub">데이터 선택</option>
+                <option class="option-menu-sub">데이터 매핑</option>
+                <option class="option-menu-sub">코드조회</option>
+                <option class="option-menu-sub">컬럼설정</option>
+            </select>
+        </span>
     </div>
+
 
     <div class="area-header">
         <p class="title">CSV Viewer</p>
@@ -300,10 +307,18 @@
     //
     function btnMenuSub(elem) {
         //
-        if (elem.value === "유방암")
+        if (elem.value === "유방암 레지스트리")
             btnMenu('03-breast-cancer');
-        else if (elem.value === "위암")
+        else if (elem.value === "위암 레지스트리")
             btnMenu('04-stomach-cancer');
+        else if (elem.value === "데이터 선택")
+            btnMenu('08-connection');
+        else if (elem.value === "데이터 매핑")
+            btnMenu('09-data-mapping');
+        else if (elem.value === "코드조회")
+            btnMenu('06-code');
+        else if (elem.value === "컬럼설정")
+            btnMenu('07-column');
     }
 
     //////////////////////////////////////////////////////////////////////////// file open

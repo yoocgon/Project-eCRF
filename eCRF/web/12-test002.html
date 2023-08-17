@@ -306,30 +306,27 @@
         <div id="pagenation-patient"></div>
     </div>
 
-    <div class="area-detail">
-        <div class="warp-detail">
-            <div class="tab-contianer">
-
-                <span class="tab" onclick="alert('환자')">환자</span>
-                <span class="tab" onclick="alert('진단')">진단</span>
-                <span class="tab" onclick="alert('검사')">검사</span>
-                <span class="tab" onclick="alert('치료')">치료</span>
-                <span class="tab" onclick="alert('추적관찰')">추적관찰</span>
-
-                <div class="warp-detail-content">
-                    <div class="contianer-filter"></div>
-                    <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
-                    <table id="tb_detail"></table>
-                    <div id="pagenation-detail"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="area-footer">
-            <span id="logo-footer"></span>
-        </div>
-
+    <div class="area-menu">
+        <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">암종별 조회</option>
+                <option class="option-menu-sub">유방암</option>
+                <option class="option-menu-sub">위암</option>
+            </select>
+        </span>
+        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터 선택</span>
+        <span id="btn-menu-export" onclick="btnMenu('09-data-mapping')">데이터 매핑</span>
+        <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
+        <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
     </div>
+
+
+    <div class="area-footer">
+        <span id="logo-footer"></span>
+    </div>
+
+</div>
 </div>
 
 <script>

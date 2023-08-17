@@ -27,7 +27,7 @@ namespace KCureDataAccess
             // dapperConnStr = "Server=127.0.0.1;Port=5433;User Id=gony;Password=asdf;Database=kcure;";
 
             // Office
-            webRoot = @"C:/Users/kcure/Desktop/gony/project/Project-eCRF/eCRF/web/";
+            webRoot = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/web/";
             dapperConnStr = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=asdf;Database=kcure;";
         }
     }

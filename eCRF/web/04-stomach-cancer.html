@@ -61,7 +61,7 @@
         color: white;
         font-size: small;
         font-weight: 800;
-        width: 8em;
+        width: 10em;
         outline: none;
         text-align: center;
     }
@@ -112,9 +112,15 @@
         margin-left: 1em;
     }
 
-    .area-filter select {
-        width: 12.7em;
-        height: 1.4em;
+    input {
+        background: #eff7ff;
+        border: none;
+    }
+
+    select {
+        width: 13em;
+        background: #eff7ff;
+        border: none;
     }
 
     #btn-search-patient {
@@ -128,30 +134,9 @@
         color: #fff;
     }
 
-    #btn-search-detail {
-        float: right;
-        width: 4em;
-        padding: 4px;
-        margin: 1em;
-        border: 0px none #000;
-        border-radius: 5px;
-        background: #0e4f6b;
-        color: #fff;
-    }
-
-    #pagenation-detail {
-        float: right;
-    }
-
-    .btn-pagenation-detail-selected {
-        display: inline-block;
-        margin: 2px;
-        padding-bottom: 2px;
-        width: 2em;
-        border-radius: 4px;
-        text-align: center;
-        background: #1da8e3;
+    .contianer-grid {
         color: white;
+        border: 1px solid #eff7ff;
     }
 
     .area-patient {
@@ -170,6 +155,7 @@
         border-color: #f1f8ff;
         font-size: small;
         font: normal 1px 100 verdana;
+        white-space: nowrap;
     }
 
     #tb_patient th {
@@ -193,17 +179,6 @@
     }
 
     .btn-pagenation-patient {
-        display: inline-block;
-        margin: 2px;
-        padding-bottom: 2px;
-        width: 2em;
-        border-radius: 4px;
-        text-align: center;
-        background: #0e4f6b;
-        color: white;
-    }
-
-    .btn-pagenation-detail {
         display: inline-block;
         margin: 2px;
         padding-bottom: 2px;
@@ -241,27 +216,37 @@
         margin: 0px;
         display: inline-block;
         width: 10em;
-        border: 1px solid gray;
+        border: 1px solid none;
         border-bottom: none;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-        background: #15759e;
+        background: #641666;
         color: white;
         text-align: center;
     }
 
     .warp-detail-content {
-        border: 1px solid gray;
-        /* min-height: 24em; */
+        border: 2px solid #641666;
+        min-height: 24em;
         overflow-x: auto;
         overflow-y: auto;
         min-height: 46em;
-        background: #eff7ff;
     }
 
     .warp-detail {
         margin: 1em;
         background: #15759e;
+    }
+
+    #btn-search-detail {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin: 1em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #0e4f6b;
+        color: #fff;
     }
 
     #tb_detail {
@@ -272,6 +257,7 @@
         margin-left: 1em;
         margin-right: 1em;
         margin-bottom: 4px;
+        white-space: nowrap;
     }
 
     #tb_detail th {
@@ -288,6 +274,32 @@
     #tb_detail tr:hover {
         background: #eff7ff;
         color: black;
+    }
+
+    #pagenation-detail {
+        float: right;
+    }
+
+    .btn-pagenation-detail {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .btn-pagenation-detail-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #1da8e3;
+        color: white;
     }
 
     .area-footer {
@@ -309,17 +321,24 @@
 
     <div class="area-menu">
         <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
-        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
         <span id="btn-menu-request">
             <select class="select-menu-sub" onchange="btnMenuSub(this)">
-                <option style="display: none;">암</option>
-                <option class="option-menu-sub">유방암</option>
-                <option class="option-menu-sub">위암</option>
+                <option style="display: none;">암종별 레지스트리</option>
+                <option class="option-menu-sub">유방암 레지스트리</option>
+                <option class="option-menu-sub">위암 레지스트리</option>
             </select>
         </span>
-        <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
-        <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">설정</option>
+                <option class="option-menu-sub">데이터 선택</option>
+                <option class="option-menu-sub">데이터 매핑</option>
+                <option class="option-menu-sub">코드조회</option>
+                <option class="option-menu-sub">컬럼설정</option>
+            </select>
+        </span>
     </div>
+
 
     <div class="area-header">
         <p class="title">위암</p>
@@ -328,7 +347,9 @@
     <div class="area-patient">
         <div class="contianer-filter" id="patient-filter-box"></div>
         <input id="btn-search-patient" type="button" value="조회" onclick="btnSearchPatient()" />
-        <table id="tb_patient"></table>
+        <div class="contianer-grid">
+            <table id="tb_patient"></table>
+        </div>
         <div id="pagenation-patient"></div>
     </div>
 
@@ -336,19 +357,20 @@
         <div class="warp-detail">
             <div class="tab-contianer">
 
-                <span class="tab" onclick="alert('환자')">환자</span>
-                <span class="tab" onclick="alert('진단')">진단</span>
-                <span class="tab" onclick="alert('검사')">검사</span>
-                <span class="tab" onclick="alert('치료')">치료</span>
-                <span class="tab" onclick="alert('추적관찰')">추적관찰</span>
+                <span class="tab">환자</span>
+                <span class="tab">진단</span>
+                <span class="tab">검사</span>
+                <span class="tab">치료</span>
+                <span class="tab">추적관찰</span>
 
                 <div class="warp-detail-content">
                     <div class="contianer-filter"></div>
                     <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
-                    <table id="tb_detail"></table>
+                    <div class="contianer-grid">
+                        <table id="tb_detail"></table>
+                    </div>
                     <div id="pagenation-detail"></div>
                 </div>
-
             </div>
         </div>
 
@@ -406,10 +428,18 @@
     //
     function btnMenuSub(elem) {
         //
-        if (elem.value === "유방암")
+        if (elem.value === "유방암 레지스트리")
             btnMenu('03-breast-cancer');
-        else if (elem.value === "위암")
+        else if (elem.value === "위암 레지스트리")
             btnMenu('04-stomach-cancer');
+        else if (elem.value === "데이터 선택")
+            btnMenu('08-connection');
+        else if (elem.value === "데이터 매핑")
+            btnMenu('09-data-mapping');
+        else if (elem.value === "코드조회")
+            btnMenu('06-code');
+        else if (elem.value === "컬럼설정")
+            btnMenu('07-column');
     }
 
     //////////////////////////////////////////////////////////////////////////// patient filter box

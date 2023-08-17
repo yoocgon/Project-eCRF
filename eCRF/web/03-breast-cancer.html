@@ -28,27 +28,26 @@
         color: #0e4f6b;
     }
 
-/*
+    /*
     #hello {
         float: right;
         padding-right: 1em;
     }
+    */
 
-*/
-
-    .area-menu {
-        grid-area: menu;
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 4px double #ccc;
-        padding-top: 0.4em;
-        padding-left: 2em;
-        padding-right: 2em;
-        font-size: small;
-        font-weight: 800;
-        background-color: #641666;
-        color: #fff;
-    }
+     .area-menu {
+         grid-area: menu;
+         display: flex;
+         justify-content: space-between;
+         border-bottom: 4px double #ccc;
+         padding-top: 0.4em;
+         padding-left: 2em;
+         padding-right: 2em;
+         font-size: small;
+         font-weight: 800;
+         background-color: #641666;
+         color: #fff;
+     }
 
     .area-menu span:hover {
         justify-content: center;
@@ -65,7 +64,7 @@
         color: white;
         font-size: small;
         font-weight: 800;
-        width: 8em;
+        width: 10em;
         outline: none;
         text-align: center;
     }
@@ -121,9 +120,15 @@
         margin-left: 1em;
     }
 
+    .area-filter input {
+        background: #eff7ff;
+        border: none;
+    }
+
     .area-filter select {
-        width: 12.7em;
-        height: 1.4em;
+        width: 13em;
+        background: #eff7ff;
+        border: none;
     }
 
     #btn-search-patient {
@@ -137,15 +142,9 @@
         color: #fff;
     }
 
-    #btn-search-detail {
-        float: right;
-        width: 4em;
-        padding: 4px;
-        margin: 1em;
-        border: 0px none #000;
-        border-radius: 5px;
-        background: #0e4f6b;
-        color: #fff;
+    .contianer-grid {
+        color: white;
+        border: 1px solid #eff7ff;
     }
 
     .area-patient {
@@ -160,70 +159,30 @@
         font: normal 1px 100 verdana;
         margin-left: 1em;
         margin-right: 1em;
-    }
-
-    #tb_detail {
-        width: 100%;
-        background: #fff;
-        font-size: small;
-        font: normal 1px 100 verdana;
-        margin-left: 1em;
-        margin-right: 1em;
-        margin-bottom: 4px;
-    }
-
-    #tb_patient th {
-        background: #15759e;
-        border-color: #f1f8ff;
-        color: #fff;
-    }
-
-    #tb_detail th {
-        background: #15759e;
-        border-color: #f1f8ff;
-        color: #fff;
+        white-space: nowrap;
     }
 
     #tb_patient tr {
         background: #eff7ff;
         color: black;
     }
-
-    #tb_detail tr {
-        background: #eff7ff;
-        color: black;
-    }
-
+    
     #tb_patient tr:hover {
         background: #eff7ff;
         color: black;
     }
-
-    #tb_detail tr:hover {
-        background: #eff7ff;
-        color: black;
+    
+    #tb_patient th {
+        background: #15759e;
+        border-color: #f1f8ff;
+        color: #fff;
     }
 
     #pagenation-patient {
         float: right;
     }
 
-    #pagenation-detail {
-        float: right;
-    }
-
     .btn-pagenation-patient {
-        display: inline-block;
-        margin: 2px;
-        padding-bottom: 2px;
-        width: 2em;
-        border-radius: 4px;
-        text-align: center;
-        background: #0e4f6b;
-        color: white;
-    }
-
-    .btn-pagenation-detail {
         display: inline-block;
         margin: 2px;
         padding-bottom: 2px;
@@ -245,22 +204,10 @@
         color: white;
     }
 
-    .btn-pagenation-detail-selected {
-        display: inline-block;
-        margin: 2px;
-        padding-bottom: 2px;
-        width: 2em;
-        border-radius: 4px;
-        text-align: center;
-        background: #1da8e3;
-        color: white;
-    }
-
     #area-detail {
         grid-area: detl;
         background: #111;
         color: #fff;
-        /* border: 1px solid gray; */
     }
 
     .warp-detail {
@@ -277,29 +224,92 @@
         margin: 0px;
         display: inline-block;
         width: 16em;
-        border: 1px solid gray;
+        border: 1px solid none;
         border-bottom: none;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-        background: #15759e;
+        background: #641666;
         color: white;
         text-align: center;
     }
 
     .warp-detail-content {
-        background: #999;
-        border: 1px solid gray;
+        /*background: #999;*/
+        border: 2px solid #641666;
         min-height: 24em;
         overflow-x: auto;
         overflow-y: auto;
+        /*background: #eff7ff;*/
+    }
+
+    #btn-search-detail {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin: 1em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #0e4f6b;
+        color: #fff;
+    }
+
+    #tb_detail {
+        width: 100%;
+        background: #fff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+        margin-left: 1em;
+        margin-right: 1em;
+        margin-bottom: 4px;
+        white-space: nowrap;
+    }
+
+    #tb_detail th {
+        background: #15759e;
+        border-color: #f1f8ff;
+        color: #fff;
+    }
+
+    #tb_detail tr {
         background: #eff7ff;
+        color: black;
+    }
+
+    #tb_detail tr:hover {
+        background: #eff7ff;
+        color: black;
+    }
+
+    #pagenation-detail {
+        float: right;
+    }
+
+    .btn-pagenation-detail {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .btn-pagenation-detail-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #1da8e3;
+        color: white;
     }
 
     .area-footer {
         grid-area: foot;
         color: #fff;
     }
-
 </style>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
@@ -313,17 +323,24 @@
 
     <div class="area-menu">
         <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
-        <span id="btn-menu-export" onclick="btnMenu('08-connection')">데이터선택</span>
         <span id="btn-menu-request">
             <select class="select-menu-sub" onchange="btnMenuSub(this)">
-                <option style="display: none;">암</option>
-                <option class="option-menu-sub">유방암</option>
-                <option class="option-menu-sub">위암</option>
+                <option style="display: none;">암종별 레지스트리</option>
+                <option class="option-menu-sub">유방암 레지스트리</option>
+                <option class="option-menu-sub">위암 레지스트리</option>
             </select>
         </span>
-        <span id="btn-menu-export" onclick="btnMenu('06-code')">코드조회</span>
-        <span id="btn-menu-export" onclick="btnMenu('07-column')">컬럼설정</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">설정</option>
+                <option class="option-menu-sub">데이터 선택</option>
+                <option class="option-menu-sub">데이터 매핑</option>
+                <option class="option-menu-sub">코드조회</option>
+                <option class="option-menu-sub">컬럼설정</option>
+            </select>
+        </span>
     </div>
+
 
     <div class="area-header">
         <p class="title">유방암</p>
@@ -335,7 +352,9 @@
     </div>
 
     <div class="area-patient">
-        <table id="tb_patient"></table>
+        <div class="contianer-grid">
+            <table id="tb_patient"></table>
+        </div>
         <div id="pagenation-patient"></div>
     </div>
 
@@ -343,16 +362,19 @@
         <div class="warp-detail">
             <div class="tab-contianer">
 
-                <span class="tab" onclick="alert('환자')">환자</span>
-                <span class="tab" onclick="alert('진단')">진단</span>
-                <span class="tab" onclick="alert('검사')">검사</span>
-                <span class="tab" onclick="alert('치료')">치료</span>
-
-                <span class="tab" onclick="alert('추적관찰')">추적관찰</span>
+                <span class="tab">환자</span>
+                <span class="tab">진단</span>
+                <span class="tab">검사</span>
+                <span class="tab">치료</span>
+                <span class="tab">추적관찰</span>
                 <div class="warp-detail-content">
-                    <div class="contianer-filter"></div>
-                    <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
-                    <table id="tb_detail"></table>
+                    <div>
+                        <div class="contianer-filter"></div>
+                        <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
+                    </div>
+                    <div class="contianer-grid">
+                        <table id="tb_detail"></table>
+                    </div>
                     <div id="pagenation-detail"></div>
                 </div>
             </div>
@@ -412,10 +434,18 @@
     //
     function btnMenuSub(elem) {
         //
-        if (elem.value === "유방암")
+        if (elem.value === "유방암 레지스트리")
             btnMenu('03-breast-cancer');
-        else if (elem.value === "위암")
+        else if (elem.value === "위암 레지스트리")
             btnMenu('04-stomach-cancer');
+        else if (elem.value === "데이터 선택")
+            btnMenu('08-connection');
+        else if (elem.value === "데이터 매핑")
+            btnMenu('09-data-mapping');
+        else if (elem.value === "코드조회")
+            btnMenu('06-code');
+        else if (elem.value === "컬럼설정")
+            btnMenu('07-column');
     }
 
     //////////////////////////////////////////////////////////////////////////// patient filter box
@@ -458,7 +488,7 @@
                 <input type="text" id="selector-{id}">
             </span>
         `;
-        let templateListView = `            
+        let templateListView = `
             <span>
                 <span class="lb-filter">{label}</span>
                 <select id="selector-{id}"> {options} </select>
@@ -474,8 +504,7 @@
         filerPatient.forEach(filter => {
             //
             let tempHtml = "";
-            if (filter.type == "textbox")
-            {
+            if (filter.type == "textbox") {
                 tempHtml = templateListView.replaceAll("{id}", filter.id);
                 tempHtml = tempHtml.replaceAll("{label}", filter.column);
                 //
@@ -485,13 +514,11 @@
                 });
                 tempHtml = tempHtml.replaceAll("{options}", tempOption);
             }
-            else if (filter.type == "listview")
-            {
+            else if (filter.type == "listview") {
                 tempHtml = templateTextBox.replaceAll("{id}", filter.id);
                 tempHtml = tempHtml.replaceAll("{label}", filter.column);
             }
-            else if (filter.type == "datepicker")
-            {
+            else if (filter.type == "datepicker") {
                 tempHtml = templateDatePicker.replaceAll("{id}", filter.id);
                 tempHtml = tempHtml.replaceAll("{label}", filter.column);
             }
@@ -510,7 +537,7 @@
                 type: "listview",
                 schema: "kcure",
                 table: "tb_test01",
-                column: "column01", 
+                column: "column01",
                 value: "",
                 options: ["-", "test1", "test2", "test3"]
             },
@@ -541,8 +568,7 @@
     var rowsPatient = []
     function fetchPatient(response, option) {
         //
-        if (response == undefined)
-        {
+        if (response == undefined) {
             log("option", option, "table");
             window.chrome.webview.postMessage({
                 phase: "request",
@@ -712,7 +738,8 @@
     var rowsDetail = []
     function fetchDetail(response, option) {
         //
-        if (response == undefined) {
+        if (response == undefined)
+        {
             log("option", option, "table");
             window.chrome.webview.postMessage({
                 phase: "request",
@@ -722,7 +749,8 @@
                 data: option
             });
         }
-        else {
+        else
+        {
             log("response", response);
             rowsDetail = JSON.parse(response);
             renderTableDetail();
