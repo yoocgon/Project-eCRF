@@ -3,6 +3,8 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using eCRF.service;
 using eCRF.module;
+using YamlDotNet;
+using YamlDotNet.RepresentationModel;
 
 namespace KCureDataAccess
 {
@@ -27,6 +29,7 @@ namespace KCureDataAccess
         Service05CsvViewer? service05CsvViewer;
         Service06Code? service06Code;
         Service07Column? service07Column;
+        Service08Connection? service08Connection;
         Service90TestDapper? service90TestDapper;
         Service91TestLiteDb? service91TestLiteDb;
 
@@ -34,6 +37,8 @@ namespace KCureDataAccess
         {
             this.observer = observer;
             this.observer.Add(this);
+            //
+            this.LoadApplicationConfig(config);
             //
             this.config = config;
             this.library = new CustomLibrary(); 
@@ -69,6 +74,10 @@ namespace KCureDataAccess
             this.service07Column.Library = this.library;
             this.service07Column.DapperClient = this.dapperClient;
             //
+            this.service08Connection = new Service08Connection();
+            this.service08Connection.Library = this.library;
+            this.service08Connection.LiteDbClient = this.liteDbClient;
+            //
             this.service90TestDapper = new Service90TestDapper();
             this.service90TestDapper.Library = this.library;
             this.service90TestDapper.DbClient = this.dapperClient;
@@ -100,6 +109,27 @@ namespace KCureDataAccess
             if (type == "page")
             {
                 observer.Send("response", "page", action, "", null);
+            }
+            else if (type == "gui")
+            {
+                if (action == "fileBrowser")
+                {
+                    string path = service08Connection.ShowFileBrowser();
+                    observer.Send("response", "gui", action, path, null);
+                }
+                else if (action == "folderBrowser")
+                {
+                    string path = service08Connection.ShowForderBrowser();
+                    observer.Send("response", "gui", action, path, null);
+                }
+            }
+            else if (type == "litedb")
+            {
+                if (action == "insert-csv")
+                {
+                    if(service08Connection.InsertCsvLiteDb(message))
+                        observer.Send("response", "gui", action, "success", null);
+                }
             }
             else if (type == "api")
             {
@@ -176,5 +206,52 @@ namespace KCureDataAccess
             Console.WriteLine("(action) " + action);
             Console.WriteLine("(message) " + message);
         }
+
+        public void LoadApplicationConfig(Config config)
+        {
+            string yamlContents = File.ReadAllText(config.App);
+            var input = new StringReader(yamlContents);
+            var yamlStream = new YamlStream();
+            yamlStream.Load(input);
+            var rootNode = (YamlMappingNode)yamlStream.Documents[0].RootNode;
+            Dictionary<string, object> yamlDict = new Dictionary<string, object>();
+            foreach (var entry in rootNode.Children)
+            {
+                var key = ((YamlScalarNode)entry.Key).Value;
+                if (entry.Value is YamlMappingNode nestedNode)
+                {
+                    var nestedDict = new Dictionary<string, string>();
+                    foreach (var nestedEntry in nestedNode.Children)
+                    {
+                        var nestedKey = ((YamlScalarNode)nestedEntry.Key).Value;
+                        var nestedValue = ((YamlScalarNode)nestedEntry.Value).Value;
+                        nestedDict[nestedKey] = nestedValue;
+                    }
+                    yamlDict[key] = nestedDict;
+                }
+                else
+                {
+                    var value = ((YamlScalarNode)entry.Value).Value;
+                    yamlDict[key] = value;
+                }
+            }
+
+            foreach (var kvp in yamlDict)
+            {
+                if (kvp.Value is Dictionary<string, string> nestedDict)
+                {
+                    Console.WriteLine($"{kvp.Key}:");
+                    foreach (var nestedKvp in nestedDict)
+                    {
+                        Console.WriteLine($"  {nestedKvp.Key}: {nestedKvp.Value}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+                }
+            }
+        }
+
     }
 }

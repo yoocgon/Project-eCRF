@@ -7,6 +7,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text;
+using CsvHelper.Configuration;
+using CsvHelper;
+using System.Globalization;
+using Renci.SshNet.Common;
 
 namespace eCRF.module
 {
@@ -22,82 +26,6 @@ namespace eCRF.module
              .WriteTo.Console()
              .CreateLogger();
         }
-
-        //
-        //public List<Dictionary<string, object>> Query(string query)
-        //{
-        //    var database = new LiteDatabase(config.liteDbFilePath);
-        //    var collection = database.GetCollection("ecrf");
-        //    //
-        //    List<Dictionary<string, object>> listResult = new List<Dictionary<string, object>>();
-        //    var results = database.Execute(query).ToEnumerable()
-        //        .SelectMany(x => ((Dictionary<string, BsonValue>)x.RawValue)
-        //        .ToDictionary(y => y.Key, y => y.Value.RawValue.ToString()));
-        //    //
-        //    if (results == null)
-        //        return null;
-        //    //
-        //    foreach (var result in results)
-        //    {
-        //        var dictionary = new Dictionary<string, object>();
-        //        foreach (var item in result)
-        //        {
-        //            dictionary[item.Key] = item.Value;
-        //        }
-        //        listResult.Add(dictionary);
-        //    }
-        //    //
-        //    return listResult;
-        //}
-
-        //public List<Dictionary<string, object>> Query(string query)
-        //{
-        //    using (var database = new LiteDatabase(config.liteDbFilePath))
-        //    {
-        //        var resultList = new List<Dictionary<string, object>>();
-        //        using (var results = database.Execute(query))
-        //        {
-        //            if (results == null)
-        //                return resultList;
-
-        //            while (results.Read())
-        //            {
-        //                if (results.Current != null)
-        //                {
-        //                    var result = results.Current;
-        //                    var dictionary = new Dictionary<string, object>();
-        //                    if (result.IsDocument)
-        //                    {
-        //                        var document = result.AsDocument;
-        //                        foreach (var item in document)
-        //                        {
-        //                            dictionary[item.Key] = item.Value.RawValue;
-        //                        }
-        //                    }
-        //                    else if (result.IsArray)
-        //                    {
-        //                        var array = result.AsArray;
-        //                        var list = new List<object>();
-        //                        for (int i = 0; i < array.Count; i++)
-        //                        {
-        //                            list.Add(array[i].RawValue);
-        //                        }
-
-        //                        dictionary["Array"] = list;
-        //                    }
-        //                    else
-        //                    {
-        //                        dictionary["Value"] = result.RawValue;
-        //                    }
-
-        //                    resultList.Add(dictionary);
-        //                }
-        //            }
-        //        }
-
-        //        return resultList;
-        //    }
-        //}
 
         public List<Dictionary<string, object>> Query(string query)
         {
@@ -155,76 +83,11 @@ namespace eCRF.module
             return listResult;
         }
 
-        //public List<Dictionary<string, object>> Query(string query)
-        //{
-        //    //
-        //    string strJson;
-        //    Query(out strJson, query);
-        //    //
-        //    List<Dictionary<string, object>> listJsonElement = System.Text.Json.JsonSerializer.Deserialize<List<Dictionary<string, object>>>(strJson);
-        //    return listJsonElement;
-        //}
-
-        //public bool Query(out string strJson, string query)
-        //{
-        //    strJson = string.Empty;
-        //    using (var database = new LiteDatabase(config.liteDbFilePath))
-        //    {
-        //        var resultBuilder = new StringBuilder();
-        //        using (var results = database.Execute(query))
-        //        {
-        //            if (results == null)
-        //                return false;
-        //            //
-        //            while (results.Read())
-        //            {
-        //                if (results.Current != null)
-        //                {
-        //                    var bsonValue = results.Current;
-        //                    var jsonString = bsonValue.ToString();
-        //                    resultBuilder.Append(jsonString).AppendLine();
-        //                }
-        //            }
-        //        }
-        //        //
-        //        strJson = resultBuilder.ToString();
-        //        return true;
-        //    }
-        //}
-
-        //public bool Query(out string strJson, string query)
-        //{
-        //    strJson = string.Empty;
-        //    using (var database = new LiteDatabase(config.liteDbFilePath))
-        //    {
-        //        using (var results = database.Execute(query))
-        //        {
-        //            if (results == null)
-        //                return false;
-        //            //
-        //            List<string> listStr = new List<string>();
-        //            while (results.Read())
-        //            {
-        //                if (results.Current != null)
-        //                {
-        //                    var bsonValue = results.Current;
-        //                    strJson = bsonValue.ToString();
-        //                    listStr.Add(strJson);
-        //                }
-        //            }
-        //            //
-        //            if (listStr.Count > 1)
-        //                strJson = $"[{string.Join(",", listStr.ToArray())}]";
-        //        }
-        //        //
-        //        return true;
-        //    }
-        //}
 
         public bool Query(out string strJson, string query)
         {
             strJson = string.Empty;
-            using (var database = new LiteDatabase(config.liteDbFilePath))
+            using (var database = new LiteDatabase(config.LiteDbFilePath))
             {
                 using (var results = database.Execute(query))
                 {
@@ -251,10 +114,59 @@ namespace eCRF.module
             }
         }
 
+        public List<Dictionary<string, object>> ReadCsv(string path)
+        {
+            List<Dictionary<string, object>> records = new List<Dictionary<string, object>>();
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+            {
+                csv.Read();
+                csv.ReadHeader();
+                while (csv.Read())
+                {
+                    var record = new Dictionary<string, object>();
+                    foreach (var header in csv.HeaderRecord)
+                    {
+                        //record[header] = csv.GetField<object>(header);
+                        var data = csv.GetField<dynamic>(header);
+                        record.Add(header, (object) data);
+                    }
+                    //
+                    records.Add(record);
+                }
+            }
+            //
+            return records;
+        }
+
+
+        public bool InsertCsv(string path)
+        {
+            using (var database = new LiteDatabase(config.LiteDbFilePath))
+            {
+                var collection = database.GetCollection("ecrf");
+                //
+                List<Dictionary<string, object>> records = ReadCsv(path);
+                //
+                foreach (var record in records)
+                {
+                    var bsonDocument = new BsonDocument();
+                    foreach (var kvp in record)
+                        bsonDocument.Add(kvp.Key, new BsonValue(kvp.Value));
+                    //
+                    collection.Insert(bsonDocument);
+                }
+                //
+                database.Dispose();
+            }
+            //
+            return true;
+        }
+
 
         public void Test()
         {
-            using (var db = new LiteDatabase(config.liteDbFilePath))
+            using (var db = new LiteDatabase(config.LiteDbFilePath))
             {
                 var collection = db.GetCollection<BsonDocument>("ecrf");
                 var document = new BsonDocument

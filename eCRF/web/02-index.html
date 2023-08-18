@@ -11,12 +11,10 @@
             "stat"
             "menu"
             "head"
-            "fter"
-            "relt"
-            "detl"
+            "main"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 2.4em 3em auto auto auto 2em;
+        grid-template-rows: 2em 2.4em 3em auto 1em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -27,13 +25,6 @@
         background: #3f0e40;
         color: #0e4f6b;
     }
-
-/*    
-    #hello {
-        float: right;
-        padding-right: 1em;
-    }
-*/
 
     .area-menu {
         grid-area: menu;
@@ -56,6 +47,29 @@
         transition: all 0.1s ease-in-out;
     }
 
+    .area-header {
+        grid-area: head;
+
+    }
+
+    .area-header .title {
+        font-size: medium;
+        font-weight: 800;
+        margin-left: 0.8em;
+        padding-left: 2px;
+        border-bottom: 2px solid #641666;
+        color: #3f0e40;
+    }
+
+    .area-main {
+        grid-area: main;
+    }
+    
+    .area-footer {
+        grid-area: foot;
+        color: #fff;
+    }
+
     .select-menu-sub {
         border: none;
         appearance: none;
@@ -76,47 +90,17 @@
         padding: 20px;
     }
 
-    .area-header {
-        grid-area: head;
-    }
-
-    .area-header .title {
-        font-size: medium;
-        font-weight: 800;
-        margin-left: 0.8em;
-        padding-left: 2px;
-        border-bottom: 2px solid #641666;
-        color: #3f0e40;
-    }
-
     #lb-title {
         margin-left: 1.2em;
         margin-bottom: 0;
         color: #0e4f6b
     }
 
-    .area-filter {
-        grid-area: fter;
-    }
-
-    .area-filter select {
-        width: 12.7em;
-        height: 1.4em;
-    }
-
-    .area-result {
-        grid-area: relt;
-        padding: 0.6em;
-    }
-    
-    .area-footer {
-        grid-area: foot;
-        color: #fff;
-    }
 </style>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 <script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 
 <div class="wrapper">
 
@@ -147,6 +131,15 @@
 
     <div class="area-header">
         <p class="title">MAIN</p>
+    </div>
+
+    <div class="area-main">
+        <div id="chartBar" style="height: 400px;"></div>
+        <div id="chartLine" style="height: 400px;"></div>
+        <div id="chartPie" style="height: 400px;"></div>
+    </div>
+
+    <div class="area-footer">
     </div>
 
 </div>
@@ -205,4 +198,85 @@
     ////
     //fetchHello();
 
+    // 차트 데이터 준비
+    var chartData = [
+        { name: 'Category 1', value: 10 },
+        { name: 'Category 2', value: 25 },
+        { name: 'Category 3', value: 15 },
+        { name: 'Category 4', value: 30 },
+        { name: 'Category 1', value: 10 },
+        { name: 'Category 2', value: 25 },
+        { name: 'Category 3', value: 15 },
+        { name: 'Category 4', value: 30 },
+        { name: 'Category 1', value: 10 },
+        { name: 'Category 2', value: 25 },
+        { name: 'Category 3', value: 15 },
+        { name: 'Category 4', value: 30 },
+    ];
+
+    //
+    Highcharts.chart('chartBar', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Vertical Bar Chart'
+        },
+        xAxis: {
+            categories: chartData.map(item => item.name)
+        },
+        yAxis: {
+            title: {
+                text: 'Value'
+            }
+        },
+        series: [{
+            name: 'Value',
+            data: chartData.map(item => item.value)
+        }]
+    });
+
+    //
+    Highcharts.chart('chartLine', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Vertical Bar Chart'
+        },
+        xAxis: {
+            categories: chartData.map(item => item.name)
+        },
+        yAxis: {
+            title: {
+                text: 'Value'
+            }
+        },
+        series: [{
+            name: 'Value',
+            data: chartData.map(item => item.value)
+        }]
+    });
+
+    //
+    Highcharts.chart('chartPie', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Vertical Bar Chart'
+        },
+        xAxis: {
+            categories: chartData.map(item => item.name)
+        },
+        yAxis: {
+            title: {
+                text: 'Value'
+            }
+        },
+        series: [{
+            name: 'Value',
+            data: chartData.map(item => item.value)
+        }]
+    });
 </script>

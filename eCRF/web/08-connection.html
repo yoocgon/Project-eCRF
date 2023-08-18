@@ -140,14 +140,14 @@
         margin-right: 1em;
     }
 
-    #text-csv-dir {
+    #text-nosql-path, #text-csv-dir {
         /*width: calc(100% - 10em);*/
         min-width: 25em;
         width: fit-content;
         margin-left: 3em;
     }
 
-    #btn-connection, #btn-open-dir {
+    .btn-apply {
         float: right;
         width: 4em;
         padding: 4px;
@@ -260,7 +260,6 @@
         </span>
     </div>
 
-
     <div class="area-header">
         <p class="title">데이터 선택</p>
     </div>
@@ -272,12 +271,14 @@
 
         <div class="container-filter">
             <span>저장 경로</span>
-            <input class="text-black" id="text-csv-dir" type="text" />
+            <input class="text-black" id="text-nosql-path" type="text" />
         </div>
-
         <div>
-            <input id="btn-connection" type="button" value="접속" onclick="btnConnection()" />
+            <input class="btn-apply" id="btn-select-nosql" type="button" value="선택" onclick="btnSelectNoSql()" />
+            <input class="btn-apply" id="btn-connection-nosql" type="button" value="접속" onclick="btnConnectionNoSql()" />
         </div>
+        <br />
+
 
         <h4>외부 PostgreSQL 접속 설정</h4>
 
@@ -303,10 +304,10 @@
                 <input class="text-black" id="text-password" type="text" />
             </div>
         </div>
-
         <div>
-            <input id="btn-connection" type="button" value="접속" onclick="btnConnection()" />
+            <input class="btn-apply" id="btn-connection-dbms" type="button" value="접속" onclick="btnConnectionDbms()" />
         </div>
+        <br />
 
 
         <h4>CSV 데이터 사용</h4>
@@ -319,16 +320,16 @@
                     <option>유방암</option>
                 </select>
             </div>
-
             <div>
                 <span>CSV 폴더 경로</span>
                 <input class="text-black" id="text-csv-dir" type="text" />
             </div>
         </div>
-
         <div>
-            <input id="btn-open-dir" type="button" value="선택" onclick="btnOpenDir()" />
+            <input class="btn-apply" id="btn-open-dir" type="button" value="선택" onclick="btnOpenDir()" />
+            <input class="btn-apply" id="btn-apply-dir" type="button" value="적용" onclick="btnApplyDir()" />
         </div>
+        <br />
 
         <h4>CSV - 데이터 영역 매핑 상세 상태</h4>
 
@@ -411,15 +412,93 @@
             btnMenu('90-test');
     }
 
+    //////////////////////////////////////////////////////////////////////////// nosql connection
+
+    //
+    function fetchFile(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'gui',
+                action: 'fileBrowser',
+                message: '',
+            });
+        }
+        else
+        {
+            log("path", response);
+            document.getElementById("text-nosql-path").value = response;
+        }
+    }
+
+    //
+    function fetchCsvInsertTest(response, option) {
+        //
+        let path = document.getElementById("text-nosql-path").value
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'litedb',
+                action: 'insert-csv',
+                message: path,
+            });
+        }
+        else
+        {
+            log("response", response);
+            alert(response);
+        }
+    }
+
+    //
+    function btnSelectNoSql() {
+        fetchFile(undefined, null);
+    }
+
+    //
+    function btnConnectionNoSql() {
+        fetchCsvInsertTest(undefined, null);
+    }
+
     //////////////////////////////////////////////////////////////////////////// postgres connection
 
     //
-    function btnConnection() {
+    function btnConnectionDbms() {
 
+    }
+
+    //////////////////////////////////////////////////////////////////////////// select csv folder
+
+    //
+    function fetchForder(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'gui',
+                action: 'folderBrowser',
+                message: '',
+            });
+        }
+        else
+        {
+            log("path", response);
+            document.getElementById("text-csv-dir").value = response;
+        }
     }
 
     //
     function btnOpenDir() {
+        fetchForder(undefined, null);
+    }
+
+    //
+    function btnApplyDir() {
 
     }
 
@@ -494,8 +573,6 @@
                 소분류: "위암_검사_면역_병리",
                 csv: "C://aaaaa.csv"
             },
-
-
             {
                 암종: "위암",
                 대분류: "검사",
@@ -770,13 +847,13 @@
 
     //
     function btnPagenation(page) {
-
+        //
         if (page <= 0)
             page = 1;
-
+        //
         if (page >= pagenationLastPage)
             page = pagenationLastPage;
-
+        //
         pagenationCurPage = page;
         renderPagenation();
         renderTable();
@@ -792,7 +869,7 @@
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage + 1)'> > </span>
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationLastPage)'> >> </span>
                 `;
-
+        //
         let htmlPage = "";
         for (let i = 1; i <= pagenationLastPage; i++) {
             //
@@ -804,7 +881,7 @@
             else
                 htmlPage += "<span class='btn-pagenation' onclick='btnPagenation(" + i + ")'>" + i + "</span>";
         }
-
+        //
         htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
         document.getElementById('pagenation').innerHTML = htmlPage;
     }

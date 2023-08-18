@@ -26,7 +26,7 @@ namespace eCRF.module
         /// <returns></returns>
         public List<Dictionary<string, object>> Query(string query)
         {
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
+            using (var connection = new NpgsqlConnection(config.DapperConnStr))
             {
                 connection.Open();
                 dynamic result = connection.Query<dynamic>(query);
@@ -93,7 +93,7 @@ namespace eCRF.module
         /// <returns></returns>
         public List<Dictionary<string, object>> Select(string query, object parameters)
         {
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
+            using (var connection = new NpgsqlConnection(config.DapperConnStr))
             {
                 connection.Open();
                 dynamic result;
@@ -145,7 +145,7 @@ namespace eCRF.module
         /// <returns></returns>
         public List<Dictionary<string, object>> Select(string schema, string table, int offset, int limit, Dictionary<string, JsonElement> whereConditions)
         {
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
+            using (var connection = new NpgsqlConnection(config.DapperConnStr))
             {
                 connection.Open();
 
@@ -276,7 +276,7 @@ namespace eCRF.module
             string offset, string limit)
         {
             //
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
+            using (var connection = new NpgsqlConnection(config.DapperConnStr))
             {
                 connection.Open();
                 //
@@ -408,7 +408,7 @@ namespace eCRF.module
             query = query.Replace("{schema}", schema);
             query = query.Replace("{table}", table);
             //
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
+            using (var connection = new NpgsqlConnection(config.DapperConnStr))
             {
                 connection.Open();
                 dynamic result = connection.Query(query).ToList();
@@ -504,7 +504,7 @@ namespace eCRF.module
             //
             string query = $"SELECT distinct {column} FROM {table}";
             //
-            using (var connection = new NpgsqlConnection(config.dapperConnStr))
+            using (var connection = new NpgsqlConnection(config.DapperConnStr))
             {
                 connection.Open();
                 List<dynamic> result = connection.Query(query).ToList();

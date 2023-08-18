@@ -29,7 +29,7 @@ namespace KCureDataAccess
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            webView2.Source = new Uri(config.webRoot + "02-index.html");
+            webView2.Source = new Uri(config.WebRoot + "02-index.html");
 
             //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             //string relativePath = @"web/01-login.html";
@@ -66,10 +66,6 @@ namespace KCureDataAccess
                 Console.WriteLine("\nDebug>>> ({0}) {1}", "error", ex.ToString());
                 MessageBox.Show(ex.ToString());
             }
-            finally
-            {
-                Console.WriteLine("\nDebug>>> ({0}) {1}", "error", "error");
-            }
         }
 
         public void Listener(string phase, string type, string action, string message, dynamic data)
@@ -85,7 +81,17 @@ namespace KCureDataAccess
             //
             if (type == "page")
             {
-                webView2.Source = new Uri(config.webRoot + action + ".html");
+                webView2.Source = new Uri(config.WebRoot + action + ".html");
+            }
+            else if (type == "gui")
+            {
+                //
+                message = message.Replace("\\", "/");
+                //
+                if (action == "fileBrowser")
+                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchFile('{message}', undefined);");
+                else if (action == "folderBrowser") 
+                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchForder('{message}', undefined);");
             }
             else if (type == "api")
             {

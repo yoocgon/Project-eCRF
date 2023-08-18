@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualBasic.Logging;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.VisualBasic.Devices;
+using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,10 @@ namespace KCureDataAccess
 {
     public class Config
     {
-        public string webRoot { get; set; }
-        public string dapperConnStr { get; set; }
-        public string liteDbFilePath { get; set; }
+        public string App { get; set; }
+        public string WebRoot { get; set; }
+        public string DapperConnStr { get; set; }
+        public string LiteDbFilePath { get; set; }
         public Config()
         {
             // VBox
@@ -27,9 +30,10 @@ namespace KCureDataAccess
             // dapperConnStr = "Server=127.0.0.1;Port=5433;User Id=gony;Password=asdf;Database=kcure;";
 
             // Office
-            webRoot = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/web/";
-            dapperConnStr = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=asdf;Database=kcure;";
-            liteDbFilePath = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/lite.db";
+            App = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/application.yml";
+            WebRoot = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/web/";
+            DapperConnStr = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=asdf;Database=kcure;";
+            LiteDbFilePath = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/lite.db";
         }
     }
 }
