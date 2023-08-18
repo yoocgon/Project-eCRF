@@ -8,46 +8,89 @@
     .wrapper {
         display: grid;
         grid-template-areas:
-            "stat"
-            "menu"
-            "head"
-            "fter"
-            "pati"
-            "detl"
-            "foot";
-        grid-template-columns: 100%;
-        grid-template-rows: 2em 2.4em 3em auto auto auto 2em;
+            "stat stat"
+            "menu menu"
+            "head head"
+            "pati detl"
+            "foot foot";
+        grid-template-columns: 30em calc(100% - 30.5em);
+        grid-template-rows: 2em 2.4em 3em 100% 0.2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
     }
 
+    .wrapper-area {
+
+    }
+
+    .contianer-patient {
+        padding: 1em;
+        height: 100%;
+    }
+
+    .contianer-detail {
+        border: 2px solid #641666;
+        padding: 1em;
+        height: 100%;
+    }
+
+    .contianer-filter {
+    
+    }
+
+    .contianer-grid {
+        color: white;
+    }
+
+    .box-tab {
+        padding: 0px;
+        background: white;
+        margin-top: 0.2em;
+    }
+
+    .box-filter {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding: 1em;
+        border: 1px solid none;
+        border-radius: 3px;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .box-grid {
+        border: 1px solid #eff7ff;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
     .area-stat {
         grid-area: stat;
         background: #3f0e40;
-        color: #0e4f6b;
+        color: #0e4f6b;        
     }
 
-    /*
+/*    
     #hello {
         float: right;
         padding-right: 1em;
     }
-    */
-
-     .area-menu {
-         grid-area: menu;
-         display: flex;
-         justify-content: space-between;
-         border-bottom: 4px double #ccc;
-         padding-top: 0.4em;
-         padding-left: 2em;
-         padding-right: 2em;
-         font-size: small;
-         font-weight: 800;
-         background-color: #641666;
-         color: #fff;
-     }
+*/
+    .area-menu {
+        grid-area: menu;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 4px double #ccc;
+        padding-top: 0.4em;
+        padding-left: 2em;
+        padding-right: 2em;
+        font-size: small;
+        font-weight: 800;
+        background-color: #641666;
+        color: white;
+    }
 
     .area-menu span:hover {
         justify-content: center;
@@ -92,26 +135,6 @@
     #lb-title {
         margin-left: 1.2em;
         margin-bottom: 0;
-        color: #0e4f6b;
-    }
-
-    .area-filter {
-        grid-area: fter;
-        margin-left: 1em;
-    }
-
-    .contianer-filter {
-        display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        margin-top: 0.4em;
-        margin-left: 0.8em;
-        margin-right: 0.8em;
-        padding: 1em;
-        border-radius: 3px;
-        background: #0e4f6b;
-        color: #fff;
-        width: calc(100% - 4em);
     }
 
     .lb-filter {
@@ -120,12 +143,12 @@
         margin-left: 1em;
     }
 
-    .area-filter input {
+    input {
         background: #eff7ff;
         border: none;
     }
 
-    .area-filter select {
+    select {
         width: 13em;
         background: #eff7ff;
         border: none;
@@ -135,47 +158,42 @@
         float: right;
         width: 4em;
         padding: 4px;
-        margin: 1em;
+        margin-top: 1em;
         border: 0px none #000;
         border-radius: 5px;
         background: #0e4f6b;
         color: #fff;
     }
 
-    .contianer-grid {
-        color: white;
-        border: 1px solid #eff7ff;
-    }
-
     .area-patient {
         grid-area: pati;
         padding: 0.6em;
+        background:  white;
     }
 
     #tb_patient {
-        width: calc(100% - 2em);
+        width: 100%;
         background: #fff;
+        border-color: #f1f8ff;
         font-size: small;
         font: normal 1px 100 verdana;
-        margin-left: 1em;
-        margin-right: 1em;
         white-space: nowrap;
+    }
+
+    #tb_patient th {
+        background: #15759e;
+        border-color: gray;
+        color: #fff;
     }
 
     #tb_patient tr {
         background: #eff7ff;
         color: black;
     }
-    
+
     #tb_patient tr:hover {
         background: #eff7ff;
         color: black;
-    }
-    
-    #tb_patient th {
-        background: #15759e;
-        border-color: #f1f8ff;
-        color: #fff;
     }
 
     #pagenation-patient {
@@ -210,20 +228,10 @@
         color: #fff;
     }
 
-    .warp-detail {
-        margin: 1em;
-        background: #15759e;
-    }
-
-    .tab-contianer {
-        padding: 0px;
-        background: white;
-    }
-
     .tab {
         margin: 0px;
         display: inline-block;
-        width: 16em;
+        width: 8em;
         border: 1px solid none;
         border-bottom: none;
         border-top-left-radius: 5px;
@@ -233,20 +241,11 @@
         text-align: center;
     }
 
-    .warp-detail-content {
-        /*background: #999;*/
-        border: 2px solid #641666;
-        min-height: 24em;
-        overflow-x: auto;
-        overflow-y: auto;
-        /*background: #eff7ff;*/
-    }
-
     #btn-search-detail {
         float: right;
         width: 4em;
         padding: 4px;
-        margin: 1em;
+        margin-top: 1em;
         border: 0px none #000;
         border-radius: 5px;
         background: #0e4f6b;
@@ -266,15 +265,15 @@
 
     #tb_detail th {
         background: #15759e;
-        border-color: #f1f8ff;
+        border-color: gray;
         color: #fff;
     }
-
+    
     #tb_detail tr {
         background: #eff7ff;
         color: black;
     }
-
+    
     #tb_detail tr:hover {
         background: #eff7ff;
         color: black;
@@ -310,7 +309,9 @@
         grid-area: foot;
         color: #fff;
     }
+
 </style>
+
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 <script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0"></script>
@@ -337,55 +338,69 @@
                 <option class="option-menu-sub">데이터 매핑</option>
                 <option class="option-menu-sub">코드조회</option>
                 <option class="option-menu-sub">컬럼설정</option>
-                <option class="option-menu-sub">테스트</option>
             </select>
         </span>
     </div>
 
 
     <div class="area-header">
-        <p class="title">유방암</p>
-    </div>
-
-    <div class="area-filter">
-        <div class="contianer-filter" id="patient-filter-box"></div>
-        <input id="btn-search-patient" type="button" value="조회" onclick="btnSearchPatient()" />
+        <p class="title">위암</p>
     </div>
 
     <div class="area-patient">
-        <div class="contianer-grid">
-            <table id="tb_patient"></table>
+        <div class="wrapper-area">
+            <div class="contianer-patient">
+                <div class="contianer-filter">
+                    <div class="box-filter" id="patient-filter-box"></div>
+                    <input id="btn-search-patient" type="button" value="조회" onclick="btnSearchPatient()" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="contianer-grid">
+                    <div class="box-grid">
+                        <table id="tb_patient"></table>
+                    </div>
+                    <div id="pagenation-patient"></div>
+                </div>
+            </div>
         </div>
-        <div id="pagenation-patient"></div>
     </div>
 
     <div class="area-detail">
-        <div class="warp-detail">
-            <div class="tab-contianer">
-
+        <div class="wrapper-area">
+            <div class="box-tab">
+                <span class="tab">현황</span>
+                <span class="tab">요약</span>
                 <span class="tab">환자</span>
                 <span class="tab">진단</span>
                 <span class="tab">검사</span>
                 <span class="tab">치료</span>
                 <span class="tab">추적관찰</span>
-                <div class="warp-detail-content">
-                    <div>
-                        <div class="contianer-filter"></div>
-                        <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
-                    </div>
-                    <div class="contianer-grid">
+                <span class="tab">수기입력</span>
+            </div>
+
+            <div class="contianer-detail">
+                <div class="contianer-filter">
+                    <div class="box-filter"></div>
+                    <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
+                    <br />
+                    <br />
+                    <br />
+                </div>
+                <div class="contianer-grid">
+                    <div class="box-grid">
                         <table id="tb_detail"></table>
                     </div>
                     <div id="pagenation-detail"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="area-footer">
-            <span id="logo-footer"></span>
+            <div class="area-footer">
+                <span id="logo-footer"></span>
+            </div>
         </div>
     </div>
-
 </div>
 
 <script>
@@ -408,7 +423,7 @@
     //    //
     //    if (data == undefined) {
     //        window.chrome.webview.postMessage({
-    //            phase: "request",
+    //            phase: 'request',
     //            type: 'api',
     //            action: 'hello',
     //            message: ''
@@ -425,7 +440,7 @@
     function btnMenu(menu) {
         //
         window.chrome.webview.postMessage({
-            phase: "request",
+            phase: 'request',
             type: 'page',
             action: menu,
             message: ''
@@ -447,8 +462,6 @@
             btnMenu('06-code');
         else if (elem.value === "컬럼설정")
             btnMenu('07-column');
-        else if (elem.value === "테스트")
-            btnMenu('90-test');
     }
 
     //////////////////////////////////////////////////////////////////////////// patient filter box
@@ -472,8 +485,8 @@
         log("filter", filter, "table");
         //
         let option = {
-            schema: "public",
-            table: "tb_test",
+            schema: "cancer_stomach",
+            table: "gscn_pt_hlinf",
             offset: 0,
             limit: 20,
             filter: filter
@@ -491,7 +504,7 @@
                 <input type="text" id="selector-{id}">
             </span>
         `;
-        let templateListView = `
+        let templateListView = `            
             <span>
                 <span class="lb-filter">{label}</span>
                 <select id="selector-{id}"> {options} </select>
@@ -571,7 +584,8 @@
     var rowsPatient = []
     function fetchPatient(response, option) {
         //
-        if (response == undefined) {
+        if (response == undefined)
+        {
             log("option", option, "table");
             window.chrome.webview.postMessage({
                 phase: "request",
@@ -590,7 +604,6 @@
         }
     }
 
-
     //////////////////////////////////////////////////////////////////////////// patient gridview
 
     //
@@ -605,31 +618,33 @@
             lastPagePagenationPatient += 1;
         //
         log("limitRowPagenationPatient", limitRowPagenationPatient, "");
-        log("currentPagePatenationPatient", currentPagePatenationPatient, "");
-        log("lastPagePagenationPatient : ", lastPagePagenationPatient, "");
+        log("currentPagePagenationPatient", currentPagePagenationPatient, "");
+        log("lastPagePagenationPatient", lastPagePagenationPatient, "");
 
-        let rowStart = (currentPagePatenationPatient * limitRowPagenationPatient) - limitRowPagenationPatient + 1;
+        let rowStart = (currentPagePagenationPatient * limitRowPagenationPatient) - limitRowPagenationPatient + 1;
         let rowEnd = rowStart + limitRowPagenationPatient - 1;
         if (rowEnd >= rowsPatient.length)
             rowEnd = rowStart + rowsPatient.length % limitRowPagenationPatient;
         //
-        log("rowStart : ", rowStart, "");
-        log("rowEnd : ", rowEnd, "");
+        log("rowStart", rowStart, "");
+        log("rowEnd", rowEnd, "");
         //
         let htmlStack = "";
-        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++)
+        {
             //
             if (rowNum == rowsPatient.length + 1)
                 break;
             //
             let item = rowsPatient[rowNum - 1];
-            log("row", item, "");
+            // log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRowTablePatient(` + rowNum + `)">`;
-            for (let key in item) {
-                log("key", key, "");
+            for (let key in item)
+            {
+                // log("key", key, "");
                 let column = item[key];
-                log("column", column, "");
+                // log("column", column, "");
                 htmlStack += ` <td> ` + column + ` </td> `;
             }
             htmlStack += `</tr>`;
@@ -660,33 +675,34 @@
     //////////////////////////////////////////////////////////////////////////// patient pagenation
 
     //
-    var limitRowPagenationPatient = 5;
+    var limitRowPagenationPatient = 20;
     var lastPagePagenationPatient = 0;
-    var currentPagePatenationPatient = 1;
+    var currentPagePagenationPatient = 1;
 
     //
     function renderPagenationPatient() {
         //
         let htmlBase = `
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(1)'> << </span>
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePatenationPatient - 1)'> < </span>
-            {pages}
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePatenationPatient + 1)'> > </span>
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(lastPagePagenationPatient)'> >> </span>
-            `;
-
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(1)'> << </span>
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePagenationPatient - 1)'> < </span>
+                        {pages}
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePagenationPatient + 1)'> > </span>
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(lastPagePagenationPatient)'> >> </span>
+                    `;
+        //
         let htmlPage = "";
-        for (let i = 1; i <= pagenationLastPage; i++) {
+        for (let i = 1; i <= lastPagePagenationPatient; i++)
+        {
             //
-            if (i < pagenationCurPage - 5 || i > pagenationCurPage + 5)
+            if (i < currentPagePagenationPatient - 5 || i > currentPagePagenationPatient + 5)
                 continue;
             //
-            if (i == currentPagePatenationPatient)
+            if (i == currentPagePagenationPatient)
                 htmlPage += "<span class='btn-pagenation-patient-selected' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
             else
                 htmlPage += "<span class='btn-pagenation-patient' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
         }
-
+        //
         htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
         document.getElementById('pagenation-patient').innerHTML = htmlPage;
     }
@@ -700,11 +716,10 @@
         if (page >= lastPagePagenationPatient)
             page = lastPagePagenationPatient;
 
-        currentPagePatenationPatient = page;
+        currentPagePagenationPatient = page;
         renderPagenationPatient();
         renderTablePatient();
     }
-
 
     //////////////////////////////////////////////////////////////////////////// detail filter box
 
@@ -727,8 +742,8 @@
         log("filter", filter, "table");
         //
         let option = {
-            schema: "public",
-            table: "tb_test",
+            schema: "cancer_stomach",
+            table: "gscn_pt_hlinf",
             offset: 0,
             limit: 20,
             filter: filter
@@ -770,36 +785,38 @@
         //
         let htmlTh = renderTableHeaderDetail();
         //
-        lastPagePagenationDetail = parseInt(rowsDetail.length / limitRowPagenationDetail);
+        lastgePagenationDetail = parseInt(rowsDetail.length / limitRowPagenationDetail);
         if (rowsDetail.length % limitRowPagenationDetail > 0)
             lastPagePagenationDetail += 1;
         //
         log("limitRowPagenationDetail", limitRowPagenationDetail, "");
-        log("currentPagePatenationDetail", currentPagePatenationDetail, "");
-        log("lastPagePagenationDetail : ", lastPagePagenationDetail, "");
-
-        let rowStart = (currentPagePatenationDetail * limitRowPagenationDetail) - limitRowPagenationDetail + 1;
+        log("currentPagePagenationDetail", currentPagePagenationDetail, "");
+        log("lastPagePagenationDetail", lastPagePagenationDetail, "");
+        //
+        let rowStart = (currentPagePagenationDetail * limitRowPagenationDetail) - limitRowPagenationDetail + 1;
         let rowEnd = rowStart + limitRowPagenationDetail - 1;
         if (rowEnd >= rowsDetail.length)
             rowEnd = rowStart + rowsDetail.length % limitRowPagenationDetail;
         //
-        log("rowStart : ", rowStart, "");
-        log("rowEnd : ", rowEnd, "");
+        log("rowStart", rowStart, "");
+        log("rowEnd", rowEnd, "");
         //
         let htmlStack = "";
-        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++)
+        {
             //
             if (rowNum == rowsDetail.length + 1)
                 break;
             //
             let item = rowsDetail[rowNum - 1];
-            log("row", item, "");
+            // log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRowTableDetail(` + rowNum + `)">`;
-            for (let key in item) {
-                log("key", key, "");
+            for (let key in item)
+            {
+                // log("key", key, "");
                 let column = item[key];
-                log("column", column, "");
+                // log("column", column, "");
                 htmlStack += ` <td> ` + column + ` </td> `;
             }
             htmlStack += `</tr>`;
@@ -812,7 +829,7 @@
     //
     function renderTableHeaderDetail() {
         //
-        log("rowsDetail[0]", rowsDetail[0], "table");
+        log("header", rowsDetail[0], "table");
         //
         let htmlTh = "";
         for (let key in rowsDetail[0])
@@ -830,24 +847,28 @@
     //////////////////////////////////////////////////////////////////////////// detail pagenation
 
     //
-    var limitRowPagenationDetail = 10;
+    var limitRowPagenationDetail = 20;
     var lastPagePagenationDetail = 0;
-    var currentPagePatenationDetail = 1;
+    var currentPagePagenationDetail = 1;
 
     //
     function renderPagenationDetail() {
         //
         let htmlBase = `
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(1)'> << </span>
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePatenationDetail - 1)'> < </span>
-            {pages}
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePatenationDetail + 1)'> > </span>
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(lastPagePagenationDetail)'> >> </span>
-            `;
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(1)'> << </span>
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePagenationDetail - 1)'> < </span>
+                        {pages}
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePagenationDetail + 1)'> > </span>
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(lastPagePagenationDetail)'> >> </span>
+                    `;
         //
         let htmlPage = "";
-        for (let i = 1; i <= lastPagePagenationDetail; i++) {
-            if (i == currentPagePatenationDetail)
+        for (let i = 1; i <= lastPagePagenationDetail; i++)
+        {   //
+            if (i < currentPagePagenationDetail - 5 || i > currentPagePagenationDetail + 5)
+                continue;
+            //
+            if (i == currentPagePagenationDetail)
                 htmlPage += "<span class='btn-pagenation-detail-selected' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
             else
                 htmlPage += "<span class='btn-pagenation-detail' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
@@ -859,14 +880,14 @@
 
     //
     function btnPagenationDetail(page) {
-
+        //
         if (page <= 0)
             page = 1;
-
+        //
         if (page >= lastPagePagenationDetail)
             page = lastPagePagenationDetail;
-
-        currentPagePatenationDetail = page;
+        //
+        currentPagePagenationDetail = page;
         renderPagenationDetail();
         renderTableDetail();
     }
@@ -892,8 +913,8 @@
         };
         //
         let option = {
-            schema: "public",
-            table: "tb_test",
+            schema: "cancer_stomach",
+            table: "gscn_pt_hlinf",
             offset: 0,
             limit: 20,
             filter: filter

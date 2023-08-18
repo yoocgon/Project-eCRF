@@ -145,6 +145,12 @@ namespace KCureDataAccess
                     //}
                 }
             }
+            else if (type == "test")
+            {
+                List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
+                string jsonData = JsonSerializer.Serialize(listDicData);
+                webView2.CoreWebView2.ExecuteScriptAsync($"fetchResult('{jsonData}', undefined);");
+            }
         }
     }
 }

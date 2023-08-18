@@ -16,10 +16,9 @@ namespace KCureDataAccess
         //
         CustomDapperClient dapperClient;
         // CustomPostgresClient postgresClient;
+        CustomLiteDbClient liteDbClient;
         //
         CustomLibrary library;
-        //
-        Test test = new Test();
         //
         Service01Login? service01Login;
         Service02Index? service02Index;
@@ -28,9 +27,8 @@ namespace KCureDataAccess
         Service05CsvViewer? service05CsvViewer;
         Service06Code? service06Code;
         Service07Column? service07Column;
-        Service11Test? service11Test;
-        Service12Test? service12Test;
-        Service13Test? service13Test;
+        Service90TestDapper? service90TestDapper;
+        Service91TestLiteDb? service91TestLiteDb;
 
         public Controller(Observer observer, Config config)
         {
@@ -41,7 +39,7 @@ namespace KCureDataAccess
             this.library = new CustomLibrary(); 
             //
             this.dapperClient = new CustomDapperClient(config);
-            // test.test001(dapperClient);
+            this.liteDbClient = new CustomLiteDbClient(config);
             //
             this.service01Login = new Service01Login();
             this.service01Login.Library = this.library;
@@ -71,17 +69,13 @@ namespace KCureDataAccess
             this.service07Column.Library = this.library;
             this.service07Column.DapperClient = this.dapperClient;
             //
-            this.service11Test = new Service11Test();
-            this.service11Test.Library = this.library;
-            this.service11Test.DapperClient = this.dapperClient;
+            this.service90TestDapper = new Service90TestDapper();
+            this.service90TestDapper.Library = this.library;
+            this.service90TestDapper.DbClient = this.dapperClient;
             //
-            this.service12Test = new Service12Test();
-            this.service12Test.Library = this.library;
-            this.service12Test.DapperClient = this.dapperClient;
-            //
-            this.service13Test = new Service13Test();
-            this.service13Test.Library = this.library;
-            this.service13Test.DapperClient = this.dapperClient;
+            this.service91TestLiteDb = new Service91TestLiteDb();
+            this.service91TestLiteDb.Library = this.library;
+            this.service91TestLiteDb.DbClient = this.liteDbClient;
         }
 
         public void Parse(string strJson)
@@ -120,7 +114,7 @@ namespace KCureDataAccess
                 }
                 else if (action == "table")
                 {
-                    if(message == "patient")
+                    if (message == "patient")
                     {
                         List<Dictionary<string, object>>? listDicData = service03BreastCancer.GetPatients((JsonObject)objJson["data"]);
                         observer.Send("response", "api", "table", "patient", listDicData);
@@ -157,6 +151,20 @@ namespace KCureDataAccess
                 //    List<Dictionary<string, object>>? listDicData = service13Test.GetInfoTable((JsonObject)objJson["data"]);
                 //    observer.Send("response", "api", "test-13", "", listDicData);
                 //}
+            }
+            else if (type == "test")
+            {
+                List<Dictionary<string, object>>? listDicData = null;
+                if (action == "dapper")
+                {
+                    listDicData = service90TestDapper.Query(message);
+                }
+                else if (action == "litedb")
+                {
+                    listDicData = service91TestLiteDb.Query(message);
+                }
+                //
+                observer.Send("response", type, action, message, listDicData);
             }
         }
 
