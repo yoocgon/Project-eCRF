@@ -493,6 +493,25 @@
     }
 
     //
+    function fetchGetCsvFIles(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'gui',
+                action: 'folderBrowser',
+                message: '',
+            });
+        }
+        else
+        {
+            log("path", response);
+            document.getElementById("text-csv-dir").value = response;
+        }
+    }
+
+    //
     function btnOpenDir() {
         fetchForder(undefined, null);
     }

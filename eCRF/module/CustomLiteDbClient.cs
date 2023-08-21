@@ -1,16 +1,12 @@
 ﻿using Serilog;
 using KCureDataAccess;
 using LiteDB;
-using System.Collections.Generic;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text;
 using CsvHelper.Configuration;
 using CsvHelper;
 using System.Globalization;
-using Renci.SshNet.Common;
+using Dapper;
+
 
 namespace eCRF.module
 {
@@ -36,7 +32,7 @@ namespace eCRF.module
             List<Dictionary<string, object>> listDicJsonElement = System.Text.Json.JsonSerializer.Deserialize<List<Dictionary<string, object>>>(strJson);
             //
             List<Dictionary<string, object>> listResult = new List<Dictionary<string, object>>();
-            foreach (var listElem in  listDicJsonElement)
+            foreach (var listElem in listDicJsonElement)
             {
                 Dictionary<string, object> dicResult = new Dictionary<string, object>();
                 foreach (var dicElem in listElem)
@@ -83,7 +79,7 @@ namespace eCRF.module
             return listResult;
         }
 
-
+        // 결과에서 _id 제거함 
         public bool Query(out string strJson, string query)
         {
             strJson = string.Empty;
@@ -127,9 +123,21 @@ namespace eCRF.module
                     var record = new Dictionary<string, object>();
                     foreach (var header in csv.HeaderRecord)
                     {
-                        //record[header] = csv.GetField<object>(header);
-                        var data = csv.GetField<dynamic>(header);
-                        record.Add(header, (object) data);
+                        object value = null;
+                        if (int.TryParse(csv.GetField(header), out int intValue))
+                        {
+                            value = intValue;
+                        }
+                        else if (double.TryParse(csv.GetField(header), out double doubleValue))
+                        {
+                            value = doubleValue;
+                        }
+                        else
+                        {
+                            value = csv.GetField<string>(header);
+                        }
+                        //
+                        record.Add(header, value);
                     }
                     //
                     records.Add(record);
@@ -139,12 +147,11 @@ namespace eCRF.module
             return records;
         }
 
-
-        public bool InsertCsv(string path)
+        public bool InsertCsv(string strCollection, string path)
         {
             using (var database = new LiteDatabase(config.LiteDbFilePath))
             {
-                var collection = database.GetCollection("ecrf");
+                var collection = database.GetCollection(strCollection);
                 //
                 List<Dictionary<string, object>> records = ReadCsv(path);
                 //
@@ -163,12 +170,56 @@ namespace eCRF.module
             return true;
         }
 
+        public bool InsertJson(string strCollection, string pathJson)
+        {
+            //
+            string strJson = string.Empty;
+            using (var db = new LiteDatabase(config.LiteDbFilePath))
+            {
+                var collection = db.GetCollection<BsonDocument>(strCollection);
+                string jsonContent = File.ReadAllText(pathJson);
+                //
+                System.Text.Json.Nodes.JsonNode jsonNode = System.Text.Json.Nodes.JsonNode.Parse(jsonContent);
+                if (jsonNode is System.Text.Json.Nodes.JsonArray jsonArray)
+                {
+                    foreach (System.Text.Json.Nodes.JsonNode jNode in jsonArray)
+                    {
+                        //
+                        string jsonSubString = jNode.ToString();
+                        Dictionary<string, JsonElement> dicJsonElement
+                            = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonSubString);
+                        //
+                        BsonDocument bsonDoc = new BsonDocument();
+                        foreach (var jsonPare in dicJsonElement)
+                        {
+                            bsonDoc[jsonPare.Key] = new BsonValue(jsonPare.Value.ToString());
+                        }
+                        collection.Insert(bsonDoc);
+                    }
+                }
+                else
+                {
+                    //
+                    Dictionary<string, JsonElement> dicJsonElement
+                        = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonContent);
+                    //
+                    BsonDocument bsonDoc = new BsonDocument();
+                    foreach (var jsonPare in dicJsonElement)
+                    {
+                        bsonDoc[jsonPare.Key] = new BsonValue(jsonPare.Value.ToString());
+                    }
+                    collection.Insert(bsonDoc);
+                }
+            }
+            //
+            return true;
+        }
 
-        public void Test()
+        public void InsertTestData(string strCollection)
         {
             using (var db = new LiteDatabase(config.LiteDbFilePath))
             {
-                var collection = db.GetCollection<BsonDocument>("ecrf");
+                var collection = db.GetCollection<BsonDocument>(strCollection);
                 var document = new BsonDocument
                 {
                     { "Name", "John" },

@@ -8,6 +8,52 @@ namespace eCRF.module
 {
     public class CustomLibrary
     {
+        public string ShowFileBrowser()
+        {
+            OpenFileDialog fileBrowserDialog = new OpenFileDialog();
+            if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
+                return fileBrowserDialog.FileName;
+            //
+            return "";
+        }
+
+        public string ShowForderBrowser()
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                return folderBrowserDialog.SelectedPath;
+            //
+            return "";
+        }
+
+        public Dictionary<string, object> GetFileInfo(string path)
+        {
+            Dictionary<string, object> dicFileInfo = new Dictionary<string, object>();
+            FileInfo fileInfo = new FileInfo(path);
+            //
+            if (fileInfo.Exists)
+            {
+                dicFileInfo.Add("name", fileInfo.Name);
+                dicFileInfo.Add("path", fileInfo.FullName);
+                dicFileInfo.Add("exetension", fileInfo.Extension);
+                dicFileInfo.Add("size", fileInfo.Length);
+                dicFileInfo.Add("create", fileInfo.CreationTime);
+                dicFileInfo.Add("modify", fileInfo.LastWriteTime);
+            }
+            //
+            return dicFileInfo;
+        }
+
+        public List<string> GetFileList(string path)
+        {
+            List<string> csvFiles = new List<string>();
+            string[] files = Directory.GetFiles(path);
+            foreach (string file in files)
+                if (Path.GetExtension(file).Equals(".csv", StringComparison.OrdinalIgnoreCase))
+                    csvFiles.Add(file);
+            //
+            return csvFiles;
+        }
 
         public string CamelToSnake(string camelCase)
         {
@@ -35,7 +81,6 @@ namespace eCRF.module
             //
             return listDicCamelKey;
         }
-
 
         public string PrettifyJSON(string json)
         {

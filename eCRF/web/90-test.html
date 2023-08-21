@@ -158,6 +158,8 @@
             <input type="button" value="실행 [Dapper]" onclick="btnExecuteDapper()" />
             <input type="button" value="실행 [LiteDB]" onclick="btnExecuteLiteDB()" />
 
+            <input type="button" value="파일로드 [LiteDB]" onclick="btnLoadFileLiteDB()" />
+
             <h4>출력</h4>
             <textarea id="textarea-output"></textarea>
 
@@ -252,6 +254,85 @@
         fetchResult(undefined, query);
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    //
+    var pathFile = "";
+    function fetchFile(response, option) {
+        //
+        if (response == undefined) {
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'gui',
+                action: 'fileBrowser',
+                message: '',
+            });
+        }
+        else
+        {
+            pathFile = response;
+            log("pathFile", pathFile);
+            //
+            if (pathFile.substring(pathFile.length - 3, pathFile.length) == "csv")
+            {
+                alert(pathFile);
+                fetchCsvFile(undefined, pathFile);
+            }
+            else if (pathFile.substring(pathFile.length - 4, pathFile.length) == "json")
+            {
+                alert(pathFile);
+                fetchJsonFile(undefined, pathFile);
+            }
+        }
+    }
+
+    //
+    function fetchJsonFile(response, pathFile) {
+        //
+        if (response == undefined) {
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'litedb',
+                action: 'file-json',
+                message: pathFile,
+            });
+        }
+        else {
+            log("response", response);
+            alert("insert done");
+        }
+    }
+
+    //
+    function fetchCsvFile(response, pathFile) {
+        //
+        if (response == undefined) {
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'litedb',
+                action: 'file-csv',
+                message: pathFile,
+            });
+        }
+        else
+        {
+            log("response", response);
+            alert("insert done");
+        }
+    }
+
+    //
+    function btnLoadFileLiteDB() {
+        //
+        fetchFile(undefined, pathFile);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    //
     document.getElementById("textarea-input").innerText = `SELECT $ FROM ecrf;`;
 
 </script>

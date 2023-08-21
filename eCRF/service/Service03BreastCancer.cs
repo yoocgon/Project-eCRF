@@ -34,7 +34,7 @@ namespace eCRF.service
             Console.WriteLine("Debug>>> (filter) : " + strFilter);
             //
             Dictionary<string, JsonElement> whereConditions = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(strFilter);
-            List <Dictionary<string, object>> listDicData = DapperClient.Select(schema, table, offset, limit, whereConditions);
+            List<Dictionary<string, object>> listDicData = DapperClient.Select(schema, table, offset, limit, whereConditions);
             // SetColumnSetting(ref listDicData);
             return listDicData;
         }

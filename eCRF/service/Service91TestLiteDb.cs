@@ -11,9 +11,19 @@ namespace eCRF.service
         public CustomLibrary? Library { get; set; }
         public List<Dictionary<string, object>> Query(string query)
         {
-            // DbClient.Test();
             List<Dictionary<string, object>> listDicData = DbClient.Query(query);
             return listDicData;
+        }
+        public bool InsertJsonLiteDb(string path)
+        {
+            // DbClient.InsertJson("ecrf", path);
+            DbClient.InsertJson("ecrf", path);
+            return true;
+        }
+        public bool InsertCsvLiteDb(string path)
+        {
+            DbClient.InsertCsv("ecrf", path);
+            return true;
         }
     }
 }

@@ -114,12 +114,12 @@ namespace KCureDataAccess
             {
                 if (action == "fileBrowser")
                 {
-                    string path = service08Connection.ShowFileBrowser();
+                    string path = library.ShowFileBrowser();
                     observer.Send("response", "gui", action, path, null);
                 }
                 else if (action == "folderBrowser")
                 {
-                    string path = service08Connection.ShowForderBrowser();
+                    string path = library.ShowForderBrowser();
                     observer.Send("response", "gui", action, path, null);
                 }
             }
@@ -128,6 +128,16 @@ namespace KCureDataAccess
                 if (action == "insert-csv")
                 {
                     if(service08Connection.InsertCsvLiteDb(message))
+                        observer.Send("response", "gui", action, "success", null);
+                }
+                else if (action == "file-csv")
+                {
+                    if (service91TestLiteDb.InsertCsvLiteDb(message))
+                        observer.Send("response", "gui", action, "success", null);
+                }
+                else if (action == "file-json")
+                {
+                    if (service91TestLiteDb.InsertJsonLiteDb(message))
                         observer.Send("response", "gui", action, "success", null);
                 }
             }
