@@ -32,7 +32,8 @@ namespace KCureDataAccess
             // Office
             App = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/application.yml";
             WebRoot = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/web/";
-            DapperConnStr = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=asdf;Database=kcure;";
+            // DapperConnStr = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=asdf;Database=kcure;";
+            DapperConnStr = "Server=127.0.0.1;Port=5432;User Id=ecrf;Password=ecrf;Database=postgres;";
             LiteDbFilePath = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/lite.db";
         }
     }

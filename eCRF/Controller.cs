@@ -152,6 +152,16 @@ namespace KCureDataAccess
                 {
                     // observer.Send("response", "api", "hello", store.id, null);
                 }
+                else if (action == "files")
+                {
+                    List<string> listFiles = library.GetFileList(message);
+                    observer.Send("response", type, action, message, listFiles);
+                }
+                if (action == "matching-csv")
+                {
+                    List<Dictionary<string, object>>? listDicData = service08Connection.GetCsvMatchingKey();
+                    observer.Send("response", type, action, message, listDicData);
+                }
                 else if (action == "table")
                 {
                     if (message == "patient")

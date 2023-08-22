@@ -17,7 +17,7 @@ namespace eCRF.service
         public bool InsertJsonLiteDb(string path)
         {
             // DbClient.InsertJson("ecrf", path);
-            DbClient.InsertJson("ecrf", path);
+            DbClient.InsertJsonFile("ecrf", path);
             return true;
         }
         public bool InsertCsvLiteDb(string path)

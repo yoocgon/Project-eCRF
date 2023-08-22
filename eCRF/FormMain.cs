@@ -150,6 +150,18 @@ namespace KCureDataAccess
                     //    webView2.CoreWebView2.ExecuteScriptAsync($"fetchGetTableInfo('{jsonData}', undefined);");
                     //}
                 }
+                else if(action == "files")
+                {
+                    List<string> listData = (List<string>)data;
+                    string jsonData = JsonSerializer.Serialize(listData);
+                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchGetCsvFiles('{jsonData}', undefined);");
+                }
+                else if (action == "matching-csv")
+                {
+                    List<Dictionary<string, object>> listDicData = (List<Dictionary<string, object>>)data;
+                    string jsonData = JsonSerializer.Serialize(listDicData);
+                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchGetMatchingKey('{jsonData}', undefined);");
+                }
             }
             else if (type == "test")
             {

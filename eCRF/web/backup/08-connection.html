@@ -46,12 +46,12 @@
         color: white;
     }
 
-        .area-menu span:hover {
-            justify-content: center;
-            align-items: center;
-            transform: scale(1.3);
-            transition: all 0.1s ease-in-out;
-        }
+    .area-menu span:hover {
+        justify-content: center;
+        align-items: center;
+        transform: scale(1.3);
+        transition: all 0.1s ease-in-out;
+    }
 
     .select-menu-sub {
         border: none;
@@ -77,14 +77,14 @@
         grid-area: head;
     }
 
-        .area-header .title {
-            font-size: small;
-            font-weight: 800;
-            margin-left: 0.8em;
-            padding-left: 2px;
-            border-bottom: 2px solid #641666;
-            color: #3f0e40;
-        }
+    .area-header .title {
+        font-size: small;
+        font-weight: 800;
+        margin-left: 0.8em;
+        padding-left: 2px;
+        border-bottom: 2px solid #641666;
+        color: #3f0e40;
+    }
 
     #lb-title {
         margin-left: 1.2em;
@@ -174,28 +174,28 @@
         white-space: nowrap;
     }
 
-        #tb_result th {
-            background: #15759e;
-            border-color: #f1f8ff;
-            color: #fff;
-        }
+    #tb_result th {
+        background: #15759e;
+        border-color: #f1f8ff;
+        color: #fff;
+    }
 
-        #tb_result tr {
-            background: #eff7ff;
-            color: black;
-        }
+    #tb_result tr {
+        background: #eff7ff;
+        color: black;
+    }
 
-        #tb_result .btn-change-csv {
-            background: #15759e;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-        }
+    #tb_result .btn-change-csv {
+        background: #15759e;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+    }
 
-            #tb_result .btn-change-csv:hover {
-                background: #0e4f6b;
-                color: white;
-            }
+    #tb_result .btn-change-csv:hover {
+        background: #0e4f6b;
+        color: white;
+    }
 
     #pagenation {
         float: right;
@@ -326,9 +326,8 @@
             </div>
         </div>
         <div>
-            <input class="btn-apply" id="btn-csv-dir" type="button" value="선택" onclick="btnCsvDir()" />
-            <input class="btn-apply" id="btn-csv-match" type="button" value="매칭" onclick="btnCsvMatch()" />
-            <input class="btn-apply" id="btn-csv-load" type="button" value="적용" onclick="btnCsvLoad()" />
+            <input class="btn-apply" id="btn-open-dir" type="button" value="선택" onclick="btnOpenDir()" />
+            <input class="btn-apply" id="btn-apply-dir" type="button" value="적용" onclick="btnApplyDir()" />
         </div>
         <br />
 
@@ -413,7 +412,7 @@
             btnMenu('90-test');
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////// nosql connection
 
     //
     function fetchFile(response, option) {
@@ -427,23 +426,41 @@
                 message: '',
             });
         }
-        else {
+        else
+        {
             log("path", response);
             document.getElementById("text-nosql-path").value = response;
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////// nosql connection
+    //
+    function fetchCsvInsertTest(response, option) {
+        //
+        let path = document.getElementById("text-nosql-path").value
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'litedb',
+                action: 'insert-csv',
+                message: path,
+            });
+        }
+        else
+        {
+            log("response", response);
+            alert(response);
+        }
+    }
 
     //
     function btnSelectNoSql() {
-        //
         fetchFile(undefined, null);
     }
 
     //
     function btnConnectionNoSql() {
-        //
         fetchCsvInsertTest(undefined, null);
     }
 
@@ -468,105 +485,52 @@
                 message: '',
             });
         }
-        else {
+        else
+        {
             log("path", response);
             document.getElementById("text-csv-dir").value = response;
         }
     }
 
     //
-    function btnCsvDir() {
-        //
-        fetchForder(undefined, null);
-    }
-
-    //////////////////////////////////////////////////////////////////////////// match csv files
-
-    ////
-    //function fetchCsvInsertTest(response, option) {
-    //    //
-    //    let path = document.getElementById("text-nosql-path").value
-    //    //
-    //    if (response == undefined) {
-    //        log("option", option, "table");
-    //        window.chrome.webview.postMessage({
-    //            phase: "request",
-    //            type: 'litedb',
-    //            action: 'insert-csv',
-    //            message: path,
-    //        });
-    //    }
-    //    else {
-    //        log("response", response);
-    //        alert(response);
-    //    }
-    //}
-
-    //
-    var dataFiles = [];
-    function fetchGetCsvFiles(response, option) {
-        //
-        let path = document.getElementById("text-csv-dir").value
-        //
-        if (response == undefined) {
-            window.chrome.webview.postMessage({
-                phase: "request",
-                type: 'api',
-                action: 'files',
-                message: path,
-            });
-        }
-        else {
-            log("response", response);
-            dataFiles = response.slice(1, -1).split(',').map(function (item) {
-                return item.trim();
-            });
-            log("csv files", dataFiles);
-            alert(dataFiles);
-            //
-            fetchGetMatchingKey(undefined, undefined);
-        }
-    }
-
-    //
-    var dataMatchingKeys = [];
-    function fetchGetMatchingKey(response, option) {
+    function fetchGetCsvFIles(response, option) {
         //
         if (response == undefined) {
             log("option", option, "table");
             window.chrome.webview.postMessage({
                 phase: "request",
-                type: "api",
-                action: "matching-csv",
-                message: "",
+                type: 'gui',
+                action: 'folderBrowser',
+                message: '',
             });
         }
-        else {
-            dataMatchingKeys = JSON.parse(response);
-            log("csv files", dataMatchingKeys);
-            //
-            renderTable();
-            renderPagenation();
+        else
+        {
+            log("path", response);
+            document.getElementById("text-csv-dir").value = response;
         }
     }
 
     //
-    function btnCsvMatch() {
-        //
-        fetchGetCsvFiles(undefined, undefined);
+    function btnOpenDir() {
+        fetchForder(undefined, null);
+    }
+
+    //
+    function btnApplyDir() {
+
     }
 
     //////////////////////////////////////////////////////////////////////////// load csv files
 
     //
-    function fetchLoadCsvViles(response, option) {
-
-    }
-
-    //
-    function btnCsvLoad() {
+    var dataFiles = []
+    function fetchCsv(data, option) {
         //
-        fetchLoadCsvViles(undefined, undefined);
+        dataFiles = [];
+        //
+        renderTable();
+        renderPagenation();
     }
 
     //////////////////////////////////////////////////////////////////////////// gridview
@@ -574,10 +538,10 @@
     //
     function renderTableHeader() {
         //
-        log("dataMatchingKeys[0]", dataMatchingKeys[0], "table");
+        log("dataFiles[0]", dataFiles[0], "table");
         //
         let htmlTh = "";
-        for (let key in dataMatchingKeys[0])
+        for (let key in dataFiles[0])
             htmlTh += "<th>" + key + "</th>";
         //
         htmlTh += "<th> 변경 </th>";
@@ -587,12 +551,12 @@
     //
     function renderTable() {
         //
-        log("table", dataMatchingKeys, "table");
+        log("table", dataFiles, "table");
         //
         let htmlTh = renderTableHeader();
         //
-        pagenationLastPage = parseInt(dataMatchingKeys.length / pagenationRowLimit);
-        if (dataMatchingKeys.length % pagenationRowLimit > 0)
+        pagenationLastPage = parseInt(dataFiles.length / pagenationRowLimit);
+        if (dataFiles.length % pagenationRowLimit > 0)
             pagenationLastPage += 1;
         //
         log("pagenationRowLimit", pagenationRowLimit, "");
@@ -601,8 +565,8 @@
 
         let rowStart = (pagenationCurPage * pagenationRowLimit) - pagenationRowLimit + 1;
         let rowEnd = rowStart + pagenationRowLimit - 1;
-        if (rowEnd >= dataMatchingKeys.length)
-            rowEnd = rowStart + dataMatchingKeys.length % pagenationRowLimit;
+        if (rowEnd >= dataFiles.length)
+            rowEnd = rowStart + dataFiles.length % pagenationRowLimit;
         //
         log("rowStart : ", rowStart, "");
         log("rowEnd : ", rowEnd, "");
@@ -610,10 +574,10 @@
         let htmlStack = "";
         for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
             //
-            if (rowNum == dataMatchingKeys.length + 1)
+            if (rowNum == dataFiles.length + 1)
                 break;
             //
-            let item = dataMatchingKeys[rowNum - 1];
+            let item = dataFiles[rowNum - 1];
             log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRow(` + rowNum + `)">`;
@@ -692,7 +656,7 @@
             limit: 20,
         }
         //
-        // fetchCsv(undefined, option);
+        fetchCsv(undefined, option);
     }
 
     //

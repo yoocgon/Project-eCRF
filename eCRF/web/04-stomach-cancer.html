@@ -651,8 +651,9 @@
         let htmlTh = renderTableHeaderPatient();
         //
         lastPagePagenationPatient = parseInt(rowsPatient.length / limitRowPagenationPatient);
-        if (rowsPatient.length % limitRowPagenationPatient > 0)
+        if (rowsPatient.length % limitRowPagenationPatient > 0) {
             lastPagePagenationPatient += 1;
+        }
         //
         log("limitRowPagenationPatient", limitRowPagenationPatient, "");
         log("currentPagePagenationPatient", currentPagePagenationPatient, "");
@@ -718,6 +719,10 @@
 
     //
     function renderPagenationPatient() {
+        //
+        log("limitRowPagenationPatient", limitRowPagenationPatient);
+        log("lastPagePagenationPatient", lastPagePagenationPatient);
+        log("currentPagePagenationPatient", currentPagePagenationPatient);
         //
         let htmlBase = `
                     <span class='btn-pagenation-patient' onclick='btnPagenationPatient(1)'> << </span>
@@ -836,9 +841,10 @@
         //
         let htmlTh = renderTableHeaderDetail();
         //
-        lastgePagenationDetail = parseInt(rowsDetail.length / limitRowPagenationDetail);
-        if (rowsDetail.length % limitRowPagenationDetail > 0)
+        lastPagePagenationDetail = parseInt(rowsDetail.length / limitRowPagenationDetail);
+        if (rowsDetail.length % limitRowPagenationDetail > 0) { 
             lastPagePagenationDetail += 1;
+        }
         //
         log("limitRowPagenationDetail", limitRowPagenationDetail, "");
         log("currentPagePagenationDetail", currentPagePagenationDetail, "");
@@ -904,6 +910,10 @@
 
     //
     function renderPagenationDetail() {
+        //
+        log("limitRowPagenationDetail", limitRowPagenationDetail);
+        log("lastPagePagenationDetail", lastPagePagenationDetail);
+        log("currentPagePagenationDetail", currentPagePagenationDetail);
         //
         let htmlBase = `
                     <span class='btn-pagenation-detail' onclick='btnPagenationDetail(1)'> << </span>
