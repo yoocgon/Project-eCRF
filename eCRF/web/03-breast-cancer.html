@@ -11,43 +11,87 @@
             "stat"
             "menu"
             "head"
-            "fter"
             "pati"
-            "detl"
+	        "detl"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 2.4em 3em auto auto auto 2em;
+        grid-template-rows: 1em 2.5em 3em auto auto 2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
     }
 
-    .area-stat {
-        grid-area: stat;
-        background: #3f0e40;
-        color: #0e4f6b;
+    .wrapper-area {
+        padding: 1em;
     }
 
-    /*
+    .contianer-patient {
+        padding: 1em;
+        height: 100%;
+    }
+
+    .contianer-detail {
+        border: 2px solid #641666;
+        padding: 1em;
+        height: 100%;
+    }
+
+    .contianer-filter {
+    
+    }
+
+    .contianer-grid {
+        color: white;
+    }
+
+    .box-tab {
+        padding: 0px;
+        background: white;
+        margin-top: 0.2em;
+    }
+
+    .box-filter {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding: 1em;
+        border: 1px solid none;
+        border-radius: 3px;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .box-grid {
+        border: 1px double none;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    .area-stat {
+        grid-area: stat;
+        border-top: 1px solid #0e4f6b;
+    }
+
+    /*    
     #hello {
         float: right;
         padding-right: 1em;
     }
-    */
-
-     .area-menu {
-         grid-area: menu;
-         display: flex;
-         justify-content: space-between;
-         border-bottom: 4px double #ccc;
-         padding-top: 0.4em;
-         padding-left: 2em;
-         padding-right: 2em;
-         font-size: small;
-         font-weight: 800;
-         background-color: #641666;
-         color: #fff;
-     }
+*/
+    .area-menu {
+        grid-area: menu;
+        display: flex;
+        justify-content: space-between;
+        border-top: 4px double #ccc;
+        border-bottom: 4px double #ccc;
+        padding-top: 0.4em;
+        padding-left: 2em;
+        padding-right: 2em;
+        font-size: small;
+        font-weight: 800;
+        background: #641666;
+        color: #fff;
+    }
 
     .area-menu span:hover {
         justify-content: center;
@@ -92,26 +136,7 @@
     #lb-title {
         margin-left: 1.2em;
         margin-bottom: 0;
-        color: #0e4f6b;
-    }
-
-    .area-filter {
-        grid-area: fter;
-        margin-left: 1em;
-    }
-
-    .contianer-filter {
-        display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        margin-top: 0.4em;
-        margin-left: 0.8em;
-        margin-right: 0.8em;
-        padding: 1em;
-        border-radius: 3px;
-        background: #0e4f6b;
-        color: #fff;
-        width: calc(100% - 4em);
+	    color: #0e4f6b;
     }
 
     .lb-filter {
@@ -120,12 +145,12 @@
         margin-left: 1em;
     }
 
-    .area-filter input {
+    input {
         background: #eff7ff;
         border: none;
     }
 
-    .area-filter select {
+    select {
         width: 13em;
         background: #eff7ff;
         border: none;
@@ -135,47 +160,42 @@
         float: right;
         width: 4em;
         padding: 4px;
-        margin: 1em;
+        margin-top: 1em;
         border: 0px none #000;
         border-radius: 5px;
         background: #0e4f6b;
         color: #fff;
     }
 
-    .contianer-grid {
-        color: white;
-        border: 1px solid #eff7ff;
-    }
-
     .area-patient {
         grid-area: pati;
         padding: 0.6em;
+        background:  white;
     }
 
     #tb_patient {
-        width: calc(100% - 2em);
+        width: 100%;
         background: #fff;
+        border-color: #f1f8ff;
         font-size: small;
         font: normal 1px 100 verdana;
-        margin-left: 1em;
-        margin-right: 1em;
         white-space: nowrap;
+    }
+
+    #tb_patient th {
+        background: #15759e;
+        border-color: gray;
+        color: #fff;
     }
 
     #tb_patient tr {
         background: #eff7ff;
         color: black;
     }
-    
+
     #tb_patient tr:hover {
         background: #eff7ff;
         color: black;
-    }
-    
-    #tb_patient th {
-        background: #15759e;
-        border-color: #f1f8ff;
-        color: #fff;
     }
 
     #pagenation-patient {
@@ -210,20 +230,10 @@
         color: #fff;
     }
 
-    .warp-detail {
-        margin: 1em;
-        background: #15759e;
-    }
-
-    .tab-contianer {
-        padding: 0px;
-        background: white;
-    }
-
     .tab {
         margin: 0px;
         display: inline-block;
-        width: 16em;
+        width: 8em;
         border: 1px solid none;
         border-bottom: none;
         border-top-left-radius: 5px;
@@ -233,20 +243,11 @@
         text-align: center;
     }
 
-    .warp-detail-content {
-        /*background: #999;*/
-        border: 2px solid #641666;
-        min-height: 24em;
-        overflow-x: auto;
-        overflow-y: auto;
-        /*background: #eff7ff;*/
-    }
-
     #btn-search-detail {
         float: right;
         width: 4em;
         padding: 4px;
-        margin: 1em;
+        margin-top: 1em;
         border: 0px none #000;
         border-radius: 5px;
         background: #0e4f6b;
@@ -266,15 +267,15 @@
 
     #tb_detail th {
         background: #15759e;
-        border-color: #f1f8ff;
+        border-color: gray;
         color: #fff;
     }
-
+    
     #tb_detail tr {
         background: #eff7ff;
         color: black;
     }
-
+    
     #tb_detail tr:hover {
         background: #eff7ff;
         color: black;
@@ -310,7 +311,9 @@
         grid-area: foot;
         color: #fff;
     }
+
 </style>
+
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 <script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0"></script>
@@ -347,42 +350,92 @@
         <p class="title">유방암</p>
     </div>
 
-    <div class="area-filter">
-        <div class="contianer-filter" id="patient-filter-box"></div>
-        <input id="btn-search-patient" type="button" value="조회" onclick="btnSearchPatient()" />
-    </div>
-
     <div class="area-patient">
-        <div class="contianer-grid">
-            <table id="tb_patient"></table>
-        </div>
-        <div id="pagenation-patient"></div>
-    </div>
-
-    <div class="area-detail">
-        <div class="warp-detail">
-            <div class="tab-contianer">
-
-                <span class="tab">환자</span>
-                <span class="tab">진단</span>
-                <span class="tab">검사</span>
-                <span class="tab">치료</span>
-                <span class="tab">추적관찰</span>
-                <div class="warp-detail-content">
-                    <div>
-                        <div class="contianer-filter"></div>
-                        <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
+        <div class="wrapper-area">
+            <div class="contianer-patient">
+                <div class="contianer-filter">
+                    <div class="box-filter" id="patient-filter-box"></div>
+                    <input id="btn-search-patient" type="button" value="조회" onclick="btnSearchPatient()" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="contianer-grid">
+                    <div class="box-grid">
+                        <table id="tb_patient"></table>
                     </div>
-                    <div class="contianer-grid">
-                        <table id="tb_detail"></table>
-                    </div>
-                    <div id="pagenation-detail"></div>
+                    <div id="pagenation-patient"></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="area-footer">
-            <span id="logo-footer"></span>
+    <div class="area-detail">
+        <div class="wrapper-area">
+
+            <div class="box-tab">
+                <span class="tab" onclick="btnTab(1)">현황</span>
+                <span class="tab" onclick="btnTab(2)">요약</span>
+                <span class="tab" onclick="btnTab(3)">환자</span>
+                <span class="tab" onclick="btnTab(4)">진단</span>
+                <span class="tab" onclick="btnTab(5)">검사</span>
+                <span class="tab" onclick="btnTab(6)">치료</span>
+                <span class="tab" onclick="btnTab(7)">추적관찰</span>
+                <span class="tab" onclick="btnTab(8)">수기입력</span>
+            </div>
+
+            <div class="contianer-detail">
+
+                <div class="contianer-tab" id="tab-1">
+                    <div class="contianer-filter">
+                        <div class="box-filter"></div>
+                        <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div class="contianer-grid">
+                        <div class="box-grid">
+                            <table id="tb_detail"></table>
+                        </div>
+                        <div id="pagenation-detail"></div>
+                    </div>
+                </div>
+
+                <div class="contianer-tab" id="tab-2">
+                    <p>tab 2</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-3">
+                    <p>tab 3</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-4">
+                    <p>tab 4</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-5">
+                    <p>tab 5</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-6">
+                    <p>tab 6</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-7">
+                    <p>tab 7</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-8">
+                    <p>tab 8</p>
+                </div>
+
+            </div>
+
+            <div class="area-footer">
+                <span id="logo-footer"></span>
+            </div>
+
         </div>
     </div>
 
@@ -408,7 +461,7 @@
     //    //
     //    if (data == undefined) {
     //        window.chrome.webview.postMessage({
-    //            phase: "request",
+    //            phase: 'request',
     //            type: 'api',
     //            action: 'hello',
     //            message: ''
@@ -425,7 +478,7 @@
     function btnMenu(menu) {
         //
         window.chrome.webview.postMessage({
-            phase: "request",
+            phase: 'request',
             type: 'page',
             action: menu,
             message: ''
@@ -571,7 +624,8 @@
     var rowsPatient = []
     function fetchPatient(response, option) {
         //
-        if (response == undefined) {
+        if (response == undefined)
+        {
             log("option", option, "table");
             window.chrome.webview.postMessage({
                 phase: "request",
@@ -601,14 +655,15 @@
         let htmlTh = renderTableHeaderPatient();
         //
         lastPagePagenationPatient = parseInt(rowsPatient.length / limitRowPagenationPatient);
-        if (rowsPatient.length % limitRowPagenationPatient > 0)
+        if (rowsPatient.length % limitRowPagenationPatient > 0) {
             lastPagePagenationPatient += 1;
+        }
         //
         log("limitRowPagenationPatient", limitRowPagenationPatient, "");
-        log("currentPagePatenationPatient", currentPagePatenationPatient, "");
+        log("currentPagePagenationPatient", currentPagePagenationPatient, "");
         log("lastPagePagenationPatient", lastPagePagenationPatient, "");
 
-        let rowStart = (currentPagePatenationPatient * limitRowPagenationPatient) - limitRowPagenationPatient + 1;
+        let rowStart = (currentPagePagenationPatient * limitRowPagenationPatient) - limitRowPagenationPatient + 1;
         let rowEnd = rowStart + limitRowPagenationPatient - 1;
         if (rowEnd >= rowsPatient.length)
             rowEnd = rowStart + rowsPatient.length % limitRowPagenationPatient;
@@ -617,7 +672,8 @@
         log("rowEnd", rowEnd, "");
         //
         let htmlStack = "";
-        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++)
+        {
             //
             if (rowNum == rowsPatient.length + 1)
                 break;
@@ -626,7 +682,8 @@
             // log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRowTablePatient(` + rowNum + `)">`;
-            for (let key in item) {
+            for (let key in item)
+            {
                 // log("key", key, "");
                 let column = item[key];
                 // log("column", column, "");
@@ -662,31 +719,36 @@
     //
     var limitRowPagenationPatient = 5;
     var lastPagePagenationPatient = 0;
-    var currentPagePatenationPatient = 1;
+    var currentPagePagenationPatient = 1;
 
     //
     function renderPagenationPatient() {
         //
+        log("limitRowPagenationPatient", limitRowPagenationPatient);
+        log("lastPagePagenationPatient", lastPagePagenationPatient);
+        log("currentPagePagenationPatient", currentPagePagenationPatient);
+        //
         let htmlBase = `
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(1)'> << </span>
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePatenationPatient - 1)'> < </span>
-            {pages}
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePatenationPatient + 1)'> > </span>
-            <span class='btn-pagenation-patient' onclick='btnPagenationPatient(lastPagePagenationPatient)'> >> </span>
-            `;
-
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(1)'> << </span>
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePagenationPatient - 1)'> < </span>
+                        {pages}
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePagenationPatient + 1)'> > </span>
+                    <span class='btn-pagenation-patient' onclick='btnPagenationPatient(lastPagePagenationPatient)'> >> </span>
+                    `;
+        //
         let htmlPage = "";
-        for (let i = 1; i <= lastPagePagenationPatient; i++) {
+        for (let i = 1; i <= lastPagePagenationPatient; i++)
+        {
             //
-            if (i < currentPagePatenationPatient - 5 || i > currentPagePatenationPatient + 5)
+            if (i < currentPagePagenationPatient - 5 || i > currentPagePagenationPatient + 5)
                 continue;
             //
-            if (i == currentPagePatenationPatient)
+            if (i == currentPagePagenationPatient)
                 htmlPage += "<span class='btn-pagenation-patient-selected' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
             else
                 htmlPage += "<span class='btn-pagenation-patient' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
         }
-
+        //
         htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
         document.getElementById('pagenation-patient').innerHTML = htmlPage;
     }
@@ -700,11 +762,24 @@
         if (page >= lastPagePagenationPatient)
             page = lastPagePagenationPatient;
 
-        currentPagePatenationPatient = page;
+        currentPagePagenationPatient = page;
         renderPagenationPatient();
         renderTablePatient();
     }
 
+    //////////////////////////////////////////////////////////////////////////// patient gridview
+
+    function btnTab(tabIndex) {
+        // log("tab", tabIndex);
+        let elements = document.getElementsByClassName("contianer-tab");
+        for (let i = 0; i < elements.length; i++)
+        {
+            elements[i].style.display = 'none';
+        }
+        //
+        let elemTab = document.getElementById("tab-" + tabIndex);
+        elemTab.style.display = 'block';
+    }
 
     //////////////////////////////////////////////////////////////////////////// detail filter box
 
@@ -754,7 +829,7 @@
         }
         else
         {
-            // log("response", response);
+            log("response", response);
             rowsDetail = JSON.parse(response);
             renderTableDetail();
             renderPagenationDetail();
@@ -771,14 +846,15 @@
         let htmlTh = renderTableHeaderDetail();
         //
         lastPagePagenationDetail = parseInt(rowsDetail.length / limitRowPagenationDetail);
-        if (rowsDetail.length % limitRowPagenationDetail > 0)
+        if (rowsDetail.length % limitRowPagenationDetail > 0) { 
             lastPagePagenationDetail += 1;
+        }
         //
         log("limitRowPagenationDetail", limitRowPagenationDetail, "");
-        log("currentPagePatenationDetail", currentPagePatenationDetail, "");
+        log("currentPagePagenationDetail", currentPagePagenationDetail, "");
         log("lastPagePagenationDetail", lastPagePagenationDetail, "");
-
-        let rowStart = (currentPagePatenationDetail * limitRowPagenationDetail) - limitRowPagenationDetail + 1;
+        //
+        let rowStart = (currentPagePagenationDetail * limitRowPagenationDetail) - limitRowPagenationDetail + 1;
         let rowEnd = rowStart + limitRowPagenationDetail - 1;
         if (rowEnd >= rowsDetail.length)
             rowEnd = rowStart + rowsDetail.length % limitRowPagenationDetail;
@@ -787,7 +863,8 @@
         log("rowEnd", rowEnd, "");
         //
         let htmlStack = "";
-        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++)
+        {
             //
             if (rowNum == rowsDetail.length + 1)
                 break;
@@ -796,7 +873,8 @@
             // log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRowTableDetail(` + rowNum + `)">`;
-            for (let key in item) {
+            for (let key in item)
+            {
                 // log("key", key, "");
                 let column = item[key];
                 // log("column", column, "");
@@ -812,7 +890,7 @@
     //
     function renderTableHeaderDetail() {
         //
-        log("rowsDetail[0]", rowsDetail[0], "table");
+        log("header", rowsDetail[0], "table");
         //
         let htmlTh = "";
         for (let key in rowsDetail[0])
@@ -830,24 +908,32 @@
     //////////////////////////////////////////////////////////////////////////// detail pagenation
 
     //
-    var limitRowPagenationDetail = 10;
+    var limitRowPagenationDetail = 20;
     var lastPagePagenationDetail = 0;
-    var currentPagePatenationDetail = 1;
+    var currentPagePagenationDetail = 1;
 
     //
     function renderPagenationDetail() {
         //
+        log("limitRowPagenationDetail", limitRowPagenationDetail);
+        log("lastPagePagenationDetail", lastPagePagenationDetail);
+        log("currentPagePagenationDetail", currentPagePagenationDetail);
+        //
         let htmlBase = `
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(1)'> << </span>
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePatenationDetail - 1)'> < </span>
-            {pages}
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePatenationDetail + 1)'> > </span>
-            <span class='btn-pagenation-detail' onclick='btnPagenationDetail(lastPagePagenationDetail)'> >> </span>
-            `;
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(1)'> << </span>
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePagenationDetail - 1)'> < </span>
+                        {pages}
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePagenationDetail + 1)'> > </span>
+                    <span class='btn-pagenation-detail' onclick='btnPagenationDetail(lastPagePagenationDetail)'> >> </span>
+                    `;
         //
         let htmlPage = "";
-        for (let i = 1; i <= lastPagePagenationDetail; i++) {
-            if (i == currentPagePatenationDetail)
+        for (let i = 1; i <= lastPagePagenationDetail; i++)
+        {   //
+            if (i < currentPagePagenationDetail - 5 || i > currentPagePagenationDetail + 5)
+                continue;
+            //
+            if (i == currentPagePagenationDetail)
                 htmlPage += "<span class='btn-pagenation-detail-selected' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
             else
                 htmlPage += "<span class='btn-pagenation-detail' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
@@ -859,14 +945,14 @@
 
     //
     function btnPagenationDetail(page) {
-
+        //
         if (page <= 0)
             page = 1;
-
+        //
         if (page >= lastPagePagenationDetail)
             page = lastPagePagenationDetail;
-
-        currentPagePatenationDetail = page;
+        //
+        currentPagePagenationDetail = page;
         renderPagenationDetail();
         renderTableDetail();
     }
@@ -904,6 +990,8 @@
         fetchPatient(undefined, option);
         //
         fetchDetail(undefined, option);
+        //
+        btnTab(1);
     }
 
     //

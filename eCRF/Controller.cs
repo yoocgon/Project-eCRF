@@ -3,7 +3,6 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using eCRF.service;
 using eCRF.module;
-using YamlDotNet;
 using YamlDotNet.RepresentationModel;
 
 namespace KCureDataAccess
@@ -38,7 +37,13 @@ namespace KCureDataAccess
             this.observer = observer;
             this.observer.Add(this);
             //
-            this.LoadApplicationConfig(config);
+            string pathExe = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string pathExdDir = Path.GetDirectoryName(pathExe);
+            //
+            Dictionary<string, object> dicYaml = this.LoadAppConfig(config.AppConfig);
+            config.WebRoot = dicYaml["WebRoot"].ToString();
+            config.DapperConnStr = dicYaml["DapperConnStr"].ToString();
+            config.LiteDbFilePath = dicYaml["LiteDbFilePath"].ToString();
             //
             this.config = config;
             this.library = new CustomLibrary(); 
@@ -157,10 +162,20 @@ namespace KCureDataAccess
                     List<string> listFiles = library.GetFileList(message);
                     observer.Send("response", type, action, message, listFiles);
                 }
-                if (action == "matching-csv")
+                else if (action == "matching-csv")
                 {
                     List<Dictionary<string, object>>? listDicData = service08Connection.GetCsvMatchingKey();
                     observer.Send("response", type, action, message, listDicData);
+                }
+                else if (action == "load-csv-test")
+                {
+                    service08Connection.InsertCsvCancerData(message);
+                    observer.Send("response", type, action, message, null);
+                }
+                else if (action == "path-litedb")
+                {
+                    string path = service08Connection.GetLiteDbPath();
+                    observer.Send("response", type, action, path, null);
                 }
                 else if (action == "table")
                 {
@@ -185,22 +200,6 @@ namespace KCureDataAccess
                         observer.Send("response", "api", "table", "column", listDicData);
                     }
                 }
-                ////
-                //else if (action == "test-11")
-                //{
-                //    List<Dictionary<string, object>>? listDicData = service11Test.GetUsers();
-                //    observer.Send("response", "api", "test-11", "", listDicData);
-                //}
-                //else if (action == "test-12")
-                //{
-                //    List<Dictionary<string, object>>? listDicData = service12Test.GetUsers((JsonObject)objJson["data"], store);
-                //    observer.Send("response", "api", "test-12", "", listDicData);
-                //}
-                //else if (action == "test-13")
-                //{
-                //    List<Dictionary<string, object>>? listDicData = service13Test.GetInfoTable((JsonObject)objJson["data"]);
-                //    observer.Send("response", "api", "test-13", "", listDicData);
-                //}
             }
             else if (type == "test")
             {
@@ -227,14 +226,15 @@ namespace KCureDataAccess
             Console.WriteLine("(message) " + message);
         }
 
-        public void LoadApplicationConfig(Config config)
+        public Dictionary<string, object> LoadAppConfig(string path)
         {
-            string yamlContents = File.ReadAllText(config.App);
+            Dictionary<string, object> yamlDict = new Dictionary<string, object>();
+            //
+            string yamlContents = File.ReadAllText(path);
             var input = new StringReader(yamlContents);
             var yamlStream = new YamlStream();
             yamlStream.Load(input);
             var rootNode = (YamlMappingNode)yamlStream.Documents[0].RootNode;
-            Dictionary<string, object> yamlDict = new Dictionary<string, object>();
             foreach (var entry in rootNode.Children)
             {
                 var key = ((YamlScalarNode)entry.Key).Value;
@@ -255,22 +255,8 @@ namespace KCureDataAccess
                     yamlDict[key] = value;
                 }
             }
-
-            foreach (var kvp in yamlDict)
-            {
-                if (kvp.Value is Dictionary<string, string> nestedDict)
-                {
-                    Console.WriteLine($"{kvp.Key}:");
-                    foreach (var nestedKvp in nestedDict)
-                    {
-                        Console.WriteLine($"  {nestedKvp.Key}: {nestedKvp.Value}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"{kvp.Key}: {kvp.Value}");
-                }
-            }
+            //
+            return yamlDict;
         }
 
     }

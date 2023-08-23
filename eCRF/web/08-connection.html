@@ -14,7 +14,7 @@
             "main"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 2.4em auto 3em auto 2em;
+        grid-template-rows: 1em 2.5em auto 3em auto 2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -22,36 +22,36 @@
 
     .area-stat {
         grid-area: stat;
-        background: #3f0e40;
-        color: #0e4f6b;
+        border-top: 1px solid #0e4f6b;
     }
 
-    /*
-        #hello {
-            float: right;
-            padding-right: 1em;
-        }
-    */
-
+    /*    
+    #hello {
+        float: right;
+        padding-right: 1em;
+    }
+*/
     .area-menu {
         grid-area: menu;
         display: flex;
         justify-content: space-between;
+        border-top: 4px double #ccc;
+        border-bottom: 4px double #ccc;
         padding-top: 0.4em;
         padding-left: 2em;
         padding-right: 2em;
         font-size: small;
         font-weight: 800;
         background-color: #641666;
-        color: white;
+        color: #fff;
     }
 
-        .area-menu span:hover {
-            justify-content: center;
-            align-items: center;
-            transform: scale(1.3);
-            transition: all 0.1s ease-in-out;
-        }
+    .area-menu span:hover {
+        justify-content: center;
+        align-items: center;
+        transform: scale(1.3);
+        transition: all 0.1s ease-in-out;
+    }
 
     .select-menu-sub {
         border: none;
@@ -77,14 +77,14 @@
         grid-area: head;
     }
 
-        .area-header .title {
-            font-size: small;
-            font-weight: 800;
-            margin-left: 0.8em;
-            padding-left: 2px;
-            border-bottom: 2px solid #641666;
-            color: #3f0e40;
-        }
+    .area-header .title {
+        font-size: small;
+        font-weight: 800;
+        margin-left: 0.8em;
+        padding-left: 2px;
+        border-bottom: 2px solid #641666;
+        color: #3f0e40;
+    }
 
     #lb-title {
         margin-left: 1.2em;
@@ -95,8 +95,7 @@
     h4 {
         margin-left: 1em;
         font-size: small;
-        /*color: #0e4f6b;*/
-        color: #3f0e40;
+        color: #641666;
     }
 
     .area-main {
@@ -140,11 +139,18 @@
         margin-right: 1em;
     }
 
-    #text-nosql-path, #text-csv-dir {
-        /*width: calc(100% - 10em);*/
-        min-width: 25em;
-        width: fit-content;
+    #text-nosql-path {
+        min-width: calc(100% - 8em);
         margin-left: 3em;
+    }
+
+    #text-csv-dir {
+        min-width: calc(100% - 29em);
+        margin-left: 3em;
+    }
+
+    #select-cancer {
+        margin-right: 1em;
     }
 
     .btn-apply {
@@ -174,28 +180,28 @@
         white-space: nowrap;
     }
 
-        #tb_result th {
-            background: #15759e;
-            border-color: #f1f8ff;
-            color: #fff;
-        }
+    #tb_result th {
+        background: #15759e;
+        border-color: #f1f8ff;
+        color: #fff;
+    }
 
-        #tb_result tr {
-            background: #eff7ff;
-            color: black;
-        }
+    #tb_result tr {
+        background: #eff7ff;
+        color: black;
+    }
 
-        #tb_result .btn-change-csv {
-            background: #15759e;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-        }
+    #tb_result .btn-change-csv {
+        background: #15759e;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+    }
 
-            #tb_result .btn-change-csv:hover {
-                background: #0e4f6b;
-                color: white;
-            }
+    #tb_result .btn-change-csv:hover {
+        background: #0e4f6b;
+        color: white;
+    }
 
     #pagenation {
         float: right;
@@ -313,22 +319,19 @@
         <h4>CSV 데이터 사용</h4>
 
         <div class="container-filter">
-            <div class="input-pare">
-                <span>암종</span>
-                <select class="select-black">
-                    <option>위암</option>
-                    <option>유방암</option>
-                </select>
-            </div>
-            <div>
-                <span>CSV 폴더 경로</span>
-                <input class="text-black" id="text-csv-dir" type="text" />
-            </div>
+            <span>암종</span>
+            <select class="select-black" id="select-cancer">
+                <option>위암</option>
+                <option>유방암</option>
+            </select>
+            <span>CSV 폴더 경로</span>
+            <input class="text-black" id="text-csv-dir" type="text" />
         </div>
         <div>
             <input class="btn-apply" id="btn-csv-dir" type="button" value="선택" onclick="btnCsvDir()" />
             <input class="btn-apply" id="btn-csv-match" type="button" value="매칭" onclick="btnCsvMatch()" />
             <input class="btn-apply" id="btn-csv-load" type="button" value="적용" onclick="btnCsvLoad()" />
+            <input class="btn-apply" type="button" value="테스트" onclick="btnCsvLoadTest()" />
         </div>
         <br />
 
@@ -522,7 +525,6 @@
                 return item.trim();
             });
             log("csv files", dataFiles);
-            alert(dataFiles);
             //
             fetchGetMatchingKey(undefined, undefined);
         }
@@ -545,28 +547,63 @@
             dataMatchingKeys = JSON.parse(response);
             log("csv files", dataMatchingKeys);
             //
+            Calculate();
             renderTable();
             renderPagenation();
         }
     }
 
-    //
+    // 매칭
     function btnCsvMatch() {
         //
         fetchGetCsvFiles(undefined, undefined);
     }
 
-    //////////////////////////////////////////////////////////////////////////// load csv files
-
     //
-    function fetchLoadCsvViles(response, option) {
-
+    function Calculate() {
+        // log("function", "Calculate");
+        // log("dataFiles", dataFiles, "table");
+        // log("dataMatchingKeys", dataMatchingKeys, "table");
+        dataFiles.forEach(file => {
+            // log("matching file", file);
+            file.file = "";
+            //
+            dataMatchingKeys.forEach(row => {
+                row.매칭키.forEach(key => {
+                    log("matching key", key);
+                    if (file.includes(key))
+                    {
+                        log("matching result file", file);
+                        log("matching result key", key);
+                        row.file = file;
+                    }
+                });
+            });
+        });
     }
 
-    //
-    function btnCsvLoad() {
+    //////////////////////////////////////////////////////////////////////////// load csv files
+
+    // 테스트 상태
+    function fetchLoadCsvFiles(response, option) {
         //
-        fetchLoadCsvViles(undefined, undefined);
+        if (response == undefined) {
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'api',
+                action: 'load-csv-test',
+                message: 'C:/Users/kcure/Desktop/gony/data/test/iris-write-from-docker.csv',
+            });
+        }
+        else {
+            log("response", response);
+        }
+    }
+
+    // 테스트
+    function btnCsvLoadTest() {
+        //
+        fetchLoadCsvFiles(undefined, undefined);
     }
 
     //////////////////////////////////////////////////////////////////////////// gridview
@@ -587,7 +624,7 @@
     //
     function renderTable() {
         //
-        log("table", dataMatchingKeys, "table");
+        // log("table", dataMatchingKeys, "table");
         //
         let htmlTh = renderTableHeader();
         //
@@ -595,17 +632,17 @@
         if (dataMatchingKeys.length % pagenationRowLimit > 0)
             pagenationLastPage += 1;
         //
-        log("pagenationRowLimit", pagenationRowLimit, "");
-        log("pagenationCurPage", pagenationCurPage, "");
-        log("pagenationLastPage : ", pagenationLastPage, "");
+        // log("pagenationRowLimit", pagenationRowLimit, "");
+        // log("pagenationCurPage", pagenationCurPage, "");
+        // log("pagenationLastPage : ", pagenationLastPage, "");
 
         let rowStart = (pagenationCurPage * pagenationRowLimit) - pagenationRowLimit + 1;
         let rowEnd = rowStart + pagenationRowLimit - 1;
         if (rowEnd >= dataMatchingKeys.length)
             rowEnd = rowStart + dataMatchingKeys.length % pagenationRowLimit;
         //
-        log("rowStart : ", rowStart, "");
-        log("rowEnd : ", rowEnd, "");
+        // log("rowStart : ", rowStart, "");
+        // log("rowEnd : ", rowEnd, "");
         //
         let htmlStack = "";
         for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
@@ -614,13 +651,13 @@
                 break;
             //
             let item = dataMatchingKeys[rowNum - 1];
-            log("row", item, "");
+            // log("row", item, "");
             //
             htmlStack += `<tr onclick="selectRow(` + rowNum + `)">`;
             for (let key in item) {
-                log("key", key, "");
+                // log("key", key, "");
                 let column = item[key];
-                log("column", column, "");
+                // log("column", column, "");
                 htmlStack += ` <td> ` + column + ` </td> `;
             }
             //
@@ -659,7 +696,7 @@
         let htmlBase = `
                 <span class='btn-pagenation' onclick='btnPagenation(1)'> << </span>
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage - 1)'> < </span>
-                {pages}
+                    {pages}
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationCurPage + 1)'> > </span>
                 <span class='btn-pagenation' onclick='btnPagenation(pagenationLastPage)'> >> </span>
                 `;
@@ -681,6 +718,27 @@
     }
 
     //////////////////////////////////////////////////////////////////////////// init
+
+    function fetchGetLiteDbPath() {
+        //
+        if (response == undefined) {
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'api',
+                action: 'path-litedb',
+                message: '',
+            });
+        }
+        else {
+            log("response", response);
+            document.getElementById("")
+        }
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////// 
 
     //
     function init() {

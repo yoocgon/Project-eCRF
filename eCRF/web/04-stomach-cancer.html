@@ -14,7 +14,7 @@
             "pati detl"
             "foot foot";
         grid-template-columns: 30em calc(100% - 30.5em);
-        grid-template-rows: 2em 2.4em 3em 100% 0.2em;
+        grid-template-rows: 1em 2.5em 3em 100% 0.2em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -61,18 +61,17 @@
     }
 
     .box-grid {
-        border: 1px solid #eff7ff;
+        border: 1px solid none;
         overflow-x: auto;
         overflow-y: auto;
     }
 
     .area-stat {
         grid-area: stat;
-        background: #3f0e40;
-        color: #0e4f6b;        
+        border-top: 1px solid #0e4f6b;
     }
 
-/*    
+    /*    
     #hello {
         float: right;
         padding-right: 1em;
@@ -82,6 +81,7 @@
         grid-area: menu;
         display: flex;
         justify-content: space-between;
+        border-top: 4px double #ccc;
         border-bottom: 4px double #ccc;
         padding-top: 0.4em;
         padding-left: 2em;
@@ -89,7 +89,7 @@
         font-size: small;
         font-weight: 800;
         background-color: #641666;
-        color: white;
+        color: #fff;
     }
 
     .area-menu span:hover {
@@ -135,6 +135,7 @@
     #lb-title {
         margin-left: 1.2em;
         margin-bottom: 0;
+	color: #0e4f6b;
     }
 
     .lb-filter {
@@ -436,6 +437,7 @@
 
         </div>
     </div>
+
 </div>
 
 <script>
@@ -541,7 +543,7 @@
                 <input type="text" id="selector-{id}">
             </span>
         `;
-        let templateListView = `            
+        let templateListView = `
             <span>
                 <span class="lb-filter">{label}</span>
                 <select id="selector-{id}"> {options} </select>
@@ -640,6 +642,7 @@
             renderPagenationPatient();
         }
     }
+
 
     //////////////////////////////////////////////////////////////////////////// patient gridview
 

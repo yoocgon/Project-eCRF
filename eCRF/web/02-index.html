@@ -14,7 +14,7 @@
             "main"
             "foot";
         grid-template-columns: 100%;
-        grid-template-rows: 2em 2.4em 3em auto 1em;
+        grid-template-rows: 1em 2.5em 3em auto 1em;
         font-size: small;
         margin: 0%;
         padding: 0%;
@@ -22,14 +22,20 @@
 
     .area-stat {
         grid-area: stat;
-        background: #3f0e40;
-        color: #0e4f6b;
+        border-top: 1px solid #0e4f6b;
     }
 
+    /*    
+    #hello {
+        float: right;
+        padding-right: 1em;
+    }
+*/
     .area-menu {
         grid-area: menu;
         display: flex;
         justify-content: space-between;
+        border-top: 4px double #ccc;
         border-bottom: 4px double #ccc;
         padding-top: 0.4em;
         padding-left: 2em;
@@ -63,6 +69,10 @@
 
     .area-main {
         grid-area: main;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 1em;
     }
     
     .area-footer {
@@ -94,6 +104,14 @@
         margin-left: 1.2em;
         margin-bottom: 0;
         color: #0e4f6b
+    }
+
+    .contianer-chart {
+        min-width: 24em;
+        height: 10em;
+        border: solid 2px #1887b7;
+        margin: 1em;
+        border-radius: 1em;
     }
 
 </style>
@@ -134,9 +152,9 @@
     </div>
 
     <div class="area-main">
-        <div id="chartBar" style="height: 400px;"></div>
-        <div id="chartLine" style="height: 400px;"></div>
-        <div id="chartPie" style="height: 400px;"></div>
+        <div class="contianer-chart" id="chartBar" style="height: 400px;"></div>
+        <div class="contianer-chart" id="chartLine" style="height: 400px;"></div>
+        <div class="contianer-chart" id="chartPie" style="height: 400px;"></div>
     </div>
 
     <div class="area-footer">

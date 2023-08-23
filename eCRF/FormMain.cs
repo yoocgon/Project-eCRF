@@ -162,6 +162,10 @@ namespace KCureDataAccess
                     string jsonData = JsonSerializer.Serialize(listDicData);
                     webView2.CoreWebView2.ExecuteScriptAsync($"fetchGetMatchingKey('{jsonData}', undefined);");
                 }
+                else if (action == "path-litedb")
+                {
+                    webView2.CoreWebView2.ExecuteScriptAsync($"fetchGetLiteDbPath('{message}', undefined);");
+                }
             }
             else if (type == "test")
             {

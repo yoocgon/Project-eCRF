@@ -24,64 +24,6 @@ namespace eCRF.module
              .CreateLogger();
         }
 
-        //// 쿼리하면 JSON 문자열을 List Dictionary 형태로 반환
-        //public List<Dictionary<string, object>> Query(string query)
-        //{
-        //    //
-        //    string strJson;
-        //    Query(out strJson, query);
-        //    //
-        //    List<Dictionary<string, object>> listDicJsonElement = System.Text.Json.JsonSerializer.Deserialize<List<Dictionary<string, object>>>(strJson);
-        //    //
-        //    List<Dictionary<string, object>> listResult = new List<Dictionary<string, object>>();
-        //    foreach (var listElem in listDicJsonElement)
-        //    {
-        //        Dictionary<string, object> dicResult = new Dictionary<string, object>();
-        //        foreach (var dicElem in listElem)
-        //        {
-        //            string key = dicElem.Key;
-        //            JsonElement property = (JsonElement)dicElem.Value;
-        //            switch (property.ValueKind)
-        //            {
-        //                //
-        //                case JsonValueKind.String:
-        //                    //
-        //                    dicResult.Add(key, property.GetString());
-        //                    break;
-        //                //
-        //                case JsonValueKind.Number:
-        //                    //
-        //                    if (property.TryGetInt32(out int intValue))
-        //                        dicResult.Add(key, property.GetInt32());
-        //                    else if (property.TryGetInt64(out long longValue))
-        //                        dicResult.Add(key, property.GetInt64());
-        //                    else if (property.TryGetDouble(out double doubleValue))
-        //                        dicResult.Add(key, property.GetDouble());
-        //                    //
-        //                    break;
-        //                //
-        //                case JsonValueKind.True:
-        //                    //
-        //                    dicResult.Add(key, property.GetBoolean());
-        //                    break;
-        //                //
-        //                case JsonValueKind.False:
-        //                    //
-        //                    dicResult.Add(key, property.GetBoolean());
-        //                    break;
-        //                //
-        //                default:
-        //                    MessageBox.Show("Debug>>> failed to matching type");
-        //                    break;
-        //            }
-        //        }
-        //        listResult.Add(dicResult);
-        //    }
-        //    //
-        //    return listResult;
-        //}
-
-
         // 쿼리하면 JSON 문자열을 List Dictionary 형태로 반환
         public List<Dictionary<string, object>> Query(string query)
         {
@@ -99,7 +41,7 @@ namespace eCRF.module
 
         // 쿼리의 결과로 JSON 문자열 반환
         // 결과에서 _id 제거함 
-        public bool Query(out string strJson, string query)
+        private bool Query(out string strJson, string query)
         {
             strJson = string.Empty;
             using (var database = new LiteDatabase(config.LiteDbFilePath))
@@ -130,7 +72,7 @@ namespace eCRF.module
         }
 
         //
-        public List<Dictionary<string, object>> GetJonDictionary(string strJson)
+        private List<Dictionary<string, object>> GetJonDictionary(string strJson)
         {
             //
             List<Dictionary<string, object>> listResult = new List<Dictionary<string, object>>();
@@ -235,8 +177,30 @@ namespace eCRF.module
             return true;
         }
 
+        public bool InsertCsv(string strCollection, string path)
+        {
+            using (var database = new LiteDatabase(config.LiteDbFilePath))
+            {
+                var collection = database.GetCollection(strCollection);
+                //
+                List<Dictionary<string, object>> records = ReadCsv(path);
+                //
+                foreach (var record in records)
+                {
+                    var bsonDocument = new BsonDocument();
+                    foreach (var kvp in record)
+                        bsonDocument.Add(kvp.Key, new BsonValue(kvp.Value));
+                    //
+                    collection.Insert(bsonDocument);
+                }
+                //
+                database.Dispose();
+            }
+            //
+            return true;
+        }
 
-        public List<Dictionary<string, object>> ReadCsv(string path)
+        private List<Dictionary<string, object>> ReadCsv(string path)
         {
             List<Dictionary<string, object>> records = new List<Dictionary<string, object>>();
             using (var reader = new StreamReader(path))
@@ -271,29 +235,6 @@ namespace eCRF.module
             }
             //
             return records;
-        }
-
-        public bool InsertCsv(string strCollection, string path)
-        {
-            using (var database = new LiteDatabase(config.LiteDbFilePath))
-            {
-                var collection = database.GetCollection(strCollection);
-                //
-                List<Dictionary<string, object>> records = ReadCsv(path);
-                //
-                foreach (var record in records)
-                {
-                    var bsonDocument = new BsonDocument();
-                    foreach (var kvp in record)
-                        bsonDocument.Add(kvp.Key, new BsonValue(kvp.Value));
-                    //
-                    collection.Insert(bsonDocument);
-                }
-                //
-                database.Dispose();
-            }
-            //
-            return true;
         }
 
         // JSON 가장 바깥이 Array 형태 []로 감싸져여 가능

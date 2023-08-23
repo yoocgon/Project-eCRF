@@ -1,7 +1,4 @@
-name: John Doe
-age: 30
-address:
-  street: 123 Main Street
-  city: Anytown
-  state: CA
-  zip code: 91234
+AppConfig: C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/application.yml
+WebRoot: C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/web/
+DapperConnStr: Server=127.0.0.1;Port=5432;User Id=ecrf;Password=ecrf;Database=postgres;
+LiteDbFilePath: C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/lite.db

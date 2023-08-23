@@ -11,7 +11,7 @@ namespace KCureDataAccess
 {
     public class Config
     {
-        public string App { get; set; }
+        public string AppConfig { get; set; }
         public string WebRoot { get; set; }
         public string DapperConnStr { get; set; }
         public string LiteDbFilePath { get; set; }
@@ -30,7 +30,7 @@ namespace KCureDataAccess
             // dapperConnStr = "Server=127.0.0.1;Port=5433;User Id=gony;Password=asdf;Database=kcure;";
 
             // Office
-            App = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/application.yml";
+            AppConfig = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/application.yml";
             WebRoot = @"C:/Users/kcure/Desktop/gony/workspace/visual-studio/Project-eCRF/eCRF/web/";
             // DapperConnStr = "Server=127.0.0.1;Port=5432;User Id=postgres;Password=asdf;Database=kcure;";
             DapperConnStr = "Server=127.0.0.1;Port=5432;User Id=ecrf;Password=ecrf;Database=postgres;";
