@@ -3,6 +3,8 @@ using Dapper;
 using Serilog;
 using KCureDataAccess;
 using System.Text.Json;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Security.Cryptography;
 
 namespace eCRF.module
 {
@@ -403,7 +405,8 @@ namespace eCRF.module
                    AND PD.OBJOID = PA.ATTRELID
                    AND PD.OBJSUBID = PA.ATTNUM
                  ORDER BY PS.RELNAME, PD.OBJSUBID) as a
-                ON a.column_name = b.column_name)";
+                ON a.column_name = b.column_name)
+            ";
             //
             query = query.Replace("{schema}", schema);
             query = query.Replace("{table}", table);
@@ -518,3 +521,53 @@ namespace eCRF.module
         }
     }
 }
+
+
+
+
+
+//SELECT
+//    c.table_schema, 
+//    c.table_name,
+//    c.column_name,
+//    c.data_type,
+//    c.character_maximum_length,
+//    c.column_default,
+//    c.is_nullable,
+//    d.description AS column_comment,
+//    t.table_comment AS table_comment
+//FROM 
+//    information_schema.columns AS c
+//LEFT JOIN 
+//    pg_catalog.pg_description AS d 
+//    ON (
+//        d.objoid = (
+//            SELECT oid FROM pg_catalog.pg_class
+//            WHERE relname = c.table_name
+//        ) AND d.objsubid = (
+//            SELECT ordinal_position
+//            FROM information_schema.columns AS ic
+//            WHERE ic.table_name = c.table_name AND ic.column_name = c.column_name
+//        )
+//    )
+//LEFT JOIN
+//    (
+//        SELECT
+//            t.tablename AS table_name,
+//            td.description AS table_comment
+//        FROM
+//            pg_catalog.pg_tables AS t
+//        LEFT JOIN
+//pg_catalog.pg_description AS td
+//ON (
+//td.objoid = (
+//                    SELECT oid FROM pg_catalog.pg_class
+//                    WHERE relname = t.tablename
+//                )
+//            )
+//        WHERE
+//            t.schemaname in ('public', 'cancer_breast', 'cancer_stomach')
+//    ) AS t
+//    ON c.table_name = t.table_name
+//WHERE 
+//    c.table_schema = 'public';

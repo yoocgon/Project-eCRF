@@ -1,0 +1,977 @@
+
+<style>
+
+    body {
+        margin: 0;
+    }
+
+    .wrapper {
+        display: grid;
+        grid-template-areas:
+            "stat stat"
+            "menu menu"
+            "head head"
+            "side main"
+            "foot foot";
+        grid-template-columns: 20em auto;
+        grid-template-rows: 1em 2.5em 3em auto 2em;
+        font-size: small;
+        margin: 0%;
+        padding: 0%;
+    }
+
+    .wrapper-area {
+        padding: 1em;
+    }
+
+    .contianer-patient {
+        padding: 1em;
+        height: 100%;
+    }
+
+    .contianer-detail {
+        border: 2px solid #641666;
+        padding: 1em;
+        height: 100%;
+    }
+
+    .contianer-filter {
+    }
+
+    .contianer-grid {
+        color: white;
+    }
+
+    .box-tab {
+        padding: 0px;
+        background: white;
+        margin-top: 0.2em;
+    }
+
+    .box-filter {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding: 1em;
+        border: 1px solid none;
+        border-radius: 3px;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .box-grid {
+        border: 1px double none;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    .area-stat {
+        grid-area: stat;
+        border-top: 1px solid #0e4f6b;
+    }
+
+    /*
+        #hello {
+            float: right;
+            padding-right: 1em;
+        }
+    */
+    .area-menu {
+        grid-area: menu;
+        display: flex;
+        justify-content: space-between;
+        border-top: 4px double #ccc;
+        border-bottom: 4px double #ccc;
+        padding-top: 0.4em;
+        padding-left: 2em;
+        padding-right: 2em;
+        font-size: small;
+        font-weight: 800;
+        background: #641666;
+        color: #fff;
+    }
+
+        .area-menu span:hover {
+            justify-content: center;
+            align-items: center;
+            transform: scale(1.3);
+            transition: all 0.1s ease-in-out;
+        }
+
+    .select-menu-sub {
+        border: none;
+        appearance: none;
+        outline: none;
+        background: #641666;
+        color: white;
+        font-size: small;
+        font-weight: 800;
+        width: 10em;
+        outline: none;
+        text-align: center;
+    }
+
+    .option-menu-sub {
+        border-radius: 0px;
+        font-size: small;
+        font-weight: 800;
+        padding: 20px;
+    }
+
+    .area-header {
+        grid-area: head;
+    }
+
+        .area-header .title {
+            font-size: medium;
+            font-weight: 800;
+            margin-left: 0.8em;
+            padding-left: 2px;
+            border-bottom: 2px solid #641666;
+            color: #3f0e40;
+        }
+
+    #lb-title {
+        margin-left: 1.2em;
+        margin-bottom: 0;
+        color: #0e4f6b;
+    }
+
+    .lb-filter {
+        display: inline-block;
+        width: 10em;
+        margin-left: 1em;
+    }
+
+    input {
+        background: #eff7ff;
+        border: none;
+    }
+
+    select {
+        width: 13em;
+        background: #eff7ff;
+        border: none;
+    }
+
+    #btn-search-patient {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin-top: 1em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #0e4f6b;
+        color: #fff;
+    }
+
+    .area-patient {
+        grid-area: pati;
+        padding: 0.6em;
+        background: white;
+    }
+
+    #tb_patient {
+        width: 100%;
+        background: #fff;
+        border-color: #f1f8ff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+        white-space: nowrap;
+    }
+
+        #tb_patient th {
+            background: #15759e;
+            border-color: gray;
+            color: #fff;
+        }
+
+        #tb_patient tr {
+            background: #eff7ff;
+            color: black;
+        }
+
+            #tb_patient tr:hover {
+                background: #eff7ff;
+                color: black;
+            }
+
+    #pagenation-patient {
+        float: right;
+    }
+
+    .btn-pagenation-patient {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .btn-pagenation-patient-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #1da8e3;
+        color: white;
+    }
+
+    #area-detail {
+        grid-area: detl;
+        background: #111;
+        color: #fff;
+    }
+
+    .tab {
+        margin: 0px;
+        display: inline-block;
+        width: 8em;
+        border: 1px solid none;
+        border-bottom: none;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background: #641666;
+        color: white;
+        text-align: center;
+    }
+
+    #btn-search-detail {
+        float: right;
+        width: 4em;
+        padding: 4px;
+        margin-top: 1em;
+        border: 0px none #000;
+        border-radius: 5px;
+        background: #0e4f6b;
+        color: #fff;
+    }
+
+    #tb_detail {
+        width: 100%;
+        background: #fff;
+        font-size: small;
+        font: normal 1px 100 verdana;
+        margin-left: 1em;
+        margin-right: 1em;
+        margin-bottom: 4px;
+        white-space: nowrap;
+    }
+
+        #tb_detail th {
+            background: #15759e;
+            border-color: gray;
+            color: #fff;
+        }
+
+        #tb_detail tr {
+            background: #eff7ff;
+            color: black;
+        }
+
+            #tb_detail tr:hover {
+                background: #eff7ff;
+                color: black;
+            }
+
+    #pagenation-detail {
+        float: right;
+    }
+
+    .btn-pagenation-detail {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #0e4f6b;
+        color: white;
+    }
+
+    .btn-pagenation-detail-selected {
+        display: inline-block;
+        margin: 2px;
+        padding-bottom: 2px;
+        width: 2em;
+        border-radius: 4px;
+        text-align: center;
+        background: #1da8e3;
+        color: white;
+    }
+
+    .area-footer {
+        grid-area: foot;
+        color: #fff;
+    }
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+<script src="https://cdn.jsdelivr.net/npm/pikaday@1.8.0"></script>
+
+<div class="wrapper">
+
+    <div class="area-stat">
+        <!--<span id="hello"></span>-->
+    </div>
+
+    <div class="area-menu">
+        <span id="btn-menu-main" onclick="btnMenu('02-index')">메인</span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">암종별 레지스트리</option>
+                <option class="option-menu-sub">유방암 레지스트리</option>
+                <option class="option-menu-sub">위암 레지스트리</option>
+            </select>
+        </span>
+        <span id="btn-menu-request">
+            <select class="select-menu-sub" onchange="btnMenuSub(this)">
+                <option style="display: none;">설정</option>
+                <option class="option-menu-sub">데이터 선택</option>
+                <option class="option-menu-sub">데이터 매핑</option>
+                <option class="option-menu-sub">코드조회</option>
+                <option class="option-menu-sub">컬럼설정</option>
+                <option class="option-menu-sub">테스트</option>
+            </select>
+        </span>
+    </div>
+
+
+    <div class="area-header">
+        <p class="title">유방암</p>
+    </div>
+
+    <div class="area-side">
+        <table>
+            <tr>
+                <th>테이블</th>
+            </tr>
+            <tr>
+                <td></td>
+            <tr>
+        </table>
+    </div>
+
+    <div class="area-main">
+        <div class="wrapper-area">
+
+            <div class="box-tab">
+                <span class="tab" onclick="btnTab(1)">현황</span>
+                <span class="tab" onclick="btnTab(2)">요약</span>
+                <span class="tab" onclick="btnTab(3)">환자</span>
+                <span class="tab" onclick="btnTab(4)">진단</span>
+                <span class="tab" onclick="btnTab(5)">검사</span>
+                <span class="tab" onclick="btnTab(6)">치료</span>
+                <span class="tab" onclick="btnTab(7)">추적관찰</span>
+                <span class="tab" onclick="btnTab(8)">수기입력</span>
+            </div>
+
+            <div class="contianer-detail">
+
+                <div class="contianer-tab" id="tab-1">
+                    <div class="contianer-filter">
+                        <div class="box-filter"></div>
+                        <input id="btn-search-detail" type="button" value="조회" onclick="btnSearchDetail()" />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div class="contianer-grid">
+                        <div class="box-grid">
+                            <table id="tb_detail"></table>
+                        </div>
+                        <div id="pagenation-detail"></div>
+                    </div>
+                </div>
+
+                <div class="contianer-tab" id="tab-2">
+                    <p>tab 2</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-3">
+                    <p>tab 3</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-4">
+                    <p>tab 4</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-5">
+                    <p>tab 5</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-6">
+                    <p>tab 6</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-7">
+                    <p>tab 7</p>
+                </div>
+
+                <div class="contianer-tab" id="tab-8">
+                    <p>tab 8</p>
+                </div>
+
+            </div>
+
+            <div class="area-footer">
+                <span id="logo-footer"></span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    //
+    function log(category, log, type) {
+        //
+        console.log("Debug>>> (" + category + ") \n");
+        //
+        if (type === "table")
+            console.table(log);
+        else
+            console.log(log);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// header
+
+    ////
+    //function fetchHello(data) {
+    //    //
+    //    if (data == undefined) {
+    //        window.chrome.webview.postMessage({
+    //            phase: 'request',
+    //            type: 'api',
+    //            action: 'hello',
+    //            message: ''
+    //        });
+    //    }
+    //    else {
+    //        document.getElementById("hello").innerText = data + "님 안녕하세요."
+    //    }
+    //}
+
+    //////////////////////////////////////////////////////////////////////////// menu
+
+    //
+    function btnMenu(menu) {
+        //
+        window.chrome.webview.postMessage({
+            phase: 'request',
+            type: 'page',
+            action: menu,
+            message: ''
+        });
+    }
+
+    //
+    function btnMenuSub(elem) {
+        //
+        if (elem.value === "유방암 레지스트리")
+            btnMenu('03-breast-cancer');
+        else if (elem.value === "위암 레지스트리")
+            btnMenu('04-stomach-cancer');
+        else if (elem.value === "데이터 선택")
+            btnMenu('08-connection');
+        else if (elem.value === "데이터 매핑")
+            btnMenu('09-data-mapping');
+        else if (elem.value === "코드조회")
+            btnMenu('06-code');
+        else if (elem.value === "컬럼설정")
+            btnMenu('07-column');
+        else if (elem.value === "테스트")
+            btnMenu('90-test');
+    }
+
+    //////////////////////////////////////////////////////////////////////////// patient filter box
+
+    //
+    function btnSearchPatient() {
+        //
+        let filter = {
+            research: "",
+            department: "",
+            researcher: "",
+            applyStep: "",
+            //    applyStatus: "",
+            //    importedDataExists: "",
+            //    dataExportRequestExists: "",
+            //    dataExportApprovalExistence: "",
+            //    dataUtilizationStartDate: "",
+            //    dataUtilizationEndDate: ""
+        };
+        //
+        log("filter", filter, "table");
+        //
+        let option = {
+            schema: "public",
+            table: "tb_test",
+            offset: 0,
+            limit: 20,
+            filter: filter
+        }
+        //
+        fetchPatient(undefined, option);
+    }
+
+    //
+    function renderPatientFilter() {
+        //
+        let templateTextBox = `
+                <span>
+                    <span class="lb-filter">{label}</span>
+                    <input type="text" id="selector-{id}">
+                </span>
+            `;
+        let templateListView = `
+                <span>
+                    <span class="lb-filter">{label}</span>
+                    <select id="selector-{id}"> {options} </select>
+                </span>`;
+        let templateDatePicker = `
+                <span>
+                    <span class="lb-filter">{label}</span>
+                    <input type="text" id="selector-{id}">
+                </span>
+            `;
+        //
+        document.getElementById("patient-filter-box").innerHTML = "";
+        filerPatient.forEach(filter => {
+            //
+            let tempHtml = "";
+            if (filter.type == "textbox") {
+                tempHtml = templateListView.replaceAll("{id}", filter.id);
+                tempHtml = tempHtml.replaceAll("{label}", filter.column);
+                //
+                let tempOption = "";
+                filter.options.forEach(option => {
+                    tempOption += "<option>" + option + "</option>";
+                });
+                tempHtml = tempHtml.replaceAll("{options}", tempOption);
+            }
+            else if (filter.type == "listview") {
+                tempHtml = templateTextBox.replaceAll("{id}", filter.id);
+                tempHtml = tempHtml.replaceAll("{label}", filter.column);
+            }
+            else if (filter.type == "datepicker") {
+                tempHtml = templateDatePicker.replaceAll("{id}", filter.id);
+                tempHtml = tempHtml.replaceAll("{label}", filter.column);
+            }
+            //
+            document.getElementById("patient-filter-box").innerHTML += tempHtml;
+        });
+    }
+
+    //
+    var filerPatient = [];
+    function fetchPatientFilter(undefined, option) {
+        //
+        filerPatient = [
+            {
+                id: "test001",
+                type: "listview",
+                schema: "kcure",
+                table: "tb_test01",
+                column: "column01",
+                value: "",
+                options: ["-", "test1", "test2", "test3"]
+            },
+            {
+                id: "test002",
+                type: "textbox",
+                schema: "kcure",
+                table: "tb_test02",
+                column: "column01",
+                value: "",
+                options: ["-", "test1", "test2", "test3"]
+            },
+            {
+                id: "test003",
+                type: "datepicker",
+                schema: "kcure",
+                table: "tb_test03",
+                column: "column01",
+                value: "",
+                options: ["-", "test1", "test2", "test3"]
+            }
+        ];
+        //
+        renderPatientFilter();
+    }
+
+    //
+    var rowsPatient = []
+    function fetchPatient(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'api',
+                action: 'table',
+                message: 'patient',
+                data: option
+            });
+        }
+        else {
+            log("response", response);
+            rowsPatient = JSON.parse(response);
+            renderTablePatient();
+            renderPagenationPatient();
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////// patient gridview
+
+    //
+    function renderTablePatient() {
+        //
+        log("table", rowsPatient, "table");
+        //
+        let htmlTh = renderTableHeaderPatient();
+        //
+        lastPagePagenationPatient = parseInt(rowsPatient.length / limitRowPagenationPatient);
+        if (rowsPatient.length % limitRowPagenationPatient > 0) {
+            lastPagePagenationPatient += 1;
+        }
+        //
+        log("limitRowPagenationPatient", limitRowPagenationPatient, "");
+        log("currentPagePagenationPatient", currentPagePagenationPatient, "");
+        log("lastPagePagenationPatient", lastPagePagenationPatient, "");
+
+        let rowStart = (currentPagePagenationPatient * limitRowPagenationPatient) - limitRowPagenationPatient + 1;
+        let rowEnd = rowStart + limitRowPagenationPatient - 1;
+        if (rowEnd >= rowsPatient.length)
+            rowEnd = rowStart + rowsPatient.length % limitRowPagenationPatient;
+        //
+        log("rowStart", rowStart, "");
+        log("rowEnd", rowEnd, "");
+        //
+        let htmlStack = "";
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+            //
+            if (rowNum == rowsPatient.length + 1)
+                break;
+            //
+            let item = rowsPatient[rowNum - 1];
+            // log("row", item, "");
+            //
+            htmlStack += `<tr onclick="selectRowTablePatient(` + rowNum + `)">`;
+            for (let key in item) {
+                // log("key", key, "");
+                let column = item[key];
+                // log("column", column, "");
+                htmlStack += ` <td> ` + column + ` </td> `;
+            }
+            htmlStack += `</tr>`;
+        }
+        //
+        let elemTable = document.getElementById("tb_patient");
+        elemTable.innerHTML = htmlTh + htmlStack;
+    }
+
+    //
+    function renderTableHeaderPatient() {
+        //
+        log("rowsPatient[0]", rowsPatient[0], "table");
+        //
+        let htmlTh = "";
+        for (let key in rowsPatient[0])
+            htmlTh += "<th>" + key + "</th>";
+        //
+        return htmlTh;
+    }
+
+    //
+    function selectRowTablePatient(rowNum) {
+        //
+        log("select row", rowNum);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// patient pagenation
+
+    //
+    var limitRowPagenationPatient = 5;
+    var lastPagePagenationPatient = 0;
+    var currentPagePagenationPatient = 1;
+
+    //
+    function renderPagenationPatient() {
+        //
+        log("limitRowPagenationPatient", limitRowPagenationPatient);
+        log("lastPagePagenationPatient", lastPagePagenationPatient);
+        log("currentPagePagenationPatient", currentPagePagenationPatient);
+        //
+        let htmlBase = `
+                        <span class='btn-pagenation-patient' onclick='btnPagenationPatient(1)'> << </span>
+                        <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePagenationPatient - 1)'> < </span>
+                            {pages}
+                        <span class='btn-pagenation-patient' onclick='btnPagenationPatient(currentPagePagenationPatient + 1)'> > </span>
+                        <span class='btn-pagenation-patient' onclick='btnPagenationPatient(lastPagePagenationPatient)'> >> </span>
+                        `;
+        //
+        let htmlPage = "";
+        for (let i = 1; i <= lastPagePagenationPatient; i++) {
+            //
+            if (i < currentPagePagenationPatient - 5 || i > currentPagePagenationPatient + 5)
+                continue;
+            //
+            if (i == currentPagePagenationPatient)
+                htmlPage += "<span class='btn-pagenation-patient-selected' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
+            else
+                htmlPage += "<span class='btn-pagenation-patient' onclick='btnPagenationPatient(" + i + ")'>" + i + "</span>";
+        }
+        //
+        htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
+        document.getElementById('pagenation-patient').innerHTML = htmlPage;
+    }
+
+    //
+    function btnPagenationPatient(page) {
+
+        if (page <= 0)
+            page = 1;
+
+        if (page >= lastPagePagenationPatient)
+            page = lastPagePagenationPatient;
+
+        currentPagePagenationPatient = page;
+        renderPagenationPatient();
+        renderTablePatient();
+    }
+
+    //////////////////////////////////////////////////////////////////////////// patient gridview
+
+    function btnTab(tabIndex) {
+        // log("tab", tabIndex);
+        let elements = document.getElementsByClassName("contianer-tab");
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.display = 'none';
+        }
+        //
+        let elemTab = document.getElementById("tab-" + tabIndex);
+        elemTab.style.display = 'block';
+    }
+
+    //////////////////////////////////////////////////////////////////////////// detail filter box
+
+    //
+    function btnSearchDetail() {
+        //
+        let filter = {
+            research: "",
+            department: "",
+            researcher: "",
+            applyStep: "",
+            //    applyStatus: "",
+            //    importedDataExists: "",
+            //    dataExportRequestExists: "",
+            //    dataExportApprovalExistence: "",
+            //    dataUtilizationStartDate: "",
+            //    dataUtilizationEndDate: ""
+        };
+        //
+        log("filter", filter, "table");
+        //
+        let option = {
+            schema: "public",
+            table: "tb_test",
+            offset: 0,
+            limit: 20,
+            filter: filter
+        }
+        //
+        fetchDetail(undefined, option);
+    }
+
+    //
+    var rowsDetail = []
+    function fetchDetail(response, option) {
+        //
+        if (response == undefined) {
+            log("option", option, "table");
+            window.chrome.webview.postMessage({
+                phase: "request",
+                type: 'api',
+                action: 'table',
+                message: 'detail',
+                data: option
+            });
+        }
+        else {
+            log("response", response);
+            rowsDetail = JSON.parse(response);
+            renderTableDetail();
+            renderPagenationDetail();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////// detail gridview
+
+    //
+    function renderTableDetail() {
+        //
+        log("table", rowsDetail, "table");
+        //
+        let htmlTh = renderTableHeaderDetail();
+        //
+        lastPagePagenationDetail = parseInt(rowsDetail.length / limitRowPagenationDetail);
+        if (rowsDetail.length % limitRowPagenationDetail > 0) {
+            lastPagePagenationDetail += 1;
+        }
+        //
+        log("limitRowPagenationDetail", limitRowPagenationDetail, "");
+        log("currentPagePagenationDetail", currentPagePagenationDetail, "");
+        log("lastPagePagenationDetail", lastPagePagenationDetail, "");
+        //
+        let rowStart = (currentPagePagenationDetail * limitRowPagenationDetail) - limitRowPagenationDetail + 1;
+        let rowEnd = rowStart + limitRowPagenationDetail - 1;
+        if (rowEnd >= rowsDetail.length)
+            rowEnd = rowStart + rowsDetail.length % limitRowPagenationDetail;
+        //
+        log("rowStart", rowStart, "");
+        log("rowEnd", rowEnd, "");
+        //
+        let htmlStack = "";
+        for (let rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+            //
+            if (rowNum == rowsDetail.length + 1)
+                break;
+            //
+            let item = rowsDetail[rowNum - 1];
+            // log("row", item, "");
+            //
+            htmlStack += `<tr onclick="selectRowTableDetail(` + rowNum + `)">`;
+            for (let key in item) {
+                // log("key", key, "");
+                let column = item[key];
+                // log("column", column, "");
+                htmlStack += ` <td> ` + column + ` </td> `;
+            }
+            htmlStack += `</tr>`;
+        }
+        //
+        let elemTable = document.getElementById("tb_detail");
+        elemTable.innerHTML = htmlTh + htmlStack;
+    }
+
+    //
+    function renderTableHeaderDetail() {
+        //
+        log("header", rowsDetail[0], "table");
+        //
+        let htmlTh = "";
+        for (let key in rowsDetail[0])
+            htmlTh += "<th>" + key + "</th>";
+        //
+        return htmlTh;
+    }
+
+    //
+    function selectRowTableDetail(rowNum) {
+        //
+        log("select row", rowNum);
+    }
+
+    //////////////////////////////////////////////////////////////////////////// detail pagenation
+
+    //
+    var limitRowPagenationDetail = 20;
+    var lastPagePagenationDetail = 0;
+    var currentPagePagenationDetail = 1;
+
+    //
+    function renderPagenationDetail() {
+        //
+        log("limitRowPagenationDetail", limitRowPagenationDetail);
+        log("lastPagePagenationDetail", lastPagePagenationDetail);
+        log("currentPagePagenationDetail", currentPagePagenationDetail);
+        //
+        let htmlBase = `
+                        <span class='btn-pagenation-detail' onclick='btnPagenationDetail(1)'> << </span>
+                        <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePagenationDetail - 1)'> < </span>
+                            {pages}
+                        <span class='btn-pagenation-detail' onclick='btnPagenationDetail(currentPagePagenationDetail + 1)'> > </span>
+                        <span class='btn-pagenation-detail' onclick='btnPagenationDetail(lastPagePagenationDetail)'> >> </span>
+                        `;
+        //
+        let htmlPage = "";
+        for (let i = 1; i <= lastPagePagenationDetail; i++) {   //
+            if (i < currentPagePagenationDetail - 5 || i > currentPagePagenationDetail + 5)
+                continue;
+            //
+            if (i == currentPagePagenationDetail)
+                htmlPage += "<span class='btn-pagenation-detail-selected' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
+            else
+                htmlPage += "<span class='btn-pagenation-detail' onclick='btnPagenationDetail(" + i + ")'>" + i + "</span>";
+        }
+        //
+        htmlPage = htmlBase.replaceAll('{pages}', htmlPage);
+        document.getElementById('pagenation-detail').innerHTML = htmlPage;
+    }
+
+    //
+    function btnPagenationDetail(page) {
+        //
+        if (page <= 0)
+            page = 1;
+        //
+        if (page >= lastPagePagenationDetail)
+            page = lastPagePagenationDetail;
+        //
+        currentPagePagenationDetail = page;
+        renderPagenationDetail();
+        renderTableDetail();
+    }
+
+    //////////////////////////////////////////////////////////////////////////// init
+
+    //
+    function init() {
+        //
+        // fetchHello();
+        //
+        let filter = {
+            research: "-",
+            department: "-",
+            researcher: "-",
+            apply_step: "-",
+            apply_status: "-",
+            imported_data_exists: "-",
+            data_export_request_exists: "-",
+            data_export_approval_existence: "-",
+            data_utilization_start_date: "-",
+            data_utilization_end_eate: "-"
+        };
+        //
+        let option = {
+            schema: "public",
+            table: "tb_test",
+            offset: 0,
+            limit: 20,
+            filter: filter
+        }
+        //
+        fetchPatientFilter(undefined, option);
+        //
+        fetchPatient(undefined, option);
+        //
+        fetchDetail(undefined, option);
+        //
+        btnTab(1);
+    }
+
+    //
+    init();
+
+</script>
